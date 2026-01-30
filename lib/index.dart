@@ -1,0 +1,29 @@
+// Export pages
+export '/user/user_home_page/user_home_page_widget.dart'
+    show UserHomePageWidget;
+export '/auth/auth_inicial_page/auth_inicial_page_widget.dart'
+    show AuthInicialPageWidget;
+export '/auth/auth_register_page/auth_register_page_widget.dart'
+    show AuthRegisterPageWidget;
+export '/auth/auth_login_page/auth_login_page_widget.dart'
+    show AuthLoginPageWidget;
+export '/user/order_user_page/order_user_page_widget.dart'
+    show OrderUserPageWidget;
+export '/user/cart_user_page/cart_user_page_widget.dart'
+    show CartUserPageWidget;
+export '/admin/admin_dashboard_page/admin_dashboard_page_widget.dart'
+    show AdminDashboardPageWidget;
+export '/admin/admin_purchasingmanagement_page/admin_purchasingmanagement_page_widget.dart'
+    show AdminPurchasingmanagementPageWidget;
+export '/admin/admin_categories_page/admin_categories_page_widget.dart'
+    show AdminCategoriesPageWidget;
+export '/admin/admin_orders_page/admin_orders_page_widget.dart'
+    show AdminOrdersPageWidget;
+export '/admin/admin_customers_page/admin_customers_page_widget.dart'
+    show AdminCustomersPageWidget;
+export '/admin/admin_payments_page/admin_payments_page_widget.dart'
+    show AdminPaymentsPageWidget;
+export '/admin/admin_shipments_page/admin_shipments_page_widget.dart'
+    show AdminShipmentsPageWidget;
+export '/user/user_checkout_page/user_checkout_page_widget.dart'
+    show UserCheckoutPageWidget;
