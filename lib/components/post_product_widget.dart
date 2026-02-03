@@ -1,8 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -67,11 +69,14 @@ class _PostProductWidgetState extends State<PostProductWidget> {
           child: Container(
             width: double.infinity,
             height: 100.0,
+
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
             ),
+
             child: Column(
               mainAxisSize: MainAxisSize.max,
+
               children: [
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -83,7 +88,11 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                         alignment: AlignmentDirectional(-1.0, -1.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 0.0, 0.0),
+                            16.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: InkWell(
                             splashColor: Colors.transparent,
                             focusColor: Colors.transparent,
@@ -92,27 +101,29 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                             onTap: () async {
                               Navigator.pop(context);
                             },
+
                             child: Text(
                               'cancel',
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineMedium
+
+                              style: FlutterFlowTheme.of(context).headlineMedium
                                   .override(
                                     font: GoogleFonts.interTight(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontStyle,
+                                      fontWeight: FlutterFlowTheme.of(
+                                        context,
+                                      ).headlineMedium.fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).headlineMedium.fontStyle,
                                     ),
+
                                     fontSize: 28.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).headlineMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).headlineMedium.fontStyle,
                                   ),
                             ),
                           ),
@@ -124,27 +135,32 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 8.0, 16.0, 0.0),
+                            0.0,
+                            8.0,
+                            16.0,
+                            0.0,
+                          ),
                           child: Text(
                             'Post product',
-                            style: FlutterFlowTheme.of(context)
-                                .titleMedium
+
+                            style: FlutterFlowTheme.of(context).titleMedium
                                 .override(
                                   font: GoogleFonts.interTight(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .titleMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).titleMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).titleMedium.fontStyle,
                                   ),
+
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .titleMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleMedium
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).titleMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).titleMedium.fontStyle,
                                 ),
                           ),
                         ),
@@ -154,48 +170,106 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                       alignment: AlignmentDirectional(1.0, -1.0),
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 0.0, 16.0, 0.0),
+                          16.0,
+                          0.0,
+                          16.0,
+                          0.0,
+                        ),
                         child: InkWell(
                           splashColor: Colors.transparent,
                           focusColor: Colors.transparent,
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            await ProductsRecord.collection
-                                .doc()
-                                .set(createProductsRecordData(
-                                  title: _model
-                                      .tittlePostProductTextController.text,
-                                  description: _model
-                                      .descriptionPostProductTextController
-                                      .text,
-                                  price: double.tryParse(
-                                      _model.pricePTextController.text),
-                                  stock: int.tryParse(
-                                      _model.stockPTextController.text),
-                                  condition: _model.pricePTextController.text,
-                                ));
+                            {
+                              safeSetState(
+                                () =>
+                                    _model.isDataUploading_uploadDataX30 = true,
+                              );
+                              var selectedUploadedFiles = <FFUploadedFile>[];
+                              var selectedMedia = <SelectedFile>[];
+                              var downloadUrls = <String>[];
+                              try {
+                                selectedUploadedFiles =
+                                    _model
+                                        .uploadedLocalFile_uploadDataHqn
+                                        .bytes!
+                                        .isNotEmpty
+                                    ? [_model.uploadedLocalFile_uploadDataHqn]
+                                    : <FFUploadedFile>[];
+                                selectedMedia = selectedFilesFromUploadedFiles(
+                                  selectedUploadedFiles,
+                                );
+                                downloadUrls =
+                                    (await Future.wait(
+                                          selectedMedia.map(
+                                            (m) async => await uploadData(
+                                              m.storagePath,
+                                              m.bytes,
+                                            ),
+                                          ),
+                                        ))
+                                        .where((u) => u != null)
+                                        .map((u) => u!)
+                                        .toList();
+                              } finally {
+                                _model.isDataUploading_uploadDataX30 = false;
+                              }
+                              if (selectedUploadedFiles.length ==
+                                      selectedMedia.length &&
+                                  downloadUrls.length == selectedMedia.length) {
+                                safeSetState(() {
+                                  _model.uploadedLocalFile_uploadDataX30 =
+                                      selectedUploadedFiles.first;
+                                  _model.uploadedFileUrl_uploadDataX30 =
+                                      downloadUrls.first;
+                                });
+                              } else {
+                                safeSetState(() {});
+                                return;
+                              }
+                            }
+
+                            await ProductsRecord.collection.doc().set(
+                              createProductsRecordData(
+                                title:
+                                    _model.tittlePostProductTextController.text,
+                                description: _model
+                                    .descriptionPostProductTextController
+                                    .text,
+                                price: double.tryParse(
+                                  _model.pricePTextController.text,
+                                ),
+                                stock: int.tryParse(
+                                  _model.stockPTextController.text,
+                                ),
+                                condition: _model.pricePTextController.text,
+                                images: _model.uploadedFileUrl_uploadDataX30,
+                              ),
+                            );
                           },
+
                           child: Text(
                             'confirm',
-                            style: FlutterFlowTheme.of(context)
-                                .headlineMedium
+
+                            style: FlutterFlowTheme.of(context).headlineMedium
                                 .override(
                                   font: GoogleFonts.interTight(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).headlineMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).headlineMedium.fontStyle,
                                   ),
+
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).headlineMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).headlineMedium.fontStyle,
                                 ),
                           ),
                         ),
@@ -205,38 +279,46 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                 ),
                 Divider(
                   thickness: 2.0,
+
                   color: FlutterFlowTheme.of(context).alternate,
                 ),
                 Align(
                   alignment: AlignmentDirectional(-1.0, -1.0),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      20.0,
+                      0.0,
+                      0.0,
+                      0.0,
+                    ),
                     child: Text(
                       'main information ',
+
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.inter(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
+                        font: GoogleFonts.inter(
+                          fontWeight: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontWeight,
+                          fontStyle: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontStyle,
+                        ),
+
+                        letterSpacing: 0.0,
+                        fontWeight: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontWeight,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontStyle,
+                      ),
                     ),
                   ),
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
+
                   children: [
                     Wrap(
                       spacing: 0.0,
@@ -248,52 +330,114 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                       verticalDirection: VerticalDirection.down,
                       clipBehavior: Clip.none,
                       children: [
-                        Container(
-                          width: 100.0,
-                          height: 100.0,
-                          decoration: BoxDecoration(
-                            color: Color(0x7DB8B7B7),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(8.0),
-                              bottomRight: Radius.circular(8.0),
-                              topLeft: Radius.circular(8.0),
-                              topRight: Radius.circular(8.0),
-                            ),
-                            shape: BoxShape.rectangle,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(12.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(
-                                  Icons.add,
-                                  color: Color(0xDD1000E4),
-                                  size: 30.0,
-                                ),
-                                Text(
-                                  'Add image',
-                                  textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyLarge
-                                                  .fontStyle,
-                                        ),
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w500,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .fontStyle,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            final selectedMedia =
+                                await selectMediaWithSourceBottomSheet(
+                                  context: context,
+
+                                  imageQuality: 100,
+                                  allowPhoto: true,
+                                );
+                            if (selectedMedia != null &&
+                                selectedMedia.every(
+                                  (m) => validateFileFormat(
+                                    m.storagePath,
+                                    context,
+                                  ),
+                                )) {
+                              safeSetState(
+                                () =>
+                                    _model.isDataUploading_uploadDataHqn = true,
+                              );
+                              var selectedUploadedFiles = <FFUploadedFile>[];
+
+                              try {
+                                selectedUploadedFiles = selectedMedia
+                                    .map(
+                                      (m) => FFUploadedFile(
+                                        name: m.storagePath.split('/').last,
+                                        bytes: m.bytes,
+                                        height: m.dimensions?.height,
+                                        width: m.dimensions?.width,
+                                        blurHash: m.blurHash,
+                                        originalFilename: m.originalFilename,
                                       ),
-                                ),
-                              ],
+                                    )
+                                    .toList();
+                              } finally {
+                                _model.isDataUploading_uploadDataHqn = false;
+                              }
+                              if (selectedUploadedFiles.length ==
+                                  selectedMedia.length) {
+                                safeSetState(() {
+                                  _model.uploadedLocalFile_uploadDataHqn =
+                                      selectedUploadedFiles.first;
+                                });
+                              } else {
+                                safeSetState(() {});
+                                return;
+                              }
+                            }
+                          },
+
+                          child: Container(
+                            width: 100.0,
+                            height: 100.0,
+
+                            decoration: BoxDecoration(
+                              color: Color(0x7DB8B7B7),
+
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8.0),
+                                bottomRight: Radius.circular(8.0),
+                                topLeft: Radius.circular(8.0),
+                                topRight: Radius.circular(8.0),
+                              ),
+                              shape: BoxShape.rectangle,
+                            ),
+
+                            child: Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    color: Color(0xDD1000E4),
+                                    size: 30.0,
+                                  ),
+                                  Text(
+                                    'Add image',
+                                    textAlign: TextAlign.center,
+
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight: FontWeight.w500,
+                                            fontStyle: FlutterFlowTheme.of(
+                                              context,
+                                            ).bodyLarge.fontStyle,
+                                          ),
+
+                                          fontSize: 14.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
+                                          fontStyle: FlutterFlowTheme.of(
+                                            context,
+                                          ).bodyLarge.fontStyle,
+                                        ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -304,82 +448,99 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                 Align(
                   alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(14.0, 0.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      14.0,
+                      0.0,
+                      0.0,
+                      0.0,
+                    ),
                     child: Text(
                       'tittle',
+
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.inter(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
+                        font: GoogleFonts.inter(
+                          fontWeight: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontWeight,
+                          fontStyle: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontStyle,
+                        ),
+
+                        letterSpacing: 0.0,
+                        fontWeight: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontWeight,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontStyle,
+                      ),
                     ),
                   ),
                 ),
                 Align(
                   alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(30.0, 8.0, 0.0, 8.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      30.0,
+                      8.0,
+                      0.0,
+                      8.0,
+                    ),
                     child: Container(
                       width: 200.0,
                       child: TextFormField(
                         controller: _model.tittlePostProductTextController,
                         focusNode: _model.tittlePostProductFocusNode,
+
                         autofocus: false,
                         enabled: true,
+
                         obscureText: false,
                         decoration: InputDecoration(
                           isDense: true,
-                          labelStyle:
-                              FlutterFlowTheme.of(context).labelMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
-                                  ),
+
+                          labelStyle: FlutterFlowTheme.of(context).labelMedium
+                              .override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontStyle,
+                                ),
+
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.fontWeight,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.fontStyle,
+                              ),
+
                           hintText: 'TextField',
-                          hintStyle:
-                              FlutterFlowTheme.of(context).labelMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
-                                  ),
+                          hintStyle: FlutterFlowTheme.of(context).labelMedium
+                              .override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontStyle,
+                                ),
+
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.fontWeight,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.fontStyle,
+                              ),
+
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0xFF82939D),
@@ -410,27 +571,28 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                           ),
                           filled: true,
                           fillColor: Color(0x5EA6ADAF),
-                          prefixIcon: Icon(
-                            Icons.announcement_outlined,
-                          ),
+
+                          prefixIcon: Icon(Icons.announcement_outlined),
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
-                              ),
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
+                          font: GoogleFonts.inter(
+                            fontWeight: FlutterFlowTheme.of(
+                              context,
+                            ).bodyMedium.fontWeight,
+                            fontStyle: FlutterFlowTheme.of(
+                              context,
+                            ).bodyMedium.fontStyle,
+                          ),
+
+                          letterSpacing: 0.0,
+                          fontWeight: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontWeight,
+                          fontStyle: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontStyle,
+                        ),
+
                         cursorColor: FlutterFlowTheme.of(context).primaryText,
                         enableInteractiveSelection: true,
                         validator: _model
@@ -443,82 +605,99 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                 Align(
                   alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(14.0, 0.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      14.0,
+                      0.0,
+                      0.0,
+                      0.0,
+                    ),
                     child: Text(
                       'Description',
+
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.inter(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
+                        font: GoogleFonts.inter(
+                          fontWeight: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontWeight,
+                          fontStyle: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontStyle,
+                        ),
+
+                        letterSpacing: 0.0,
+                        fontWeight: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontWeight,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontStyle,
+                      ),
                     ),
                   ),
                 ),
                 Align(
                   alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(30.0, 8.0, 0.0, 8.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      30.0,
+                      8.0,
+                      0.0,
+                      8.0,
+                    ),
                     child: Container(
                       width: 200.0,
                       child: TextFormField(
                         controller: _model.descriptionPostProductTextController,
                         focusNode: _model.descriptionPostProductFocusNode,
+
                         autofocus: false,
                         enabled: true,
+
                         obscureText: false,
                         decoration: InputDecoration(
                           isDense: true,
-                          labelStyle:
-                              FlutterFlowTheme.of(context).labelMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
-                                  ),
+
+                          labelStyle: FlutterFlowTheme.of(context).labelMedium
+                              .override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontStyle,
+                                ),
+
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.fontWeight,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.fontStyle,
+                              ),
+
                           hintText: 'TextField',
-                          hintStyle:
-                              FlutterFlowTheme.of(context).labelMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
-                                  ),
+                          hintStyle: FlutterFlowTheme.of(context).labelMedium
+                              .override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontStyle,
+                                ),
+
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.fontWeight,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).labelMedium.fontStyle,
+                              ),
+
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0xFF82939D),
@@ -549,27 +728,28 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                           ),
                           filled: true,
                           fillColor: Color(0x5EA6ADAF),
-                          prefixIcon: Icon(
-                            Icons.announcement_outlined,
-                          ),
+
+                          prefixIcon: Icon(Icons.announcement_outlined),
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
-                              ),
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
+                          font: GoogleFonts.inter(
+                            fontWeight: FlutterFlowTheme.of(
+                              context,
+                            ).bodyMedium.fontWeight,
+                            fontStyle: FlutterFlowTheme.of(
+                              context,
+                            ).bodyMedium.fontStyle,
+                          ),
+
+                          letterSpacing: 0.0,
+                          fontWeight: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontWeight,
+                          fontStyle: FlutterFlowTheme.of(
+                            context,
+                          ).bodyMedium.fontStyle,
+                        ),
+
                         cursorColor: FlutterFlowTheme.of(context).primaryText,
                         enableInteractiveSelection: true,
                         validator: _model
@@ -581,38 +761,46 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                 ),
                 Divider(
                   thickness: 2.0,
+
                   color: FlutterFlowTheme.of(context).alternate,
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.max,
+
                   children: [
                     Row(
                       mainAxisSize: MainAxisSize.max,
+
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 0.0, 0.0),
+                            10.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                          ),
                           child: Text(
                             'Product details ',
-                            style: FlutterFlowTheme.of(context)
-                                .headlineLarge
+
+                            style: FlutterFlowTheme.of(context).headlineLarge
                                 .override(
                                   font: GoogleFonts.interTight(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .headlineLarge
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineLarge
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).headlineLarge.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).headlineLarge.fontStyle,
                                   ),
+
                                   fontSize: 28.0,
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineLarge
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineLarge
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).headlineLarge.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).headlineLarge.fontStyle,
                                 ),
                           ),
                         ),
@@ -620,90 +808,108 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                     ),
                     Divider(
                       thickness: 2.0,
+
                       color: FlutterFlowTheme.of(context).alternate,
                     ),
                     Align(
                       alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(14.0, 0.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          14.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Text(
                           'stock',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
+
+                          style: FlutterFlowTheme.of(context).bodyMedium
+                              .override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
+                                ),
+
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(
+                                  context,
+                                ).bodyMedium.fontWeight,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).bodyMedium.fontStyle,
+                              ),
                         ),
                       ),
                     ),
                     Align(
                       alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          8.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Container(
                           width: 200.0,
                           child: TextFormField(
                             controller: _model.stockPTextController,
                             focusNode: _model.stockPFocusNode,
+
                             autofocus: false,
                             enabled: true,
+
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
+
                               labelStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
                                     font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
+                                      fontWeight: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontStyle,
                                     ),
+
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontStyle,
                                   ),
+
                               hintText: 'TextField',
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
                                     font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
+                                      fontWeight: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontStyle,
                                     ),
+
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontStyle,
                                   ),
+
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Color(0x00000000),
@@ -733,30 +939,33 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               filled: true,
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
+                              fillColor: FlutterFlowTheme.of(
+                                context,
+                              ).secondaryBackground,
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            style: FlutterFlowTheme.of(context).bodyMedium
                                 .override(
                                   font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontStyle,
                                   ),
+
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
                                 ),
-                            cursorColor:
-                                FlutterFlowTheme.of(context).primaryText,
+
+                            cursorColor: FlutterFlowTheme.of(
+                              context,
+                            ).primaryText,
                             enableInteractiveSelection: true,
                             validator: _model.stockPTextControllerValidator
                                 .asValidator(context),
@@ -766,90 +975,108 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                     ),
                     Divider(
                       thickness: 2.0,
+
                       color: FlutterFlowTheme.of(context).alternate,
                     ),
                     Align(
                       alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(14.0, 0.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          14.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Text(
                           'tittle',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
+
+                          style: FlutterFlowTheme.of(context).bodyMedium
+                              .override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
+                                ),
+
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(
+                                  context,
+                                ).bodyMedium.fontWeight,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).bodyMedium.fontStyle,
+                              ),
                         ),
                       ),
                     ),
                     Align(
                       alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          8.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Container(
                           width: 200.0,
                           child: TextFormField(
                             controller: _model.productConditionPTextController,
                             focusNode: _model.productConditionPFocusNode,
+
                             autofocus: false,
                             enabled: true,
+
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
+
                               labelStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
                                     font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
+                                      fontWeight: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontStyle,
                                     ),
+
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontStyle,
                                   ),
+
                               hintText: 'TextField',
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
                                     font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
+                                      fontWeight: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontStyle,
                                     ),
+
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontStyle,
                                   ),
+
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Color(0x00000000),
@@ -879,30 +1106,33 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               filled: true,
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
+                              fillColor: FlutterFlowTheme.of(
+                                context,
+                              ).secondaryBackground,
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            style: FlutterFlowTheme.of(context).bodyMedium
                                 .override(
                                   font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontStyle,
                                   ),
+
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
                                 ),
-                            cursorColor:
-                                FlutterFlowTheme.of(context).primaryText,
+
+                            cursorColor: FlutterFlowTheme.of(
+                              context,
+                            ).primaryText,
                             enableInteractiveSelection: true,
                             validator: _model
                                 .productConditionPTextControllerValidator
@@ -913,90 +1143,108 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                     ),
                     Divider(
                       thickness: 2.0,
+
                       color: FlutterFlowTheme.of(context).alternate,
                     ),
                     Align(
                       alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(14.0, 0.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          14.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Text(
                           'price',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
+
+                          style: FlutterFlowTheme.of(context).bodyMedium
+                              .override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
+                                ),
+
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(
+                                  context,
+                                ).bodyMedium.fontWeight,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).bodyMedium.fontStyle,
+                              ),
                         ),
                       ),
                     ),
                     Align(
                       alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          8.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: Container(
                           width: 200.0,
                           child: TextFormField(
                             controller: _model.pricePTextController,
                             focusNode: _model.pricePFocusNode,
+
                             autofocus: false,
                             enabled: true,
+
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
+
                               labelStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
                                     font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
+                                      fontWeight: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontStyle,
                                     ),
+
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontStyle,
                                   ),
+
                               hintText: 'TextField',
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
                                     font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
+                                      fontWeight: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontStyle,
                                     ),
+
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontStyle,
                                   ),
+
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Color(0x00000000),
@@ -1026,30 +1274,33 @@ class _PostProductWidgetState extends State<PostProductWidget> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               filled: true,
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
+                              fillColor: FlutterFlowTheme.of(
+                                context,
+                              ).secondaryBackground,
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                            style: FlutterFlowTheme.of(context).bodyMedium
                                 .override(
                                   font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontStyle,
                                   ),
+
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
                                 ),
-                            cursorColor:
-                                FlutterFlowTheme.of(context).primaryText,
+
+                            cursorColor: FlutterFlowTheme.of(
+                              context,
+                            ).primaryText,
                             enableInteractiveSelection: true,
                             validator: _model.pricePTextControllerValidator
                                 .asValidator(context),

@@ -78,100 +78,112 @@ class AppStateNotifier extends ChangeNotifier {
 }
 
 GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
-      initialLocation: '/',
-      debugLogDiagnostics: true,
-      refreshListenable: appStateNotifier,
-      navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => appStateNotifier.loggedIn
+  initialLocation: '/',
+  debugLogDiagnostics: true,
+  refreshListenable: appStateNotifier,
+  navigatorKey: appNavigatorKey,
+  errorBuilder: (context, state) =>
+      appStateNotifier.loggedIn ? UserHomePageWidget() : AuthLoginPageWidget(),
+
+  routes: [
+    FFRoute(
+      name: '_initialize',
+      path: '/',
+      builder: (context, _) => appStateNotifier.loggedIn
           ? UserHomePageWidget()
           : AuthLoginPageWidget(),
-      routes: [
-        FFRoute(
-          name: '_initialize',
-          path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? UserHomePageWidget()
-              : AuthLoginPageWidget(),
-        ),
-        FFRoute(
-          name: UserHomePageWidget.routeName,
-          path: UserHomePageWidget.routePath,
-          builder: (context, params) => UserHomePageWidget(),
-        ),
-        FFRoute(
-          name: AuthInicialPageWidget.routeName,
-          path: AuthInicialPageWidget.routePath,
-          builder: (context, params) => AuthInicialPageWidget(),
-        ),
-        FFRoute(
-          name: AuthRegisterPageWidget.routeName,
-          path: AuthRegisterPageWidget.routePath,
-          builder: (context, params) => AuthRegisterPageWidget(),
-        ),
-        FFRoute(
-          name: AuthLoginPageWidget.routeName,
-          path: AuthLoginPageWidget.routePath,
-          builder: (context, params) => AuthLoginPageWidget(),
-        ),
-        FFRoute(
-          name: OrderUserPageWidget.routeName,
-          path: OrderUserPageWidget.routePath,
-          builder: (context, params) => OrderUserPageWidget(),
-        ),
-        FFRoute(
-          name: CartUserPageWidget.routeName,
-          path: CartUserPageWidget.routePath,
-          builder: (context, params) => CartUserPageWidget(),
-        ),
-        FFRoute(
-          name: AdminDashboardPageWidget.routeName,
-          path: AdminDashboardPageWidget.routePath,
-          builder: (context, params) => AdminDashboardPageWidget(),
-        ),
-        FFRoute(
-          name: AdminPurchasingmanagementPageWidget.routeName,
-          path: AdminPurchasingmanagementPageWidget.routePath,
-          builder: (context, params) => AdminPurchasingmanagementPageWidget(),
-        ),
-        FFRoute(
-          name: AdminCategoriesPageWidget.routeName,
-          path: AdminCategoriesPageWidget.routePath,
-          builder: (context, params) => AdminCategoriesPageWidget(),
-        ),
-        FFRoute(
-          name: AdminOrdersPageWidget.routeName,
-          path: AdminOrdersPageWidget.routePath,
-          builder: (context, params) => AdminOrdersPageWidget(),
-        ),
-        FFRoute(
-          name: AdminCustomersPageWidget.routeName,
-          path: AdminCustomersPageWidget.routePath,
-          builder: (context, params) => AdminCustomersPageWidget(),
-        ),
-        FFRoute(
-          name: AdminPaymentsPageWidget.routeName,
-          path: AdminPaymentsPageWidget.routePath,
-          builder: (context, params) => AdminPaymentsPageWidget(),
-        ),
-        FFRoute(
-          name: AdminShipmentsPageWidget.routeName,
-          path: AdminShipmentsPageWidget.routePath,
-          builder: (context, params) => AdminShipmentsPageWidget(),
-        ),
-        FFRoute(
-          name: UserCheckoutPageWidget.routeName,
-          path: UserCheckoutPageWidget.routePath,
-          builder: (context, params) => UserCheckoutPageWidget(),
-        )
-      ].map((r) => r.toRoute(appStateNotifier)).toList(),
-    );
+    ),
+    FFRoute(
+      name: UserHomePageWidget.routeName,
+      path: UserHomePageWidget.routePath,
+
+      builder: (context, params) => UserHomePageWidget(),
+    ),
+    FFRoute(
+      name: AuthInicialPageWidget.routeName,
+      path: AuthInicialPageWidget.routePath,
+
+      builder: (context, params) => AuthInicialPageWidget(),
+    ),
+    FFRoute(
+      name: AuthRegisterPageWidget.routeName,
+      path: AuthRegisterPageWidget.routePath,
+
+      builder: (context, params) => AuthRegisterPageWidget(),
+    ),
+    FFRoute(
+      name: AuthLoginPageWidget.routeName,
+      path: AuthLoginPageWidget.routePath,
+
+      builder: (context, params) => AuthLoginPageWidget(),
+    ),
+    FFRoute(
+      name: OrderUserPageWidget.routeName,
+      path: OrderUserPageWidget.routePath,
+
+      builder: (context, params) => OrderUserPageWidget(),
+    ),
+    FFRoute(
+      name: CartUserPageWidget.routeName,
+      path: CartUserPageWidget.routePath,
+
+      builder: (context, params) => CartUserPageWidget(),
+    ),
+    FFRoute(
+      name: AdminDashboardPageWidget.routeName,
+      path: AdminDashboardPageWidget.routePath,
+
+      builder: (context, params) => AdminDashboardPageWidget(),
+    ),
+    FFRoute(
+      name: AdminPurchasingmanagementPageWidget.routeName,
+      path: AdminPurchasingmanagementPageWidget.routePath,
+
+      builder: (context, params) => AdminPurchasingmanagementPageWidget(),
+    ),
+    FFRoute(
+      name: AdminCategoriesPageWidget.routeName,
+      path: AdminCategoriesPageWidget.routePath,
+
+      builder: (context, params) => AdminCategoriesPageWidget(),
+    ),
+    FFRoute(
+      name: AdminOrdersPageWidget.routeName,
+      path: AdminOrdersPageWidget.routePath,
+
+      builder: (context, params) => AdminOrdersPageWidget(),
+    ),
+    FFRoute(
+      name: AdminCustomersPageWidget.routeName,
+      path: AdminCustomersPageWidget.routePath,
+
+      builder: (context, params) => AdminCustomersPageWidget(),
+    ),
+    FFRoute(
+      name: AdminPaymentsPageWidget.routeName,
+      path: AdminPaymentsPageWidget.routePath,
+
+      builder: (context, params) => AdminPaymentsPageWidget(),
+    ),
+    FFRoute(
+      name: AdminShipmentsPageWidget.routeName,
+      path: AdminShipmentsPageWidget.routePath,
+
+      builder: (context, params) => AdminShipmentsPageWidget(),
+    ),
+    FFRoute(
+      name: UserCheckoutPageWidget.routeName,
+      path: UserCheckoutPageWidget.routePath,
+
+      builder: (context, params) => UserCheckoutPageWidget(),
+    ),
+  ].map((r) => r.toRoute(appStateNotifier)).toList(),
+);
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(
-        entries
-            .where((e) => e.value != null)
-            .map((e) => MapEntry(e.key, e.value!)),
-      );
+    entries.where((e) => e.value != null).map((e) => MapEntry(e.key, e.value!)),
+  );
 }
 
 extension NavigationExtensions on BuildContext {
@@ -182,15 +194,14 @@ extension NavigationExtensions on BuildContext {
     Map<String, String> queryParameters = const <String, String>{},
     Object? extra,
     bool ignoreRedirect = false,
-  }) =>
-      !mounted || GoRouter.of(this).shouldRedirect(ignoreRedirect)
-          ? null
-          : goNamed(
-              name,
-              pathParameters: pathParameters,
-              queryParameters: queryParameters,
-              extra: extra,
-            );
+  }) => !mounted || GoRouter.of(this).shouldRedirect(ignoreRedirect)
+      ? null
+      : goNamed(
+          name,
+          pathParameters: pathParameters,
+          queryParameters: queryParameters,
+          extra: extra,
+        );
 
   void pushNamedAuth(
     String name,
@@ -199,15 +210,14 @@ extension NavigationExtensions on BuildContext {
     Map<String, String> queryParameters = const <String, String>{},
     Object? extra,
     bool ignoreRedirect = false,
-  }) =>
-      !mounted || GoRouter.of(this).shouldRedirect(ignoreRedirect)
-          ? null
-          : pushNamed(
-              name,
-              pathParameters: pathParameters,
-              queryParameters: queryParameters,
-              extra: extra,
-            );
+  }) => !mounted || GoRouter.of(this).shouldRedirect(ignoreRedirect)
+      ? null
+      : pushNamed(
+          name,
+          pathParameters: pathParameters,
+          queryParameters: queryParameters,
+          extra: extra,
+        );
 
   void safePop() {
     // If there is only one route on the stack, navigate to the initial
@@ -224,8 +234,8 @@ extension GoRouterExtensions on GoRouter {
   AppStateNotifier get appState => AppStateNotifier.instance;
   void prepareAuthEvent([bool ignoreRedirect = false]) =>
       appState.hasRedirect() && !ignoreRedirect
-          ? null
-          : appState.updateNotifyOnAuthChange(false);
+      ? null
+      : appState.updateNotifyOnAuthChange(false);
   bool shouldRedirect(bool ignoreRedirect) =>
       !ignoreRedirect && appState.hasRedirect();
   void clearRedirectLocation() => appState.clearRedirectLocation();
@@ -263,18 +273,17 @@ class FFParameters {
       asyncParams.containsKey(param.key) && param.value is String;
   bool get hasFutures => state.allParams.entries.any(isAsyncParam);
   Future<bool> completeFutures() => Future.wait(
-        state.allParams.entries.where(isAsyncParam).map(
-          (param) async {
-            final doc = await asyncParams[param.key]!(param.value)
-                .onError((_, __) => null);
-            if (doc != null) {
-              futureParamValues[param.key] = doc;
-              return true;
-            }
-            return false;
-          },
-        ),
-      ).onError((_, __) => [false]).then((v) => v.every((e) => e));
+    state.allParams.entries.where(isAsyncParam).map((param) async {
+      final doc = await asyncParams[param.key]!(
+        param.value,
+      ).onError((_, __) => null);
+      if (doc != null) {
+        futureParamValues[param.key] = doc;
+        return true;
+      }
+      return false;
+    }),
+  ).onError((_, __) => [false]).then((v) => v.every((e) => e));
 
   dynamic getParam<T>(
     String paramName,
@@ -321,69 +330,70 @@ class FFRoute {
   final List<GoRoute> routes;
 
   GoRoute toRoute(AppStateNotifier appStateNotifier) => GoRoute(
-        name: name,
-        path: path,
-        redirect: (context, state) {
-          if (appStateNotifier.shouldRedirect) {
-            final redirectLocation = appStateNotifier.getRedirectLocation();
-            appStateNotifier.clearRedirectLocation();
-            return redirectLocation;
-          }
+    name: name,
+    path: path,
+    redirect: (context, state) {
+      if (appStateNotifier.shouldRedirect) {
+        final redirectLocation = appStateNotifier.getRedirectLocation();
+        appStateNotifier.clearRedirectLocation();
+        return redirectLocation;
+      }
 
-          if (requireAuth && !appStateNotifier.loggedIn) {
-            appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/authLoginPage';
-          }
-          return null;
-        },
-        pageBuilder: (context, state) {
-          fixStatusBarOniOS16AndBelow(context);
-          final ffParams = FFParameters(state, asyncParams);
-          final page = ffParams.hasFutures
-              ? FutureBuilder(
-                  future: ffParams.completeFutures(),
-                  builder: (context, _) => builder(context, ffParams),
-                )
-              : builder(context, ffParams);
-          final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
+      if (requireAuth && !appStateNotifier.loggedIn) {
+        appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
+        return '/authLoginPage';
+      }
+      return null;
+    },
+
+    pageBuilder: (context, state) {
+      fixStatusBarOniOS16AndBelow(context);
+      final ffParams = FFParameters(state, asyncParams);
+      final page = ffParams.hasFutures
+          ? FutureBuilder(
+              future: ffParams.completeFutures(),
+              builder: (context, _) => builder(context, ffParams),
+            )
+          : builder(context, ffParams);
+      final child = appStateNotifier.loading
+          ? Center(
+              child: SizedBox(
+                width: 50.0,
+                height: 50.0,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    FlutterFlowTheme.of(context).primary,
+                  ),
+                ),
+              ),
+            )
+          : page;
+
+      final transitionInfo = state.transitionInfo;
+      return transitionInfo.hasTransition
+          ? CustomTransitionPage(
+              key: state.pageKey,
+              child: child,
+              transitionDuration: transitionInfo.duration,
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                      PageTransition(
+                        type: transitionInfo.transitionType,
+                        duration: transitionInfo.duration,
+                        reverseDuration: transitionInfo.duration,
+                        alignment: transitionInfo.alignment,
+                        child: child,
+                      ).buildTransitions(
+                        context,
+                        animation,
+                        secondaryAnimation,
+                        child,
                       ),
-                    ),
-                  ),
-                )
-              : page;
-
-          final transitionInfo = state.transitionInfo;
-          return transitionInfo.hasTransition
-              ? CustomTransitionPage(
-                  key: state.pageKey,
-                  child: child,
-                  transitionDuration: transitionInfo.duration,
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          PageTransition(
-                    type: transitionInfo.transitionType,
-                    duration: transitionInfo.duration,
-                    reverseDuration: transitionInfo.duration,
-                    alignment: transitionInfo.alignment,
-                    child: child,
-                  ).buildTransitions(
-                    context,
-                    animation,
-                    secondaryAnimation,
-                    child,
-                  ),
-                )
-              : MaterialPage(key: state.pageKey, child: child);
-        },
-        routes: routes,
-      );
+            )
+          : MaterialPage(key: state.pageKey, child: child);
+    },
+    routes: routes,
+  );
 }
 
 class TransitionInfo {
@@ -416,10 +426,8 @@ class RootPageContext {
         location != rootPageContext?.errorRoute;
   }
 
-  static Widget wrap(Widget child, {String? errorRoute}) => Provider.value(
-        value: RootPageContext(true, errorRoute),
-        child: child,
-      );
+  static Widget wrap(Widget child, {String? errorRoute}) =>
+      Provider.value(value: RootPageContext(true, errorRoute), child: child);
 }
 
 extension GoRouterLocationExtension on GoRouter {

@@ -35,9 +35,10 @@ class FirestoreUtilData {
 }
 
 Map<String, dynamic> mapFromFirestore(Map<String, dynamic> data) =>
-    mergeNestedFields(data)
-        .where((k, _) => k != FirestoreUtilData.name)
-        .map((key, value) {
+    mergeNestedFields(data).where((k, _) => k != FirestoreUtilData.name).map((
+      key,
+      value,
+    ) {
       // Handle Timestamp
       if (value is Timestamp) {
         value = value.toDate();

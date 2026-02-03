@@ -43,6 +43,7 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
+
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Align(
@@ -54,18 +55,19 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
               focusColor: Colors.transparent,
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
+
               onDoubleTap: () async {
                 Navigator.pop(context);
               },
+
               child: FlutterFlowIconButton(
                 borderRadius: 8.0,
+
                 buttonSize: 40.0,
                 fillColor: Color(0x00FFFFFF),
-                icon: Icon(
-                  Icons.close,
-                  color: Color(0xFF57636C),
-                  size: 24.0,
-                ),
+
+                icon: Icon(Icons.close, color: Color(0xFF57636C), size: 24.0),
+
                 onPressed: () {
                   print('IconButton pressed ...');
                 },
@@ -78,6 +80,7 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
+
             children: [
               Align(
                 alignment: AlignmentDirectional(-1.0, 0.0),
@@ -86,8 +89,10 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
                   child: Container(
                     width: 120.0,
                     height: 120.0,
+
                     decoration: BoxDecoration(
                       color: Color(0xFF0A0A0A),
+
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -98,22 +103,23 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
         ),
         Column(
           mainAxisSize: MainAxisSize.max,
+
           children: [
             Text(
               'user name',
+
               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    font: GoogleFonts.inter(
-                      fontWeight:
-                          FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                    ),
-                    letterSpacing: 0.0,
-                    fontWeight:
-                        FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                    fontStyle:
-                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                  ),
+                font: GoogleFonts.inter(
+                  fontWeight: FlutterFlowTheme.of(
+                    context,
+                  ).bodyMedium.fontWeight,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
+
+                letterSpacing: 0.0,
+                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+              ),
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 12.0),
@@ -122,23 +128,27 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
                 child: ListTile(
                   title: Text(
                     'Home',
+
                     style: FlutterFlowTheme.of(context).titleLarge.override(
-                          font: GoogleFonts.interTight(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontStyle,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .titleLarge
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).titleLarge.fontStyle,
-                        ),
+                      font: GoogleFonts.interTight(
+                        fontWeight: FlutterFlowTheme.of(
+                          context,
+                        ).titleLarge.fontWeight,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).titleLarge.fontStyle,
+                      ),
+
+                      letterSpacing: 0.0,
+                      fontWeight: FlutterFlowTheme.of(
+                        context,
+                      ).titleLarge.fontWeight,
+                      fontStyle: FlutterFlowTheme.of(
+                        context,
+                      ).titleLarge.fontStyle,
+                    ),
                   ),
+
                   trailing: Icon(
                     Icons.home,
                     color: FlutterFlowTheme.of(context).secondaryText,
@@ -146,8 +156,12 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
                   ),
                   tileColor: FlutterFlowTheme.of(context).secondaryBackground,
                   dense: false,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                  contentPadding: EdgeInsetsDirectional.fromSTEB(
+                    12.0,
+                    0.0,
+                    12.0,
+                    0.0,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -161,23 +175,27 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
                 child: ListTile(
                   title: Text(
                     'Search',
+
                     style: FlutterFlowTheme.of(context).titleLarge.override(
-                          font: GoogleFonts.interTight(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontStyle,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .titleLarge
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).titleLarge.fontStyle,
-                        ),
+                      font: GoogleFonts.interTight(
+                        fontWeight: FlutterFlowTheme.of(
+                          context,
+                        ).titleLarge.fontWeight,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).titleLarge.fontStyle,
+                      ),
+
+                      letterSpacing: 0.0,
+                      fontWeight: FlutterFlowTheme.of(
+                        context,
+                      ).titleLarge.fontWeight,
+                      fontStyle: FlutterFlowTheme.of(
+                        context,
+                      ).titleLarge.fontStyle,
+                    ),
                   ),
+
                   trailing: Icon(
                     Icons.search_sharp,
                     color: FlutterFlowTheme.of(context).secondaryText,
@@ -185,8 +203,12 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
                   ),
                   tileColor: FlutterFlowTheme.of(context).secondaryBackground,
                   dense: false,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                  contentPadding: EdgeInsetsDirectional.fromSTEB(
+                    12.0,
+                    0.0,
+                    12.0,
+                    0.0,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -200,23 +222,27 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
                 child: ListTile(
                   title: Text(
                     'My orders ',
+
                     style: FlutterFlowTheme.of(context).titleLarge.override(
-                          font: GoogleFonts.interTight(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontStyle,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .titleLarge
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).titleLarge.fontStyle,
-                        ),
+                      font: GoogleFonts.interTight(
+                        fontWeight: FlutterFlowTheme.of(
+                          context,
+                        ).titleLarge.fontWeight,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).titleLarge.fontStyle,
+                      ),
+
+                      letterSpacing: 0.0,
+                      fontWeight: FlutterFlowTheme.of(
+                        context,
+                      ).titleLarge.fontWeight,
+                      fontStyle: FlutterFlowTheme.of(
+                        context,
+                      ).titleLarge.fontStyle,
+                    ),
                   ),
+
                   trailing: Icon(
                     Icons.shopping_bag,
                     color: FlutterFlowTheme.of(context).secondaryText,
@@ -224,8 +250,12 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
                   ),
                   tileColor: FlutterFlowTheme.of(context).secondaryBackground,
                   dense: false,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                  contentPadding: EdgeInsetsDirectional.fromSTEB(
+                    12.0,
+                    0.0,
+                    12.0,
+                    0.0,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -239,23 +269,27 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
                 child: ListTile(
                   title: Text(
                     'Cart',
+
                     style: FlutterFlowTheme.of(context).titleLarge.override(
-                          font: GoogleFonts.interTight(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontStyle,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .titleLarge
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).titleLarge.fontStyle,
-                        ),
+                      font: GoogleFonts.interTight(
+                        fontWeight: FlutterFlowTheme.of(
+                          context,
+                        ).titleLarge.fontWeight,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).titleLarge.fontStyle,
+                      ),
+
+                      letterSpacing: 0.0,
+                      fontWeight: FlutterFlowTheme.of(
+                        context,
+                      ).titleLarge.fontWeight,
+                      fontStyle: FlutterFlowTheme.of(
+                        context,
+                      ).titleLarge.fontStyle,
+                    ),
                   ),
+
                   trailing: Icon(
                     Icons.shopping_cart,
                     color: FlutterFlowTheme.of(context).secondaryText,
@@ -263,8 +297,12 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
                   ),
                   tileColor: FlutterFlowTheme.of(context).secondaryBackground,
                   dense: false,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                  contentPadding: EdgeInsetsDirectional.fromSTEB(
+                    12.0,
+                    0.0,
+                    12.0,
+                    0.0,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),

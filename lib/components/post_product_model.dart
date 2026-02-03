@@ -1,8 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import 'dart:ui';
 import 'post_product_widget.dart' show PostProductWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,16 +16,29 @@ import 'package:provider/provider.dart';
 class PostProductModel extends FlutterFlowModel<PostProductWidget> {
   ///  State fields for stateful widgets in this component.
 
+  bool isDataUploading_uploadDataX30 = false;
+  FFUploadedFile uploadedLocalFile_uploadDataX30 = FFUploadedFile(
+    bytes: Uint8List.fromList([]),
+    originalFilename: '',
+  );
+  String uploadedFileUrl_uploadDataX30 = '';
+
+  bool isDataUploading_uploadDataHqn = false;
+  FFUploadedFile uploadedLocalFile_uploadDataHqn = FFUploadedFile(
+    bytes: Uint8List.fromList([]),
+    originalFilename: '',
+  );
+
   // State field(s) for tittle_post_product widget.
   FocusNode? tittlePostProductFocusNode;
   TextEditingController? tittlePostProductTextController;
   String? Function(BuildContext, String?)?
-      tittlePostProductTextControllerValidator;
+  tittlePostProductTextControllerValidator;
   // State field(s) for description_post_product widget.
   FocusNode? descriptionPostProductFocusNode;
   TextEditingController? descriptionPostProductTextController;
   String? Function(BuildContext, String?)?
-      descriptionPostProductTextControllerValidator;
+  descriptionPostProductTextControllerValidator;
   // State field(s) for stock_p widget.
   FocusNode? stockPFocusNode;
   TextEditingController? stockPTextController;
@@ -32,7 +47,7 @@ class PostProductModel extends FlutterFlowModel<PostProductWidget> {
   FocusNode? productConditionPFocusNode;
   TextEditingController? productConditionPTextController;
   String? Function(BuildContext, String?)?
-      productConditionPTextControllerValidator;
+  productConditionPTextControllerValidator;
   // State field(s) for price_p widget.
   FocusNode? pricePFocusNode;
   TextEditingController? pricePTextController;

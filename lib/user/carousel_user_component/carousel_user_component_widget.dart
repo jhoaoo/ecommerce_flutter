@@ -54,19 +54,23 @@ class _CarouselUserComponentWidgetState
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
               child: Text(
                 'Hello World',
+
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      font: GoogleFonts.inter(
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
-                      letterSpacing: 0.0,
-                      fontWeight:
-                          FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                    ),
+                  font: GoogleFonts.inter(
+                    fontWeight: FlutterFlowTheme.of(
+                      context,
+                    ).bodyMedium.fontWeight,
+                    fontStyle: FlutterFlowTheme.of(
+                      context,
+                    ).bodyMedium.fontStyle,
+                  ),
+
+                  letterSpacing: 0.0,
+                  fontWeight: FlutterFlowTheme.of(
+                    context,
+                  ).bodyMedium.fontWeight,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
               ),
             ),
             Container(
@@ -113,6 +117,7 @@ class _CarouselUserComponentWidgetState
                   enableInfiniteScroll: true,
                   scrollDirection: Axis.horizontal,
                   autoPlay: false,
+
                   onPageChanged: (index, _) =>
                       _model.carouselCurrentIndex1 = index,
                 ),
@@ -122,19 +127,23 @@ class _CarouselUserComponentWidgetState
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
               child: Text(
                 'Hello World',
+
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      font: GoogleFonts.inter(
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
-                      letterSpacing: 0.0,
-                      fontWeight:
-                          FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                    ),
+                  font: GoogleFonts.inter(
+                    fontWeight: FlutterFlowTheme.of(
+                      context,
+                    ).bodyMedium.fontWeight,
+                    fontStyle: FlutterFlowTheme.of(
+                      context,
+                    ).bodyMedium.fontStyle,
+                  ),
+
+                  letterSpacing: 0.0,
+                  fontWeight: FlutterFlowTheme.of(
+                    context,
+                  ).bodyMedium.fontWeight,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
               ),
             ),
             Container(
@@ -181,6 +190,7 @@ class _CarouselUserComponentWidgetState
                   enableInfiniteScroll: true,
                   scrollDirection: Axis.horizontal,
                   autoPlay: false,
+
                   onPageChanged: (index, _) =>
                       _model.carouselCurrentIndex2 = index,
                 ),
@@ -190,19 +200,23 @@ class _CarouselUserComponentWidgetState
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
               child: Text(
                 'Hello World',
+
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      font: GoogleFonts.inter(
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
-                      letterSpacing: 0.0,
-                      fontWeight:
-                          FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                    ),
+                  font: GoogleFonts.inter(
+                    fontWeight: FlutterFlowTheme.of(
+                      context,
+                    ).bodyMedium.fontWeight,
+                    fontStyle: FlutterFlowTheme.of(
+                      context,
+                    ).bodyMedium.fontStyle,
+                  ),
+
+                  letterSpacing: 0.0,
+                  fontWeight: FlutterFlowTheme.of(
+                    context,
+                  ).bodyMedium.fontWeight,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                ),
               ),
             ),
             Container(
@@ -249,6 +263,7 @@ class _CarouselUserComponentWidgetState
                   enableInfiniteScroll: true,
                   scrollDirection: Axis.horizontal,
                   autoPlay: false,
+
                   onPageChanged: (index, _) =>
                       _model.carouselCurrentIndex3 = index,
                 ),

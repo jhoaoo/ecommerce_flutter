@@ -43,90 +43,111 @@ class _SalesHistoryWidgetState extends State<SalesHistoryWidget> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
+
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ListView(
           padding: EdgeInsets.zero,
+
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
+
           children: [
             Column(
               mainAxisSize: MainAxisSize.max,
+
               children: [
                 FlutterFlowChoiceChips(
                   options: [
                     ChipData('Option 1'),
                     ChipData('Option 2'),
-                    ChipData('Option 3')
+                    ChipData('Option 3'),
                   ],
                   onChanged: (val) => safeSetState(
-                      () => _model.choiceChipsValue = val?.firstOrNull),
+                    () => _model.choiceChipsValue = val?.firstOrNull,
+                  ),
                   selectedChipStyle: ChipStyle(
                     backgroundColor: FlutterFlowTheme.of(context).primary,
                     textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
-                          color: FlutterFlowTheme.of(context).info,
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
+                      font: GoogleFonts.inter(
+                        fontWeight: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontWeight,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontStyle,
+                      ),
+
+                      color: FlutterFlowTheme.of(context).info,
+
+                      letterSpacing: 0.0,
+                      fontWeight: FlutterFlowTheme.of(
+                        context,
+                      ).bodyMedium.fontWeight,
+                      fontStyle: FlutterFlowTheme.of(
+                        context,
+                      ).bodyMedium.fontStyle,
+                    ),
                     iconColor: FlutterFlowTheme.of(context).info,
                     iconSize: 16.0,
+
                     elevation: 0.0,
+
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   unselectedChipStyle: ChipStyle(
-                    backgroundColor:
-                        FlutterFlowTheme.of(context).secondaryBackground,
+                    backgroundColor: FlutterFlowTheme.of(
+                      context,
+                    ).secondaryBackground,
                     textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
+                      font: GoogleFonts.inter(
+                        fontWeight: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontWeight,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).bodyMedium.fontStyle,
+                      ),
+
+                      color: FlutterFlowTheme.of(context).secondaryText,
+
+                      letterSpacing: 0.0,
+                      fontWeight: FlutterFlowTheme.of(
+                        context,
+                      ).bodyMedium.fontWeight,
+                      fontStyle: FlutterFlowTheme.of(
+                        context,
+                      ).bodyMedium.fontStyle,
+                    ),
                     iconColor: FlutterFlowTheme.of(context).secondaryText,
                     iconSize: 16.0,
+
                     elevation: 0.0,
+
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   chipSpacing: 8.0,
                   rowSpacing: 8.0,
                   multiselect: false,
+
                   alignment: WrapAlignment.start,
                   controller: _model.choiceChipsValueController ??=
-                      FormFieldController<List<String>>(
-                    [],
-                  ),
+                      FormFieldController<List<String>>([]),
+
                   wrapped: true,
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        20.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                      ),
                       child: Icon(
                         Icons.arrow_back,
                         color: FlutterFlowTheme.of(context).primaryText,
@@ -135,56 +156,67 @@ class _SalesHistoryWidgetState extends State<SalesHistoryWidget> {
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.max,
+
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 10.0, 20.0, 10.0),
+                            0.0,
+                            10.0,
+                            20.0,
+                            10.0,
+                          ),
                           child: Text(
                             'Hello World',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+
+                            style: FlutterFlowTheme.of(context).bodyMedium
                                 .override(
                                   font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontStyle,
                                   ),
+
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
                                 ),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 20.0, 10.0),
+                            0.0,
+                            0.0,
+                            20.0,
+                            10.0,
+                          ),
                           child: Text(
                             'Hello World',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+
+                            style: FlutterFlowTheme.of(context).bodyMedium
                                 .override(
                                   font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontStyle,
                                   ),
+
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
                                 ),
                           ),
                         ),

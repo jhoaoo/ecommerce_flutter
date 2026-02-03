@@ -24,7 +24,8 @@ class UserHomePageModel extends FlutterFlowModel<UserHomePageWidget> {
   // State field(s) for PageView widget.
   PageController? pageViewController;
 
-  int get pageViewCurrentIndex => pageViewController != null &&
+  int get pageViewCurrentIndex =>
+      pageViewController != null &&
           pageViewController!.hasClients &&
           pageViewController!.page != null
       ? pageViewController!.page!.round()
@@ -36,10 +37,14 @@ class UserHomePageModel extends FlutterFlowModel<UserHomePageWidget> {
 
   @override
   void initState(BuildContext context) {
-    carouselUserComponentModel =
-        createModel(context, () => CarouselUserComponentModel());
-    userDrawerComponentModel =
-        createModel(context, () => UserDrawerComponentModel());
+    carouselUserComponentModel = createModel(
+      context,
+      () => CarouselUserComponentModel(),
+    );
+    userDrawerComponentModel = createModel(
+      context,
+      () => UserDrawerComponentModel(),
+    );
   }
 
   @override

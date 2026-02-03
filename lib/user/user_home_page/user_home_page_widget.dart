@@ -55,38 +55,51 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
+
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+
         drawer: Drawer(
           elevation: 16.0,
           child: wrapWithModel(
             model: _model.userDrawerComponentModel,
             updateCallback: () => safeSetState(() {}),
+
             child: UserDrawerComponentWidget(),
           ),
         ),
+
         body: SafeArea(
           top: true,
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
+
               children: [
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
+
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          5.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                        ),
                         child: FlutterFlowIconButton(
                           borderRadius: 8.0,
+
                           buttonSize: 40.0,
                           fillColor: Color(0x004E3F78),
+
                           icon: Icon(
                             Icons.dehaze,
                             color: Color(0xFF57636C),
                             size: 24.0,
                           ),
+
                           onPressed: () async {
                             scaffoldKey.currentState!.openDrawer();
                           },
@@ -95,56 +108,67 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 30.0, 30.0, 30.0),
+                            10.0,
+                            30.0,
+                            30.0,
+                            30.0,
+                          ),
                           child: Container(
                             width: 200.0,
                             child: TextFormField(
                               controller: _model.textController,
                               focusNode: _model.textFieldFocusNode,
+
                               autofocus: false,
                               enabled: true,
+
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
+
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
                                       font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
+                                        fontWeight: FlutterFlowTheme.of(
+                                          context,
+                                        ).labelMedium.fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(
+                                          context,
+                                        ).labelMedium.fontStyle,
                                       ),
+
                                       letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
+                                      fontWeight: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontStyle,
                                     ),
+
                                 hintText: 'TextField',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
                                       font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
+                                        fontWeight: FlutterFlowTheme.of(
+                                          context,
+                                        ).labelMedium.fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(
+                                          context,
+                                        ).labelMedium.fontStyle,
                                       ),
+
                                       letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
+                                      fontWeight: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontStyle,
                                     ),
+
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),
@@ -174,36 +198,36 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                   borderRadius: BorderRadius.circular(24.0),
                                 ),
                                 filled: true,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                prefixIcon: Icon(
-                                  FontAwesomeIcons.search,
-                                ),
-                                suffixIcon: Icon(
-                                  Icons.close_outlined,
-                                ),
+                                fillColor: FlutterFlowTheme.of(
+                                  context,
+                                ).secondaryBackground,
+
+                                prefixIcon: Icon(FontAwesomeIcons.search),
+                                suffixIcon: Icon(Icons.close_outlined),
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                              style: FlutterFlowTheme.of(context).bodyMedium
                                   .override(
                                     font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
+                                      fontWeight: FlutterFlowTheme.of(
+                                        context,
+                                      ).bodyMedium.fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).bodyMedium.fontStyle,
                                     ),
+
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontStyle,
                                   ),
-                              cursorColor:
-                                  FlutterFlowTheme.of(context).primaryText,
+
+                              cursorColor: FlutterFlowTheme.of(
+                                context,
+                              ).primaryText,
                               enableInteractiveSelection: true,
                               validator: _model.textControllerValidator
                                   .asValidator(context),
@@ -216,6 +240,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
+
                   children: [
                     Expanded(
                       child: Container(
@@ -225,14 +250,21 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 40.0),
+                                0.0,
+                                0.0,
+                                0.0,
+                                40.0,
+                              ),
                               child: PageView(
                                 controller: _model.pageViewController ??=
                                     PageController(initialPage: 0),
+
                                 scrollDirection: Axis.horizontal,
+
                                 children: [
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
+
                                     children: [
                                       Builder(
                                         builder: (context) => FFButtonWidget(
@@ -247,17 +279,21 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                       Colors.transparent,
                                                   alignment:
                                                       AlignmentDirectional(
-                                                              0.0, 0.0)
-                                                          .resolve(
-                                                              Directionality.of(
-                                                                  context)),
+                                                        0.0,
+                                                        0.0,
+                                                      ).resolve(
+                                                        Directionality.of(
+                                                          context,
+                                                        ),
+                                                      ),
                                                   child: GestureDetector(
                                                     onTap: () {
                                                       FocusScope.of(
-                                                              dialogContext)
-                                                          .unfocus();
+                                                        dialogContext,
+                                                      ).unfocus();
                                                       FocusManager
-                                                          .instance.primaryFocus
+                                                          .instance
+                                                          .primaryFocus
                                                           ?.unfocus();
                                                     },
                                                     child:
@@ -268,48 +304,60 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                             );
                                           },
                                           text: 'Button',
+
                                           options: FFButtonOptions(
                                             height: 40.0,
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
+                                                  16.0,
+                                                  0.0,
+                                                  16.0,
+                                                  0.0,
+                                                ),
+
                                             iconPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle: FlutterFlowTheme.of(
-                                                    context)
-                                                .titleSmall
-                                                .override(
+                                                  0.0,
+                                                  0.0,
+                                                  0.0,
+                                                  0.0,
+                                                ),
+
+                                            color: FlutterFlowTheme.of(
+                                              context,
+                                            ).primary,
+                                            textStyle:
+                                                FlutterFlowTheme.of(
+                                                  context,
+                                                ).titleSmall.override(
                                                   font: GoogleFonts.interTight(
                                                     fontWeight:
                                                         FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleSmall
-                                                            .fontWeight,
+                                                          context,
+                                                        ).titleSmall.fontWeight,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleSmall
-                                                            .fontStyle,
+                                                          context,
+                                                        ).titleSmall.fontStyle,
                                                   ),
+
                                                   color: Colors.white,
+
                                                   letterSpacing: 0.0,
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleSmall
-                                                          .fontWeight,
+                                                        context,
+                                                      ).titleSmall.fontWeight,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleSmall
-                                                          .fontStyle,
+                                                        context,
+                                                      ).titleSmall.fontStyle,
                                                 ),
                                             elevation: 0.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+
+                                            borderRadius: BorderRadius.circular(
+                                              8.0,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -317,10 +365,12 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                   ),
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
+
                                     children: [],
                                   ),
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
+
                                     children: [],
                                   ),
                                 ],
@@ -330,34 +380,42 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                               alignment: AlignmentDirectional(0.0, 1.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 16.0),
+                                  0.0,
+                                  0.0,
+                                  0.0,
+                                  16.0,
+                                ),
                                 child:
                                     smooth_page_indicator.SmoothPageIndicator(
-                                  controller: _model.pageViewController ??=
-                                      PageController(initialPage: 0),
-                                  count: 3,
-                                  axisDirection: Axis.horizontal,
-                                  onDotClicked: (i) async {
-                                    await _model.pageViewController!
-                                        .animateToPage(
-                                      i,
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.ease,
-                                    );
-                                    safeSetState(() {});
-                                  },
-                                  effect: smooth_page_indicator.SlideEffect(
-                                    spacing: 8.0,
-                                    radius: 8.0,
-                                    dotWidth: 8.0,
-                                    dotHeight: 8.0,
-                                    dotColor:
-                                        FlutterFlowTheme.of(context).accent1,
-                                    activeDotColor:
-                                        FlutterFlowTheme.of(context).primary,
-                                    paintStyle: PaintingStyle.fill,
-                                  ),
-                                ),
+                                      controller: _model.pageViewController ??=
+                                          PageController(initialPage: 0),
+                                      count: 3,
+                                      axisDirection: Axis.horizontal,
+                                      onDotClicked: (i) async {
+                                        await _model.pageViewController!
+                                            .animateToPage(
+                                              i,
+                                              duration: Duration(
+                                                milliseconds: 500,
+                                              ),
+                                              curve: Curves.ease,
+                                            );
+                                        safeSetState(() {});
+                                      },
+                                      effect: smooth_page_indicator.SlideEffect(
+                                        spacing: 8.0,
+                                        radius: 8.0,
+                                        dotWidth: 8.0,
+                                        dotHeight: 8.0,
+                                        dotColor: FlutterFlowTheme.of(
+                                          context,
+                                        ).accent1,
+                                        activeDotColor: FlutterFlowTheme.of(
+                                          context,
+                                        ).primary,
+                                        paintStyle: PaintingStyle.fill,
+                                      ),
+                                    ),
                               ),
                             ),
                           ],
@@ -368,8 +426,12 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      0.0,
+                      20.0,
+                      0.0,
+                      0.0,
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -378,6 +440,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                         wrapWithModel(
                           model: _model.carouselUserComponentModel,
                           updateCallback: () => safeSetState(() {}),
+
                           child: CarouselUserComponentWidget(),
                         ),
                       ],

@@ -46,22 +46,27 @@ class _TestWidgetState extends State<TestWidget> {
       child: Container(
         width: 100.0,
         height: 100.0,
+
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
         ),
+
         child: Stack(
           children: [
             Align(
               alignment: AlignmentDirectional(-0.01, -0.91),
               child: FlutterFlowIconButton(
                 borderRadius: 8.0,
+
                 buttonSize: 40.0,
                 fillColor: Color(0x004E3F78),
+
                 icon: FaIcon(
                   FontAwesomeIcons.trashAlt,
                   color: Colors.black,
                   size: 24.0,
                 ),
+
                 onPressed: () {
                   print('IconButton pressed ...');
                 },
@@ -72,11 +77,14 @@ class _TestWidgetState extends State<TestWidget> {
               child: Container(
                 width: 120.0,
                 height: 40.0,
+
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
+
                   borderRadius: BorderRadius.circular(8.0),
                   shape: BoxShape.rectangle,
                 ),
+
                 child: FlutterFlowCountController(
                   decrementIconBuilder: (enabled) => Icon(
                     Icons.remove_rounded,
@@ -95,28 +103,35 @@ class _TestWidgetState extends State<TestWidget> {
                   countBuilder: (count) => Text(
                     count.toString(),
                     style: FlutterFlowTheme.of(context).titleLarge.override(
-                          font: GoogleFonts.interTight(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontStyle,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .titleLarge
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).titleLarge.fontStyle,
-                        ),
+                      font: GoogleFonts.interTight(
+                        fontWeight: FlutterFlowTheme.of(
+                          context,
+                        ).titleLarge.fontWeight,
+                        fontStyle: FlutterFlowTheme.of(
+                          context,
+                        ).titleLarge.fontStyle,
+                      ),
+
+                      letterSpacing: 0.0,
+                      fontWeight: FlutterFlowTheme.of(
+                        context,
+                      ).titleLarge.fontWeight,
+                      fontStyle: FlutterFlowTheme.of(
+                        context,
+                      ).titleLarge.fontStyle,
+                    ),
                   ),
                   count: _model.countControllerValue ??= 0,
                   updateCount: (count) =>
                       safeSetState(() => _model.countControllerValue = count),
                   stepSize: 1,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+
+                  contentPadding: EdgeInsetsDirectional.fromSTEB(
+                    12.0,
+                    0.0,
+                    12.0,
+                    0.0,
+                  ),
                 ),
               ),
             ),

@@ -52,7 +52,9 @@ class _AdminCategoriesPageWidgetState extends State<AdminCategoriesPageWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
+
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+
         body: SafeArea(
           top: true,
           child: Column(
@@ -62,60 +64,70 @@ class _AdminCategoriesPageWidgetState extends State<AdminCategoriesPageWidget> {
             children: [
               Row(
                 mainAxisSize: MainAxisSize.max,
+
                 children: [
                   Expanded(
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
-                          50.0, 30.0, 50.0, 30.0),
+                        50.0,
+                        30.0,
+                        50.0,
+                        30.0,
+                      ),
                       child: Container(
                         width: 200.0,
                         child: TextFormField(
                           controller: _model.textController,
                           focusNode: _model.textFieldFocusNode,
+
                           autofocus: false,
                           enabled: true,
+
                           obscureText: false,
                           decoration: InputDecoration(
                             isDense: true,
-                            labelStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
+
+                            labelStyle: FlutterFlowTheme.of(context).labelMedium
                                 .override(
                                   font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontStyle,
                                   ),
+
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontStyle,
                                 ),
+
                             hintText: 'TextField',
-                            hintStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
+                            hintStyle: FlutterFlowTheme.of(context).labelMedium
                                 .override(
                                   font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).labelMedium.fontStyle,
                                   ),
+
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).labelMedium.fontStyle,
                                 ),
+
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
@@ -145,37 +157,38 @@ class _AdminCategoriesPageWidgetState extends State<AdminCategoriesPageWidget> {
                               borderRadius: BorderRadius.circular(24.0),
                             ),
                             filled: true,
-                            fillColor: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            prefixIcon: Icon(
-                              FontAwesomeIcons.search,
-                            ),
-                            suffixIcon: Icon(
-                              Icons.close_outlined,
-                            ),
+                            fillColor: FlutterFlowTheme.of(
+                              context,
+                            ).secondaryBackground,
+
+                            prefixIcon: Icon(FontAwesomeIcons.search),
+                            suffixIcon: Icon(Icons.close_outlined),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
+                          style: FlutterFlowTheme.of(context).bodyMedium
+                              .override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
+                                ),
+
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(
+                                  context,
+                                ).bodyMedium.fontWeight,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).bodyMedium.fontStyle,
+                              ),
+
                           cursorColor: FlutterFlowTheme.of(context).primaryText,
                           enableInteractiveSelection: true,
-                          validator: _model.textControllerValidator
-                              .asValidator(context),
+                          validator: _model.textControllerValidator.asValidator(
+                            context,
+                          ),
                         ),
                       ),
                     ),
@@ -186,18 +199,25 @@ class _AdminCategoriesPageWidgetState extends State<AdminCategoriesPageWidget> {
                 alignment: AlignmentDirectional(1.0, 1.0),
                 child: Builder(
                   builder: (context) => Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 30.0, 13.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      0.0,
+                      0.0,
+                      30.0,
+                      13.0,
+                    ),
                     child: FlutterFlowIconButton(
                       borderColor: Color(0xBE000000),
                       borderRadius: 15.0,
+
                       buttonSize: MediaQuery.sizeOf(context).width * 0.18,
                       fillColor: Color(0x49000000),
+
                       icon: Icon(
                         Icons.add,
                         color: FlutterFlowTheme.of(context).info,
                         size: 48.0,
                       ),
+
                       onPressed: () async {
                         await showDialog(
                           context: context,
@@ -206,8 +226,10 @@ class _AdminCategoriesPageWidgetState extends State<AdminCategoriesPageWidget> {
                               elevation: 0,
                               insetPadding: EdgeInsets.zero,
                               backgroundColor: Colors.transparent,
-                              alignment: AlignmentDirectional(0.0, 0.0)
-                                  .resolve(Directionality.of(context)),
+                              alignment: AlignmentDirectional(
+                                0.0,
+                                0.0,
+                              ).resolve(Directionality.of(context)),
                               child: GestureDetector(
                                 onTap: () {
                                   FocusScope.of(dialogContext).unfocus();

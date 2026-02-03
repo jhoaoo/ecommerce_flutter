@@ -42,8 +42,10 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
+
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(0.0),
           bottomRight: Radius.circular(16.0),
@@ -51,37 +53,46 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
           topRight: Radius.circular(0.0),
         ),
       ),
+
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
+
           children: [
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
+
               children: [
                 Text(
                   'Select a category',
                   textAlign: TextAlign.center,
+
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.inter(
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
+                    font: GoogleFonts.inter(
+                      fontWeight: FlutterFlowTheme.of(
+                        context,
+                      ).bodyMedium.fontWeight,
+                      fontStyle: FlutterFlowTheme.of(
+                        context,
+                      ).bodyMedium.fontStyle,
+                    ),
+
+                    letterSpacing: 0.0,
+                    fontWeight: FlutterFlowTheme.of(
+                      context,
+                    ).bodyMedium.fontWeight,
+                    fontStyle: FlutterFlowTheme.of(
+                      context,
+                    ).bodyMedium.fontStyle,
+                  ),
                 ),
               ],
             ),
             Divider(
               thickness: 2.0,
+
               color: FlutterFlowTheme.of(context).alternate,
             ),
             FutureBuilder<List<ProductsRecord>>(
@@ -106,39 +117,47 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
 
                 return ListView.builder(
                   padding: EdgeInsets.zero,
+
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                   itemCount: listViewProductsRecordList.length,
+
                   itemBuilder: (context, listViewIndex) {
                     final listViewProductsRecord =
                         listViewProductsRecordList[listViewIndex];
                     return Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        16.0,
+                        8.0,
+                        16.0,
+                        8.0,
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                         children: [
                           Text(
                             'Hello World',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+
+                            style: FlutterFlowTheme.of(context).bodyMedium
                                 .override(
                                   font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontStyle,
                                   ),
+
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).bodyMedium.fontStyle,
                                 ),
                           ),
                           Icon(
