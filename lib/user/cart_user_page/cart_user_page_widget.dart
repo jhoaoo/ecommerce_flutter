@@ -144,7 +144,7 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: Image.network(
-                                    listViewProductsRecord.image,
+                                    listViewProductsRecord.images,
                                     width: 98.5,
                                     height: 200.0,
                                     fit: BoxFit.cover,
@@ -157,7 +157,7 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 20.0),
                                   child: Text(
-                                    listViewProductsRecord.name,
+                                    listViewProductsRecord.title,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(

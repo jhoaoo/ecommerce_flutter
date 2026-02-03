@@ -84,14 +84,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) => appStateNotifier.loggedIn
           ? UserHomePageWidget()
-          : AuthInicialPageWidget(),
+          : AuthLoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
               ? UserHomePageWidget()
-              : AuthInicialPageWidget(),
+              : AuthLoginPageWidget(),
         ),
         FFRoute(
           name: UserHomePageWidget.routeName,
@@ -332,7 +332,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/authInicialPage';
+            return '/authLoginPage';
           }
           return null;
         },

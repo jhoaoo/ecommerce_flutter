@@ -58,8 +58,8 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
@@ -106,25 +106,23 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Flexible(
-                      child: Opacity(
-                        opacity: 0.7,
-                        child: Container(
-                          width: 100.0,
-                          height: 100.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            shape: BoxShape.rectangle,
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.network(
-                              'https://picsum.photos/seed/30/600',
-                              width: 0.0,
-                              height: 21.31,
-                              fit: BoxFit.cover,
-                            ),
+                    Opacity(
+                      opacity: 0.7,
+                      child: Container(
+                        width: 100.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          shape: BoxShape.rectangle,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            'https://picsum.photos/seed/30/600',
+                            width: 0.0,
+                            height: 21.31,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -133,15 +131,15 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                 ),
               ),
               Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(60.0, 0.0, 60.0, 16.0),
-                      child: Container(
-                        width: 200.0,
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(60.0, 0.0, 60.0, 0.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: double.infinity,
                         child: TextFormField(
                           controller: _model.emailLTextController,
                           focusNode: _model.emailLFocusNode,
@@ -244,12 +242,8 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                               .asValidator(context),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(60.0, 0.0, 60.0, 16.0),
-                      child: Container(
-                        width: 200.0,
+                      Container(
+                        width: double.infinity,
                         child: TextFormField(
                           controller: _model.passwordLTextController,
                           focusNode: _model.passwordLFocusNode,
@@ -365,11 +359,7 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                               .asValidator(context),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(60.0, 0.0, 60.0, 20.0),
-                      child: InkWell(
+                      InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
                         hoverColor: Colors.transparent,
@@ -409,11 +399,7 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                                   ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(60.0, 0.0, 60.0, 20.0),
-                      child: FFButtonWidget(
+                      FFButtonWidget(
                         onPressed: () async {
                           await authManager.refreshUser();
                           GoRouter.of(context).prepareAuthEvent();
@@ -470,7 +456,7 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                         },
                         text: 'login',
                         options: FFButtonOptions(
-                          width: MediaQuery.sizeOf(context).width * 0.3,
+                          width: double.infinity,
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 16.0, 0.0),
@@ -503,11 +489,7 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(60.0, 0.0, 60.0, 20.0),
-                      child: FFButtonWidget(
+                      FFButtonWidget(
                         onPressed: () async {
                           GoRouter.of(context).prepareAuthEvent();
                           final user =
@@ -521,7 +503,7 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                         },
                         text: 'Sign in with Google',
                         options: FFButtonOptions(
-                          width: MediaQuery.sizeOf(context).width * 0.3,
+                          width: double.infinity,
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 16.0, 0.0),
@@ -554,8 +536,8 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                    ),
-                  ],
+                    ].divide(SizedBox(height: 16.0)),
+                  ),
                 ),
               ),
             ],

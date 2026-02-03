@@ -16,19 +16,55 @@ class ProductsRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "name" field.
-  String? _name;
-  String get name => _name ?? '';
-  bool hasName() => _name != null;
+  // "title" field.
+  String? _title;
+  String get title => _title ?? '';
+  bool hasTitle() => _title != null;
 
-  // "image" field.
-  String? _image;
-  String get image => _image ?? '';
-  bool hasImage() => _image != null;
+  // "description" field.
+  String? _description;
+  String get description => _description ?? '';
+  bool hasDescription() => _description != null;
+
+  // "price" field.
+  double? _price;
+  double get price => _price ?? 0.0;
+  bool hasPrice() => _price != null;
+
+  // "stock" field.
+  int? _stock;
+  int get stock => _stock ?? 0;
+  bool hasStock() => _stock != null;
+
+  // "condition" field.
+  String? _condition;
+  String get condition => _condition ?? '';
+  bool hasCondition() => _condition != null;
+
+  // "images" field.
+  String? _images;
+  String get images => _images ?? '';
+  bool hasImages() => _images != null;
+
+  // "isActive" field.
+  bool? _isActive;
+  bool get isActive => _isActive ?? false;
+  bool hasIsActive() => _isActive != null;
+
+  // "createdAt" field.
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  bool hasCreatedAt() => _createdAt != null;
 
   void _initializeFields() {
-    _name = snapshotData['name'] as String?;
-    _image = snapshotData['image'] as String?;
+    _title = snapshotData['title'] as String?;
+    _description = snapshotData['description'] as String?;
+    _price = castToType<double>(snapshotData['price']);
+    _stock = castToType<int>(snapshotData['stock']);
+    _condition = snapshotData['condition'] as String?;
+    _images = snapshotData['images'] as String?;
+    _isActive = snapshotData['isActive'] as bool?;
+    _createdAt = snapshotData['createdAt'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -66,13 +102,25 @@ class ProductsRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createProductsRecordData({
-  String? name,
-  String? image,
+  String? title,
+  String? description,
+  double? price,
+  int? stock,
+  String? condition,
+  String? images,
+  bool? isActive,
+  DateTime? createdAt,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'name': name,
-      'image': image,
+      'title': title,
+      'description': description,
+      'price': price,
+      'stock': stock,
+      'condition': condition,
+      'images': images,
+      'isActive': isActive,
+      'createdAt': createdAt,
     }.withoutNulls,
   );
 
@@ -84,11 +132,27 @@ class ProductsRecordDocumentEquality implements Equality<ProductsRecord> {
 
   @override
   bool equals(ProductsRecord? e1, ProductsRecord? e2) {
-    return e1?.name == e2?.name && e1?.image == e2?.image;
+    return e1?.title == e2?.title &&
+        e1?.description == e2?.description &&
+        e1?.price == e2?.price &&
+        e1?.stock == e2?.stock &&
+        e1?.condition == e2?.condition &&
+        e1?.images == e2?.images &&
+        e1?.isActive == e2?.isActive &&
+        e1?.createdAt == e2?.createdAt;
   }
 
   @override
-  int hash(ProductsRecord? e) => const ListEquality().hash([e?.name, e?.image]);
+  int hash(ProductsRecord? e) => const ListEquality().hash([
+        e?.title,
+        e?.description,
+        e?.price,
+        e?.stock,
+        e?.condition,
+        e?.images,
+        e?.isActive,
+        e?.createdAt
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is ProductsRecord;
