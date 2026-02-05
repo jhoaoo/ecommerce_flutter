@@ -48,48 +48,44 @@ class _AuthVerificationPageWidgetState
       child: Container(
         width: 300.0,
         height: 350.0,
-
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
-
           borderRadius: BorderRadius.circular(25.0),
         ),
-
         child: Column(
           mainAxisSize: MainAxisSize.max,
-
           children: [
             Text(
               'Hello World',
-
               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                font: GoogleFonts.inter(
-                  fontWeight: FlutterFlowTheme.of(
-                    context,
-                  ).bodyMedium.fontWeight,
-                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                ),
-
-                letterSpacing: 0.0,
-                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-              ),
+                    font: GoogleFonts.inter(
+                      fontWeight:
+                          FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                    ),
+                    letterSpacing: 0.0,
+                    fontWeight:
+                        FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
             ),
             Text(
               'Hello World',
-
               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                font: GoogleFonts.inter(
-                  fontWeight: FlutterFlowTheme.of(
-                    context,
-                  ).bodyMedium.fontWeight,
-                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                ),
-
-                letterSpacing: 0.0,
-                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-              ),
+                    font: GoogleFonts.inter(
+                      fontWeight:
+                          FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                    ),
+                    letterSpacing: 0.0,
+                    fontWeight:
+                        FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
             ),
             FFButtonWidget(
               onPressed: () async {
@@ -102,7 +98,6 @@ class _AuthVerificationPageWidgetState
                     builder: (alertDialogContext) {
                       return AlertDialog(
                         title: Text('Aun no haz sido verificado'),
-
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(alertDialogContext),
@@ -115,34 +110,26 @@ class _AuthVerificationPageWidgetState
                 }
               },
               text: 'Button',
-
               options: FFButtonOptions(
                 height: 40.0,
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-
                 color: FlutterFlowTheme.of(context).primary,
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                  font: GoogleFonts.interTight(
-                    fontWeight: FlutterFlowTheme.of(
-                      context,
-                    ).titleSmall.fontWeight,
-                    fontStyle: FlutterFlowTheme.of(
-                      context,
-                    ).titleSmall.fontStyle,
-                  ),
-
-                  color: Colors.white,
-
-                  letterSpacing: 0.0,
-                  fontWeight: FlutterFlowTheme.of(
-                    context,
-                  ).titleSmall.fontWeight,
-                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                ),
+                      font: GoogleFonts.interTight(
+                        fontWeight:
+                            FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                      ),
+                      color: Colors.white,
+                      letterSpacing: 0.0,
+                      fontWeight:
+                          FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                    ),
                 elevation: 0.0,
-
                 borderRadius: BorderRadius.circular(8.0),
               ),
             ),
@@ -154,26 +141,21 @@ class _AuthVerificationPageWidgetState
               onTap: () async {
                 await authManager.sendEmailVerification();
               },
-
               child: Text(
                 'Volver a enviar mensaje',
-
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                  font: GoogleFonts.inter(
-                    fontWeight: FlutterFlowTheme.of(
-                      context,
-                    ).bodyMedium.fontWeight,
-                    fontStyle: FlutterFlowTheme.of(
-                      context,
-                    ).bodyMedium.fontStyle,
-                  ),
-
-                  letterSpacing: 0.0,
-                  fontWeight: FlutterFlowTheme.of(
-                    context,
-                  ).bodyMedium.fontWeight,
-                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                ),
+                      font: GoogleFonts.inter(
+                        fontWeight:
+                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                      ),
+                      letterSpacing: 0.0,
+                      fontWeight:
+                          FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                    ),
               ),
             ),
           ],

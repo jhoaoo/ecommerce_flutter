@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -13,16 +14,8 @@ class CarouselUserComponentModel
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for Carousel widget.
-  CarouselSliderController? carouselController1;
-  int carouselCurrentIndex1 = 1;
-
-  // State field(s) for Carousel widget.
-  CarouselSliderController? carouselController2;
-  int carouselCurrentIndex2 = 1;
-
-  // State field(s) for Carousel widget.
-  CarouselSliderController? carouselController3;
-  int carouselCurrentIndex3 = 1;
+  CarouselSliderController? carouselController;
+  int carouselCurrentIndex = 1;
 
   @override
   void initState(BuildContext context) {}

@@ -1,4 +1,4 @@
-import '/components/post_product_widget.dart';
+import '/admin/post_product/post_product_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';

@@ -12,12 +12,12 @@ class EcommerceFirebaseUser extends BaseAuthUser {
 
   @override
   AuthUserInfo get authUserInfo => AuthUserInfo(
-    uid: user?.uid,
-    email: user?.email,
-    displayName: user?.displayName,
-    photoUrl: user?.photoURL,
-    phoneNumber: user?.phoneNumber,
-  );
+        uid: user?.uid,
+        email: user?.email,
+        displayName: user?.displayName,
+        photoUrl: user?.photoURL,
+        phoneNumber: user?.phoneNumber,
+      );
 
   @override
   Future? delete() => user?.delete();
@@ -51,9 +51,9 @@ class EcommerceFirebaseUser extends BaseAuthUser {
 
   @override
   Future refreshUser() async {
-    await FirebaseAuth.instance.currentUser?.reload().then(
-      (_) => user = FirebaseAuth.instance.currentUser,
-    );
+    await FirebaseAuth.instance.currentUser
+        ?.reload()
+        .then((_) => user = FirebaseAuth.instance.currentUser);
   }
 
   static BaseAuthUser fromUserCredential(UserCredential userCredential) =>
@@ -63,13 +63,13 @@ class EcommerceFirebaseUser extends BaseAuthUser {
 }
 
 Stream<BaseAuthUser> ecommerceFirebaseUserStream() => FirebaseAuth.instance
-    .authStateChanges()
-    .debounce(
-      (user) => user == null && !loggedIn
-          ? TimerStream(true, const Duration(seconds: 1))
-          : Stream.value(user),
-    )
-    .map<BaseAuthUser>((user) {
-      currentUser = EcommerceFirebaseUser(user);
-      return currentUser!;
-    });
+        .authStateChanges()
+        .debounce((user) => user == null && !loggedIn
+            ? TimerStream(true, const Duration(seconds: 1))
+            : Stream.value(user))
+        .map<BaseAuthUser>(
+      (user) {
+        currentUser = EcommerceFirebaseUser(user);
+        return currentUser!;
+      },
+    );

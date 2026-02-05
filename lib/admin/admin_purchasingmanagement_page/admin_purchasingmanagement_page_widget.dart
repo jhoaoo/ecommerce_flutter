@@ -47,12 +47,13 @@ class _AdminPurchasingmanagementPageWidgetState
       },
       child: Scaffold(
         key: scaffoldKey,
-
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-
         body: SafeArea(
           top: true,
-          child: Column(mainAxisSize: MainAxisSize.max, children: []),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [],
+          ),
         ),
       ),
     );

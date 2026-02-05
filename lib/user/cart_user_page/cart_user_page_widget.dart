@@ -48,40 +48,29 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-
         body: SafeArea(
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
-
             children: [
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
-
                 children: [
                   Flexible(
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                        5.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                      ),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
                       child: FlutterFlowIconButton(
                         borderRadius: 8.0,
-
                         buttonSize: 40.0,
                         fillColor: Color(0x004E3F78),
-
                         icon: Icon(
                           Icons.dehaze,
                           color: Color(0xFF57636C),
                           size: 24.0,
                         ),
-
                         onPressed: () async {
                           scaffoldKey.currentState!.openDrawer();
                         },
@@ -89,30 +78,25 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                      20.0,
-                      20.0,
-                      0.0,
-                      30.0,
-                    ),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 0.0, 30.0),
                     child: Text(
                       'Your product',
-
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.inter(
-                          fontWeight: FontWeight.w900,
-                          fontStyle: FlutterFlowTheme.of(
-                            context,
-                          ).bodyMedium.fontStyle,
-                        ),
-
-                        fontSize: 40.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.w900,
-                        fontStyle: FlutterFlowTheme.of(
-                          context,
-                        ).bodyMedium.fontStyle,
-                      ),
+                            font: GoogleFonts.inter(
+                              fontWeight: FontWeight.w900,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontStyle,
+                            ),
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            fontSize: 40.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w900,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
                     ),
                   ),
                 ],
@@ -140,7 +124,6 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
 
                     return ListView.separated(
                       padding: EdgeInsets.zero,
-
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemCount: listViewProductsRecordList.length,
@@ -151,13 +134,10 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
                         return Container(
                           width: 100.0,
                           height: 100.0,
-
                           decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(
-                              context,
-                            ).secondaryBackground,
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
                           ),
-
                           child: Stack(
                             children: [
                               Align(
@@ -176,33 +156,31 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
                                 alignment: AlignmentDirectional(0.0, -0.81),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0,
-                                    0.0,
-                                    0.0,
-                                    20.0,
-                                  ),
+                                      0.0, 0.0, 0.0, 20.0),
                                   child: Text(
                                     listViewProductsRecord.title,
-
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           font: GoogleFonts.inter(
-                                            fontWeight: FlutterFlowTheme.of(
-                                              context,
-                                            ).bodyMedium.fontWeight,
-                                            fontStyle: FlutterFlowTheme.of(
-                                              context,
-                                            ).bodyMedium.fontStyle,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
                                           ),
-
                                           letterSpacing: 0.0,
-                                          fontWeight: FlutterFlowTheme.of(
-                                            context,
-                                          ).bodyMedium.fontWeight,
-                                          fontStyle: FlutterFlowTheme.of(
-                                            context,
-                                          ).bodyMedium.fontStyle,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
                                         ),
                                   ),
                                 ),
@@ -211,33 +189,31 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
                                 alignment: AlignmentDirectional(0.0, 0.3),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0,
-                                    20.0,
-                                    0.0,
-                                    0.0,
-                                  ),
+                                      0.0, 20.0, 0.0, 0.0),
                                   child: Text(
                                     'Hello World',
-
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           font: GoogleFonts.inter(
-                                            fontWeight: FlutterFlowTheme.of(
-                                              context,
-                                            ).bodyMedium.fontWeight,
-                                            fontStyle: FlutterFlowTheme.of(
-                                              context,
-                                            ).bodyMedium.fontStyle,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
                                           ),
-
                                           letterSpacing: 0.0,
-                                          fontWeight: FlutterFlowTheme.of(
-                                            context,
-                                          ).bodyMedium.fontWeight,
-                                          fontStyle: FlutterFlowTheme.of(
-                                            context,
-                                          ).bodyMedium.fontStyle,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
                                         ),
                                   ),
                                 ),
@@ -246,33 +222,31 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
                                 alignment: AlignmentDirectional(0.0, -0.37),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0,
-                                    20.0,
-                                    0.0,
-                                    20.0,
-                                  ),
+                                      0.0, 20.0, 0.0, 20.0),
                                   child: Text(
                                     'Hello World',
-
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           font: GoogleFonts.inter(
-                                            fontWeight: FlutterFlowTheme.of(
-                                              context,
-                                            ).bodyMedium.fontWeight,
-                                            fontStyle: FlutterFlowTheme.of(
-                                              context,
-                                            ).bodyMedium.fontStyle,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
                                           ),
-
                                           letterSpacing: 0.0,
-                                          fontWeight: FlutterFlowTheme.of(
-                                            context,
-                                          ).bodyMedium.fontWeight,
-                                          fontStyle: FlutterFlowTheme.of(
-                                            context,
-                                          ).bodyMedium.fontStyle,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
                                         ),
                                   ),
                                 ),
@@ -281,8 +255,7 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
                                 alignment: AlignmentDirectional(0.81, 0.0),
                                 child: TestWidget(
                                   key: Key(
-                                    'Keymlp_${listViewIndex}_of_${listViewProductsRecordList.length}',
-                                  ),
+                                      'Keymlp_${listViewIndex}_of_${listViewProductsRecordList.length}'),
                                 ),
                               ),
                             ],

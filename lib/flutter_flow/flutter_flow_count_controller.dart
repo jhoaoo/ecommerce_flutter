@@ -53,20 +53,20 @@ class _FlutterFlowCountControllerState
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: widget.contentPadding,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-          onTap: _decrementCounter,
-          child: widget.decrementIconBuilder(canDecrement),
+        padding: widget.contentPadding,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: _decrementCounter,
+              child: widget.decrementIconBuilder(canDecrement),
+            ),
+            widget.countBuilder(count),
+            InkWell(
+              onTap: _incrementCounter,
+              child: widget.incrementIconBuilder(canIncrement),
+            ),
+          ],
         ),
-        widget.countBuilder(count),
-        InkWell(
-          onTap: _incrementCounter,
-          child: widget.incrementIconBuilder(canIncrement),
-        ),
-      ],
-    ),
-  );
+      );
 }

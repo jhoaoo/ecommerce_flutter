@@ -9,8 +9,10 @@ import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 class ProductsRecord extends FirestoreRecord {
-  ProductsRecord._(DocumentReference reference, Map<String, dynamic> data)
-    : super(reference, data) {
+  ProductsRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
     _initializeFields();
   }
 
@@ -83,7 +85,8 @@ class ProductsRecord extends FirestoreRecord {
   static ProductsRecord getDocumentFromData(
     Map<String, dynamic> data,
     DocumentReference reference,
-  ) => ProductsRecord._(reference, mapFromFirestore(data));
+  ) =>
+      ProductsRecord._(reference, mapFromFirestore(data));
 
   @override
   String toString() =>
@@ -141,15 +144,15 @@ class ProductsRecordDocumentEquality implements Equality<ProductsRecord> {
 
   @override
   int hash(ProductsRecord? e) => const ListEquality().hash([
-    e?.title,
-    e?.description,
-    e?.price,
-    e?.stock,
-    e?.condition,
-    e?.images,
-    e?.isActive,
-    e?.createdAt,
-  ]);
+        e?.title,
+        e?.description,
+        e?.price,
+        e?.stock,
+        e?.condition,
+        e?.images,
+        e?.isActive,
+        e?.createdAt
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is ProductsRecord;

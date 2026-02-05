@@ -3,9 +3,33 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+const kThemeModeKey = '__theme_mode__';
+
+SharedPreferences? _prefs;
+
 abstract class FlutterFlowTheme {
+  static Future initialize() async =>
+      _prefs = await SharedPreferences.getInstance();
+
+  static ThemeMode get themeMode {
+    final darkMode = _prefs?.getBool(kThemeModeKey);
+    return darkMode == null
+        ? ThemeMode.system
+        : darkMode
+            ? ThemeMode.dark
+            : ThemeMode.light;
+  }
+
+  static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system
+      ? _prefs?.remove(kThemeModeKey)
+      : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
+
   static FlutterFlowTheme of(BuildContext context) {
-    return LightModeTheme();
+    return Theme.of(context).brightness == Brightness.dark
+        ? DarkModeTheme()
+        : LightModeTheme();
   }
 
   @Deprecated('Use primary instead')
@@ -118,22 +142,22 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF4E3F78);
-  late Color secondary = const Color(0xFF39D2C0);
-  late Color tertiary = const Color(0xFFEE8B60);
-  late Color alternate = const Color(0xFFE0E3E7);
-  late Color primaryText = const Color(0xFF14181B);
+  late Color primary = const Color(0xFF2563EB);
+  late Color secondary = const Color(0xFFF97316);
+  late Color tertiary = const Color(0xFF16A34A);
+  late Color alternate = const Color(0xFFDC2626);
+  late Color primaryText = const Color(0xFF111827);
   late Color secondaryText = const Color(0xFF57636C);
-  late Color primaryBackground = const Color(0xFFF1F4F8);
+  late Color primaryBackground = const Color(0xFFF9FAFB);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
-  late Color accent1 = const Color(0x4C4B39EF);
+  late Color accent1 = const Color(0xFF4C4B9F);
   late Color accent2 = const Color(0x4D39D2C0);
-  late Color accent3 = const Color(0x4DEE8B60);
+  late Color accent3 = const Color(0x4DEEB860);
   late Color accent4 = const Color(0xCCFFFFFF);
   late Color success = const Color(0xFF249689);
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
-  late Color info = const Color(0xFFFFFFFF);
+  late Color info = const Color(0xFF38BDF8);
 }
 
 abstract class Typography {
@@ -192,108 +216,134 @@ class ThemeTypography extends Typography {
   String get displayLargeFamily => 'Inter Tight';
   bool get displayLargeIsCustom => false;
   TextStyle get displayLarge => GoogleFonts.interTight(
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 64.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 64.0,
+      );
   String get displayMediumFamily => 'Inter Tight';
   bool get displayMediumIsCustom => false;
   TextStyle get displayMedium => GoogleFonts.interTight(
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 44.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 44.0,
+      );
   String get displaySmallFamily => 'Inter Tight';
   bool get displaySmallIsCustom => false;
   TextStyle get displaySmall => GoogleFonts.interTight(
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 36.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 36.0,
+      );
   String get headlineLargeFamily => 'Inter Tight';
   bool get headlineLargeIsCustom => false;
   TextStyle get headlineLarge => GoogleFonts.interTight(
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 32.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 32.0,
+      );
   String get headlineMediumFamily => 'Inter Tight';
   bool get headlineMediumIsCustom => false;
   TextStyle get headlineMedium => GoogleFonts.interTight(
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 28.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 28.0,
+      );
   String get headlineSmallFamily => 'Inter Tight';
   bool get headlineSmallIsCustom => false;
   TextStyle get headlineSmall => GoogleFonts.interTight(
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 24.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 24.0,
+      );
   String get titleLargeFamily => 'Inter Tight';
   bool get titleLargeIsCustom => false;
   TextStyle get titleLarge => GoogleFonts.interTight(
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 20.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 20.0,
+      );
   String get titleMediumFamily => 'Inter Tight';
   bool get titleMediumIsCustom => false;
   TextStyle get titleMedium => GoogleFonts.interTight(
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 18.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 18.0,
+      );
   String get titleSmallFamily => 'Inter Tight';
   bool get titleSmallIsCustom => false;
   TextStyle get titleSmall => GoogleFonts.interTight(
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 16.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 16.0,
+      );
   String get labelLargeFamily => 'Inter';
   bool get labelLargeIsCustom => false;
   TextStyle get labelLarge => GoogleFonts.inter(
-    color: theme.secondaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 16.0,
-  );
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 16.0,
+      );
   String get labelMediumFamily => 'Inter';
   bool get labelMediumIsCustom => false;
   TextStyle get labelMedium => GoogleFonts.inter(
-    color: theme.secondaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 14.0,
-  );
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 14.0,
+      );
   String get labelSmallFamily => 'Inter';
   bool get labelSmallIsCustom => false;
   TextStyle get labelSmall => GoogleFonts.inter(
-    color: theme.secondaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 12.0,
-  );
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 12.0,
+      );
   String get bodyLargeFamily => 'Inter';
   bool get bodyLargeIsCustom => false;
   TextStyle get bodyLarge => GoogleFonts.inter(
-    color: theme.primaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 16.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 16.0,
+      );
   String get bodyMediumFamily => 'Inter';
   bool get bodyMediumIsCustom => false;
   TextStyle get bodyMedium => GoogleFonts.inter(
-    color: theme.primaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 14.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 14.0,
+      );
   String get bodySmallFamily => 'Inter';
   bool get bodySmallIsCustom => false;
   TextStyle get bodySmall => GoogleFonts.inter(
-    color: theme.primaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 12.0,
-  );
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 12.0,
+      );
+}
+
+class DarkModeTheme extends FlutterFlowTheme {
+  @Deprecated('Use primary instead')
+  Color get primaryColor => primary;
+  @Deprecated('Use secondary instead')
+  Color get secondaryColor => secondary;
+  @Deprecated('Use tertiary instead')
+  Color get tertiaryColor => tertiary;
+
+  late Color primary = const Color(0xFF6366F1);
+  late Color secondary = const Color(0xFFFB923C);
+  late Color tertiary = const Color(0xFF22C55E);
+  late Color alternate = const Color(0xFFEF4444);
+  late Color primaryText = const Color(0xFFE5E7EB);
+  late Color secondaryText = const Color(0xFF9CA3AF);
+  late Color primaryBackground = const Color(0xFF0F172A);
+  late Color secondaryBackground = const Color(0xFF020617);
+  late Color accent1 = const Color(0x4C4B39EF);
+  late Color accent2 = const Color(0xFF22D3EE);
+  late Color accent3 = const Color(0xFF34D399);
+  late Color accent4 = const Color(0xFF1E293B);
+  late Color success = const Color(0xFF22C55E);
+  late Color warning = const Color(0xFFFACC15);
+  late Color error = const Color(0xFFF87171);
+  late Color info = const Color(0xFF38BDF8);
 }
 
 extension TextStyleHelper on TextStyle {
@@ -312,11 +362,9 @@ extension TextStyleHelper on TextStyle {
     String? package,
   }) {
     if (useGoogleFonts && fontFamily != null) {
-      font = GoogleFonts.getFont(
-        fontFamily,
-        fontWeight: fontWeight ?? this.fontWeight,
-        fontStyle: fontStyle ?? this.fontStyle,
-      );
+      font = GoogleFonts.getFont(fontFamily,
+          fontWeight: fontWeight ?? this.fontWeight,
+          fontStyle: fontStyle ?? this.fontStyle);
     }
 
     return font != null
