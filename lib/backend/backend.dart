@@ -7,6 +7,7 @@ import 'schema/util/firestore_util.dart';
 
 import 'schema/products_record.dart';
 import 'schema/user_record.dart';
+import 'schema/categories_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -17,6 +18,7 @@ export 'schema/util/schema_util.dart';
 
 export 'schema/products_record.dart';
 export 'schema/user_record.dart';
+export 'schema/categories_record.dart';
 
 /// Functions to query ProductsRecords (as a Stream and as a Future).
 Future<int> queryProductsRecordCount({
@@ -87,6 +89,43 @@ Future<List<UserRecord>> queryUserRecordOnce({
     queryCollectionOnce(
       UserRecord.collection,
       UserRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query CategoriesRecords (as a Stream and as a Future).
+Future<int> queryCategoriesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      CategoriesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<CategoriesRecord>> queryCategoriesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      CategoriesRecord.collection,
+      CategoriesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<CategoriesRecord>> queryCategoriesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      CategoriesRecord.collection,
+      CategoriesRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

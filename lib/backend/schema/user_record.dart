@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
+import '/backend/schema/enums/enums.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -51,6 +52,11 @@ class UserRecord extends FirestoreRecord {
   bool get userNew => _userNew ?? false;
   bool hasUserNew() => _userNew != null;
 
+  // "role" field.
+  UserRole? _role;
+  UserRole? get role => _role;
+  bool hasRole() => _role != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -59,6 +65,9 @@ class UserRecord extends FirestoreRecord {
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
     _userNew = snapshotData['user_new'] as bool?;
+    _role = snapshotData['role'] is UserRole
+        ? snapshotData['role']
+        : deserializeEnum<UserRole>(snapshotData['role']);
   }
 
   static CollectionReference get collection =>
@@ -102,6 +111,7 @@ Map<String, dynamic> createUserRecordData({
   DateTime? createdTime,
   String? phoneNumber,
   bool? userNew,
+  UserRole? role,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -112,6 +122,7 @@ Map<String, dynamic> createUserRecordData({
       'created_time': createdTime,
       'phone_number': phoneNumber,
       'user_new': userNew,
+      'role': role,
     }.withoutNulls,
   );
 
@@ -129,7 +140,8 @@ class UserRecordDocumentEquality implements Equality<UserRecord> {
         e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
         e1?.phoneNumber == e2?.phoneNumber &&
-        e1?.userNew == e2?.userNew;
+        e1?.userNew == e2?.userNew &&
+        e1?.role == e2?.role;
   }
 
   @override
@@ -140,7 +152,8 @@ class UserRecordDocumentEquality implements Equality<UserRecord> {
         e?.uid,
         e?.createdTime,
         e?.phoneNumber,
-        e?.userNew
+        e?.userNew,
+        e?.role
       ]);
 
   @override

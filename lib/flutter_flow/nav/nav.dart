@@ -6,6 +6,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 
+import '/backend/schema/enums/enums.dart';
+
 import '/auth/base_auth_user_provider.dart';
 
 import '/main.dart';
@@ -134,9 +136,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AdminPurchasingmanagementPageWidget(),
         ),
         FFRoute(
-          name: AdminCategoriesPageWidget.routeName,
-          path: AdminCategoriesPageWidget.routePath,
-          builder: (context, params) => AdminCategoriesPageWidget(),
+          name: PostProductSellerWidget.routeName,
+          path: PostProductSellerWidget.routePath,
+          builder: (context, params) => PostProductSellerWidget(),
         ),
         FFRoute(
           name: AdminOrdersPageWidget.routeName,
@@ -162,6 +164,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: UserCheckoutPageWidget.routeName,
           path: UserCheckoutPageWidget.routePath,
           builder: (context, params) => UserCheckoutPageWidget(),
+        ),
+        FFRoute(
+          name: DashboardSellerWidget.routeName,
+          path: DashboardSellerWidget.routePath,
+          builder: (context, params) => DashboardSellerWidget(),
+        ),
+        FFRoute(
+          name: ProductsSellerWidget.routeName,
+          path: ProductsSellerWidget.routePath,
+          builder: (context, params) => ProductsSellerWidget(),
+        ),
+        FFRoute(
+          name: OrdersSellerWidget.routeName,
+          path: OrdersSellerWidget.routePath,
+          builder: (context, params) => OrdersSellerWidget(),
+        ),
+        FFRoute(
+          name: EarningsSellerWidget.routeName,
+          path: EarningsSellerWidget.routePath,
+          builder: (context, params) => EarningsSellerWidget(),
+        ),
+        FFRoute(
+          name: AdminCategoriesPageWidget.routeName,
+          path: AdminCategoriesPageWidget.routePath,
+          builder: (context, params) => AdminCategoriesPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

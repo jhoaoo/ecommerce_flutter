@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
+import '/backend/schema/enums/enums.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -56,6 +57,11 @@ class ProductsRecord extends FirestoreRecord {
   DateTime? get createdAt => _createdAt;
   bool hasCreatedAt() => _createdAt != null;
 
+  // "categories" field.
+  List<DocumentReference>? _categories;
+  List<DocumentReference> get categories => _categories ?? const [];
+  bool hasCategories() => _categories != null;
+
   void _initializeFields() {
     _title = snapshotData['title'] as String?;
     _description = snapshotData['description'] as String?;
@@ -65,6 +71,7 @@ class ProductsRecord extends FirestoreRecord {
     _images = snapshotData['images'] as String?;
     _isActive = snapshotData['isActive'] as bool?;
     _createdAt = snapshotData['createdAt'] as DateTime?;
+    _categories = getDataList(snapshotData['categories']);
   }
 
   static CollectionReference get collection =>
@@ -132,6 +139,7 @@ class ProductsRecordDocumentEquality implements Equality<ProductsRecord> {
 
   @override
   bool equals(ProductsRecord? e1, ProductsRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.title == e2?.title &&
         e1?.description == e2?.description &&
         e1?.price == e2?.price &&
@@ -139,7 +147,8 @@ class ProductsRecordDocumentEquality implements Equality<ProductsRecord> {
         e1?.condition == e2?.condition &&
         e1?.images == e2?.images &&
         e1?.isActive == e2?.isActive &&
-        e1?.createdAt == e2?.createdAt;
+        e1?.createdAt == e2?.createdAt &&
+        listEquality.equals(e1?.categories, e2?.categories);
   }
 
   @override
@@ -151,7 +160,8 @@ class ProductsRecordDocumentEquality implements Equality<ProductsRecord> {
         e?.condition,
         e?.images,
         e?.isActive,
-        e?.createdAt
+        e?.createdAt,
+        e?.categories
       ]);
 
   @override
