@@ -1,6 +1,6 @@
-import '/auth/firebase_auth/auth_util.dart';
+import '/admin/component_admin/create_categorie_admin/create_categorie_admin_widget.dart';
+import '/admin/component_admin/update_categorie_admin/update_categorie_admin_widget.dart';
 import '/backend/backend.dart';
-import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -60,7 +60,7 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
           children: [
             Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Select a category',
@@ -78,7 +78,57 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
                             FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                       ),
                 ),
-              ],
+                Builder(
+                  builder: (context) => FFButtonWidget(
+                    onPressed: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (dialogContext) {
+                          return Dialog(
+                            elevation: 0,
+                            insetPadding: EdgeInsets.zero,
+                            backgroundColor: Colors.transparent,
+                            alignment: AlignmentDirectional(0.0, 0.0)
+                                .resolve(Directionality.of(context)),
+                            child: CreateCategorieAdminWidget(),
+                          );
+                        },
+                      );
+                    },
+                    text: 'create categoryes',
+                    options: FFButtonOptions(
+                      width: MediaQuery.sizeOf(context).width * 0.4,
+                      height: MediaQuery.sizeOf(context).height * 0.05,
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      iconPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                font: GoogleFonts.interTight(
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontStyle,
+                                ),
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .fontStyle,
+                              ),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+              ].addToStart(SizedBox(width: 8.0)).addToEnd(SizedBox(width: 8.0)),
             ),
             StreamBuilder<List<CategoriesRecord>>(
               stream: queryCategoriesRecord(
@@ -142,9 +192,12 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
                                       .fontStyle,
                                 ),
                           ),
-                          if (currentUserDocument?.role == UserRole.admin)
-                            AuthUserStreamWidget(
-                              builder: (context) => InkWell(
+                          Align(
+                            alignment: AlignmentDirectional(1.0, -1.0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  250.0, 0.0, 0.0, 0.0),
+                              child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
@@ -161,6 +214,38 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
                                 ),
                               ),
                             ),
+                          ),
+                          Builder(
+                            builder: (context) => InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (dialogContext) {
+                                    return Dialog(
+                                      elevation: 0,
+                                      insetPadding: EdgeInsets.zero,
+                                      backgroundColor: Colors.transparent,
+                                      alignment: AlignmentDirectional(0.0, 0.0)
+                                          .resolve(Directionality.of(context)),
+                                      child: UpdateCategorieAdminWidget(
+                                        categoryRef:
+                                            listViewCategoriesRecord.reference,
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Icon(
+                                Icons.edit,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 24.0,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     );

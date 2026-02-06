@@ -2,7 +2,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/user/components_user/card_products_component/card_products_component_widget.dart';
+import '/user/components_user/card_products_section/card_products_section_widget.dart';
 import '/user/components_user/carousel_user_component/carousel_user_component_widget.dart';
 import '/user/components_user/user_drawer_component/user_drawer_component_widget.dart';
 import 'dart:ui';
@@ -31,8 +31,8 @@ class UserHomePageModel extends FlutterFlowModel<UserHomePageWidget> {
       : 0;
   // Model for carousel_user_component component.
   late CarouselUserComponentModel carouselUserComponentModel;
-  // Model for card_products_component component.
-  late CardProductsComponentModel cardProductsComponentModel;
+  // Model for card_products_section component.
+  late CardProductsSectionModel cardProductsSectionModel;
   // Model for user_drawer_component component.
   late UserDrawerComponentModel userDrawerComponentModel;
 
@@ -40,8 +40,8 @@ class UserHomePageModel extends FlutterFlowModel<UserHomePageWidget> {
   void initState(BuildContext context) {
     carouselUserComponentModel =
         createModel(context, () => CarouselUserComponentModel());
-    cardProductsComponentModel =
-        createModel(context, () => CardProductsComponentModel());
+    cardProductsSectionModel =
+        createModel(context, () => CardProductsSectionModel());
     userDrawerComponentModel =
         createModel(context, () => UserDrawerComponentModel());
   }
@@ -52,7 +52,7 @@ class UserHomePageModel extends FlutterFlowModel<UserHomePageWidget> {
     textController?.dispose();
 
     carouselUserComponentModel.dispose();
-    cardProductsComponentModel.dispose();
+    cardProductsSectionModel.dispose();
     userDrawerComponentModel.dispose();
   }
 }

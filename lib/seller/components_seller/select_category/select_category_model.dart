@@ -1,6 +1,6 @@
-import '/auth/firebase_auth/auth_util.dart';
+import '/admin/component_admin/create_categorie_admin/create_categorie_admin_widget.dart';
+import '/admin/component_admin/update_categorie_admin/update_categorie_admin_widget.dart';
 import '/backend/backend.dart';
-import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';

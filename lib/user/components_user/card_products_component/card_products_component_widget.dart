@@ -79,7 +79,7 @@ class _CardProductsComponentWidgetState
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.network(
-                            '',
+                            rowProductsRecord.images,
                             width: 145.2,
                             height: 183.4,
                             fit: BoxFit.cover,

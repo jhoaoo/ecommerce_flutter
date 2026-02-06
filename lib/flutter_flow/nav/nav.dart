@@ -131,34 +131,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AdminDashboardPageWidget(),
         ),
         FFRoute(
-          name: AdminPurchasingmanagementPageWidget.routeName,
-          path: AdminPurchasingmanagementPageWidget.routePath,
-          builder: (context, params) => AdminPurchasingmanagementPageWidget(),
-        ),
-        FFRoute(
           name: PostProductSellerWidget.routeName,
           path: PostProductSellerWidget.routePath,
           builder: (context, params) => PostProductSellerWidget(),
-        ),
-        FFRoute(
-          name: AdminOrdersPageWidget.routeName,
-          path: AdminOrdersPageWidget.routePath,
-          builder: (context, params) => AdminOrdersPageWidget(),
-        ),
-        FFRoute(
-          name: AdminCustomersPageWidget.routeName,
-          path: AdminCustomersPageWidget.routePath,
-          builder: (context, params) => AdminCustomersPageWidget(),
-        ),
-        FFRoute(
-          name: AdminPaymentsPageWidget.routeName,
-          path: AdminPaymentsPageWidget.routePath,
-          builder: (context, params) => AdminPaymentsPageWidget(),
-        ),
-        FFRoute(
-          name: AdminShipmentsPageWidget.routeName,
-          path: AdminShipmentsPageWidget.routePath,
-          builder: (context, params) => AdminShipmentsPageWidget(),
         ),
         FFRoute(
           name: UserCheckoutPageWidget.routeName,
@@ -184,11 +159,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: EarningsSellerWidget.routeName,
           path: EarningsSellerWidget.routePath,
           builder: (context, params) => EarningsSellerWidget(),
-        ),
-        FFRoute(
-          name: AdminCategoriesPageWidget.routeName,
-          path: AdminCategoriesPageWidget.routePath,
-          builder: (context, params) => AdminCategoriesPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

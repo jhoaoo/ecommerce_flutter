@@ -13,18 +13,8 @@ export '/user/cart_user_page/cart_user_page_widget.dart'
     show CartUserPageWidget;
 export '/admin/admin_dashboard_page/admin_dashboard_page_widget.dart'
     show AdminDashboardPageWidget;
-export '/admin/admin_purchasingmanagement_page/admin_purchasingmanagement_page_widget.dart'
-    show AdminPurchasingmanagementPageWidget;
 export '/seller/post_product_seller/post_product_seller_widget.dart'
     show PostProductSellerWidget;
-export '/admin/admin_orders_page/admin_orders_page_widget.dart'
-    show AdminOrdersPageWidget;
-export '/admin/admin_customers_page/admin_customers_page_widget.dart'
-    show AdminCustomersPageWidget;
-export '/admin/admin_payments_page/admin_payments_page_widget.dart'
-    show AdminPaymentsPageWidget;
-export '/admin/admin_shipments_page/admin_shipments_page_widget.dart'
-    show AdminShipmentsPageWidget;
 export '/user/user_checkout_page/user_checkout_page_widget.dart'
     show UserCheckoutPageWidget;
 export '/seller/dashboard_seller/dashboard_seller_widget.dart'
@@ -35,5 +25,3 @@ export '/seller/orders_seller/orders_seller_widget.dart'
     show OrdersSellerWidget;
 export '/seller/earnings_seller/earnings_seller_widget.dart'
     show EarningsSellerWidget;
-export '/admin/component_admin/admin_categories_page/admin_categories_page_widget.dart'
-    show AdminCategoriesPageWidget;

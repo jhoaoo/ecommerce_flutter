@@ -1,5 +1,4 @@
 import '/backend/backend.dart';
-import '/components/test_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -249,13 +248,6 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
                                                   .fontStyle,
                                         ),
                                   ),
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(0.81, 0.0),
-                                child: TestWidget(
-                                  key: Key(
-                                      'Keymlp_${listViewIndex}_of_${listViewProductsRecordList.length}'),
                                 ),
                               ),
                             ],

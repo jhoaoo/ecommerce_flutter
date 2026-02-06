@@ -11,13 +11,14 @@
         "cached_network_image",
         "cached_network_image_platform_interface",
         "cached_network_image_web",
-        "carousel_slider",
         "cloud_firestore",
         "cloud_firestore_platform_interface",
         "cloud_firestore_web",
         "collection",
+        "cross_file",
         "csslib",
         "cupertino_icons",
+        "dropdown_button2",
         "file_picker",
         "firebase_auth",
         "firebase_auth_platform_interface",
@@ -668,7 +669,7 @@
     },
     {
       "name": "google_fonts",
-      "version": "6.1.0",
+      "version": "6.3.3",
       "dependencies": [
         "crypto",
         "flutter",
@@ -890,10 +891,26 @@
       ]
     },
     {
+      "name": "dropdown_button2",
+      "version": "2.3.9",
+      "dependencies": [
+        "flutter",
+        "meta"
+      ]
+    },
+    {
       "name": "csslib",
       "version": "1.0.2",
       "dependencies": [
         "source_span"
+      ]
+    },
+    {
+      "name": "cross_file",
+      "version": "0.3.4+2",
+      "dependencies": [
+        "meta",
+        "web"
       ]
     },
     {
@@ -937,13 +954,6 @@
         "firebase_core_platform_interface",
         "flutter",
         "meta"
-      ]
-    },
-    {
-      "name": "carousel_slider",
-      "version": "5.0.0",
-      "dependencies": [
-        "flutter"
       ]
     },
     {
@@ -1204,14 +1214,6 @@
         "flutter",
         "http",
         "plugin_platform_interface"
-      ]
-    },
-    {
-      "name": "cross_file",
-      "version": "0.3.5+2",
-      "dependencies": [
-        "meta",
-        "web"
       ]
     },
     {
