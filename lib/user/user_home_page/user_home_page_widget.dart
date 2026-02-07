@@ -312,10 +312,13 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                   updateCallback: () => safeSetState(() {}),
                   child: CarouselUserComponentWidget(),
                 ),
-                wrapWithModel(
-                  model: _model.cardProductsSectionModel,
-                  updateCallback: () => safeSetState(() {}),
-                  child: CardProductsSectionWidget(),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+                  child: wrapWithModel(
+                    model: _model.cardProductsSectionModel,
+                    updateCallback: () => safeSetState(() {}),
+                    child: CardProductsSectionWidget(),
+                  ),
                 ),
               ],
             ),
