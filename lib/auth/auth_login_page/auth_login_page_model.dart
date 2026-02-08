@@ -13,19 +13,40 @@ import 'package:provider/provider.dart';
 class AuthLoginPageModel extends FlutterFlowModel<AuthLoginPageWidget> {
   ///  State fields for stateful widgets in this page.
 
+  final formKey = GlobalKey<FormState>();
   // State field(s) for email_L widget.
   FocusNode? emailLFocusNode;
   TextEditingController? emailLTextController;
   String? Function(BuildContext, String?)? emailLTextControllerValidator;
+  String? _emailLTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'email is required';
+    }
+
+    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+      return 'Has to be a valid email address.';
+    }
+    return null;
+  }
+
   // State field(s) for password_L widget.
   FocusNode? passwordLFocusNode;
   TextEditingController? passwordLTextController;
   late bool passwordLVisibility;
   String? Function(BuildContext, String?)? passwordLTextControllerValidator;
+  String? _passwordLTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Password is required';
+    }
+
+    return null;
+  }
 
   @override
   void initState(BuildContext context) {
+    emailLTextControllerValidator = _emailLTextControllerValidator;
     passwordLVisibility = false;
+    passwordLTextControllerValidator = _passwordLTextControllerValidator;
   }
 
   @override

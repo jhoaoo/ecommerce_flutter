@@ -1,2 +1,3 @@
-2026/02/03-12:35:52.975 31d8 Creating DB C:\Users\avale\AppData\Local\Temp\flutter_tools.f70e3e70\flutter_tools_chrome_device.c6cba7fa\Default\WebStorage\8\IndexedDB\indexeddb.leveldb since it was missing.
-2026/02/03-12:35:52.980 31d8 Reusing MANIFEST C:\Users\avale\AppData\Local\Temp\flutter_tools.f70e3e70\flutter_tools_chrome_device.c6cba7fa\Default\WebStorage\8\IndexedDB\indexeddb.leveldb/MANIFEST-000001
+2026/02/07-10:54:23.157 4408 Reusing MANIFEST C:\Users\avale\AppData\Local\Temp\flutter_tools.570da95f\flutter_tools_chrome_device.95fea822\Default\WebStorage\8\IndexedDB\indexeddb.leveldb/MANIFEST-000001
+2026/02/07-10:54:23.158 4408 Recovering log #3
+2026/02/07-10:54:23.159 4408 Reusing old log C:\Users\avale\AppData\Local\Temp\flutter_tools.570da95f\flutter_tools_chrome_device.95fea822\Default\WebStorage\8\IndexedDB\indexeddb.leveldb/000003.log 

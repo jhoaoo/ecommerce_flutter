@@ -7,10 +7,10 @@ export '/auth/auth_register_page/auth_register_page_widget.dart'
     show AuthRegisterPageWidget;
 export '/auth/auth_login_page/auth_login_page_widget.dart'
     show AuthLoginPageWidget;
-export '/user/order_user_page/order_user_page_widget.dart'
-    show OrderUserPageWidget;
-export '/user/cart_user_page/cart_user_page_widget.dart'
-    show CartUserPageWidget;
+export '/user/user_order_page/user_order_page_widget.dart'
+    show UserOrderPageWidget;
+export '/user/user_cart_page/user_cart_page_widget.dart'
+    show UserCartPageWidget;
 export '/admin/admin_dashboard_page/admin_dashboard_page_widget.dart'
     show AdminDashboardPageWidget;
 export '/seller/post_product_seller/post_product_seller_widget.dart'
@@ -25,3 +25,5 @@ export '/seller/orders_seller/orders_seller_widget.dart'
     show OrdersSellerWidget;
 export '/seller/earnings_seller/earnings_seller_widget.dart'
     show EarningsSellerWidget;
+export '/user/user_profile_page/user_profile_page_widget.dart'
+    show UserProfilePageWidget;

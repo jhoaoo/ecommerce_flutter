@@ -37,6 +37,11 @@ class CartsRecord extends FirestoreRecord {
   int get quantity => _quantity ?? 0;
   bool hasQuantity() => _quantity != null;
 
+  // "productRef" field.
+  DocumentReference? _productRef;
+  DocumentReference? get productRef => _productRef;
+  bool hasProductRef() => _productRef != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -44,6 +49,7 @@ class CartsRecord extends FirestoreRecord {
     _price = castToType<double>(snapshotData['price']);
     _image = snapshotData['image'] as String?;
     _quantity = castToType<int>(snapshotData['quantity']);
+    _productRef = snapshotData['productRef'] as DocumentReference?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -89,6 +95,7 @@ Map<String, dynamic> createCartsRecordData({
   double? price,
   String? image,
   int? quantity,
+  DocumentReference? productRef,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -96,6 +103,7 @@ Map<String, dynamic> createCartsRecordData({
       'price': price,
       'image': image,
       'quantity': quantity,
+      'productRef': productRef,
     }.withoutNulls,
   );
 
@@ -110,12 +118,13 @@ class CartsRecordDocumentEquality implements Equality<CartsRecord> {
     return e1?.productsCard == e2?.productsCard &&
         e1?.price == e2?.price &&
         e1?.image == e2?.image &&
-        e1?.quantity == e2?.quantity;
+        e1?.quantity == e2?.quantity &&
+        e1?.productRef == e2?.productRef;
   }
 
   @override
   int hash(CartsRecord? e) => const ListEquality()
-      .hash([e?.productsCard, e?.price, e?.image, e?.quantity]);
+      .hash([e?.productsCard, e?.price, e?.image, e?.quantity, e?.productRef]);
 
   @override
   bool isValidKey(Object? o) => o is CartsRecord;

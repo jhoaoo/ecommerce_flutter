@@ -11,6 +11,7 @@
         "cached_network_image",
         "cached_network_image_platform_interface",
         "cached_network_image_web",
+        "carousel_slider",
         "cloud_firestore",
         "cloud_firestore_platform_interface",
         "cloud_firestore_web",
@@ -80,7 +81,6 @@
         "sign_in_with_apple",
         "sign_in_with_apple_platform_interface",
         "sign_in_with_apple_web",
-        "smooth_page_indicator",
         "sqflite",
         "sqflite_common",
         "stream_transform",
@@ -305,13 +305,6 @@
         "flutter",
         "path",
         "sqflite_common"
-      ]
-    },
-    {
-      "name": "smooth_page_indicator",
-      "version": "1.1.0",
-      "dependencies": [
-        "flutter"
       ]
     },
     {
@@ -954,6 +947,13 @@
         "firebase_core_platform_interface",
         "flutter",
         "meta"
+      ]
+    },
+    {
+      "name": "carousel_slider",
+      "version": "5.0.0",
+      "dependencies": [
+        "flutter"
       ]
     },
     {

@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
-
+import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 
 import '/auth/base_auth_user_provider.dart';
@@ -116,14 +116,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AuthLoginPageWidget(),
         ),
         FFRoute(
-          name: OrderUserPageWidget.routeName,
-          path: OrderUserPageWidget.routePath,
-          builder: (context, params) => OrderUserPageWidget(),
+          name: UserOrderPageWidget.routeName,
+          path: UserOrderPageWidget.routePath,
+          builder: (context, params) => UserOrderPageWidget(),
         ),
         FFRoute(
-          name: CartUserPageWidget.routeName,
-          path: CartUserPageWidget.routePath,
-          builder: (context, params) => CartUserPageWidget(),
+          name: UserCartPageWidget.routeName,
+          path: UserCartPageWidget.routePath,
+          builder: (context, params) => UserCartPageWidget(),
         ),
         FFRoute(
           name: AdminDashboardPageWidget.routeName,
@@ -159,6 +159,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: EarningsSellerWidget.routeName,
           path: EarningsSellerWidget.routePath,
           builder: (context, params) => EarningsSellerWidget(),
+        ),
+        FFRoute(
+          name: UserProfilePageWidget.routeName,
+          path: UserProfilePageWidget.routePath,
+          builder: (context, params) => UserProfilePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -278,6 +283,7 @@ class FFParameters {
     ParamType type, {
     bool isList = false,
     List<String>? collectionNamePath,
+    StructBuilder<T>? structBuilder,
   }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -296,6 +302,7 @@ class FFParameters {
       type,
       isList,
       collectionNamePath: collectionNamePath,
+      structBuilder: structBuilder,
     );
   }
 }
