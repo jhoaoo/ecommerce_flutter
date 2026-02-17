@@ -43,6 +43,8 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget> {
 
     _model.birthdateEditTextController ??= TextEditingController();
     _model.birthdateEditFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

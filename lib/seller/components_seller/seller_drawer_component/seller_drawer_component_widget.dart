@@ -31,6 +31,8 @@ class _SellerDrawerComponentWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => SellerDrawerComponentModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

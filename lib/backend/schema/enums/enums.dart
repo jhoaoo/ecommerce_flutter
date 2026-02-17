@@ -6,6 +6,12 @@ enum UserRole {
   user,
 }
 
+enum OrderStatus {
+  created,
+  pending,
+  sent,
+}
+
 extension FFEnumExtensions<T extends Enum> on T {
   String serialize() => name;
 }
@@ -19,6 +25,8 @@ T? deserializeEnum<T>(String? value) {
   switch (T) {
     case (UserRole):
       return UserRole.values.deserialize(value) as T?;
+    case (OrderStatus):
+      return OrderStatus.values.deserialize(value) as T?;
     default:
       return null;
   }

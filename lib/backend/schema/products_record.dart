@@ -58,8 +58,8 @@ class ProductsRecord extends FirestoreRecord {
   bool hasCreatedAt() => _createdAt != null;
 
   // "categories" field.
-  List<DocumentReference>? _categories;
-  List<DocumentReference> get categories => _categories ?? const [];
+  List<CategoriesDTStruct>? _categories;
+  List<CategoriesDTStruct> get categories => _categories ?? const [];
   bool hasCategories() => _categories != null;
 
   void _initializeFields() {
@@ -71,7 +71,10 @@ class ProductsRecord extends FirestoreRecord {
     _images = snapshotData['images'] as String?;
     _isActive = snapshotData['isActive'] as bool?;
     _createdAt = snapshotData['createdAt'] as DateTime?;
-    _categories = getDataList(snapshotData['categories']);
+    _categories = getStructList(
+      snapshotData['categories'],
+      CategoriesDTStruct.fromMap,
+    );
   }
 
   static CollectionReference get collection =>

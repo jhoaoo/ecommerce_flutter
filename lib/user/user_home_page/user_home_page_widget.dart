@@ -36,6 +36,8 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -73,9 +75,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primary,
-                  ),
+                  decoration: BoxDecoration(),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -88,8 +88,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                           fillColor: Color(0x004E3F78),
                           icon: Icon(
                             Icons.dehaze,
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
+                            color: FlutterFlowTheme.of(context).primary,
                             size: 24.0,
                           ),
                           onPressed: () async {
@@ -143,6 +142,8 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                             .labelMedium
                                             .fontStyle,
                                       ),
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                       letterSpacing: 0.0,
                                       fontWeight: FlutterFlowTheme.of(context)
                                           .labelMedium
@@ -180,8 +181,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                   borderRadius: BorderRadius.circular(24.0),
                                 ),
                                 filled: true,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                fillColor: Color(0x541E293B),
                                 prefixIcon: Icon(
                                   FontAwesomeIcons.search,
                                 ),
@@ -201,7 +201,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                           .fontStyle,
                                     ),
                                     color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
+                                        .primaryBackground,
                                     letterSpacing: 0.0,
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -319,7 +319,10 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                   child: wrapWithModel(
                     model: _model.cardProductsSectionModel,
                     updateCallback: () => safeSetState(() {}),
-                    child: CardProductsSectionWidget(),
+                    child: CardProductsSectionWidget(
+                      selectedCategory:
+                          _model.carouselUserComponentModel.selectedCategory,
+                    ),
                   ),
                 ),
               ].divide(SizedBox(height: 8.0)),

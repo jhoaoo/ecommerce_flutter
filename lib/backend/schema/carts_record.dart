@@ -17,11 +17,6 @@ class CartsRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "productsCard" field.
-  String? _productsCard;
-  String get productsCard => _productsCard ?? '';
-  bool hasProductsCard() => _productsCard != null;
-
   // "price" field.
   double? _price;
   double get price => _price ?? 0.0;
@@ -42,14 +37,25 @@ class CartsRecord extends FirestoreRecord {
   DocumentReference? get productRef => _productRef;
   bool hasProductRef() => _productRef != null;
 
+  // "productName" field.
+  String? _productName;
+  String get productName => _productName ?? '';
+  bool hasProductName() => _productName != null;
+
+  // "id" field.
+  String? _id;
+  String get id => _id ?? '';
+  bool hasId() => _id != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
-    _productsCard = snapshotData['productsCard'] as String?;
     _price = castToType<double>(snapshotData['price']);
     _image = snapshotData['image'] as String?;
     _quantity = castToType<int>(snapshotData['quantity']);
     _productRef = snapshotData['productRef'] as DocumentReference?;
+    _productName = snapshotData['productName'] as String?;
+    _id = snapshotData['id'] as String?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -91,19 +97,21 @@ class CartsRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createCartsRecordData({
-  String? productsCard,
   double? price,
   String? image,
   int? quantity,
   DocumentReference? productRef,
+  String? productName,
+  String? id,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'productsCard': productsCard,
       'price': price,
       'image': image,
       'quantity': quantity,
       'productRef': productRef,
+      'productName': productName,
+      'id': id,
     }.withoutNulls,
   );
 
@@ -115,16 +123,17 @@ class CartsRecordDocumentEquality implements Equality<CartsRecord> {
 
   @override
   bool equals(CartsRecord? e1, CartsRecord? e2) {
-    return e1?.productsCard == e2?.productsCard &&
-        e1?.price == e2?.price &&
+    return e1?.price == e2?.price &&
         e1?.image == e2?.image &&
         e1?.quantity == e2?.quantity &&
-        e1?.productRef == e2?.productRef;
+        e1?.productRef == e2?.productRef &&
+        e1?.productName == e2?.productName &&
+        e1?.id == e2?.id;
   }
 
   @override
-  int hash(CartsRecord? e) => const ListEquality()
-      .hash([e?.productsCard, e?.price, e?.image, e?.quantity, e?.productRef]);
+  int hash(CartsRecord? e) => const ListEquality().hash(
+      [e?.price, e?.image, e?.quantity, e?.productRef, e?.productName, e?.id]);
 
   @override
   bool isValidKey(Object? o) => o is CartsRecord;

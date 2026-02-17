@@ -1,0 +1,81 @@
+[33mcommit 95feb7e761645969c82da7ced326b047f30f215c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdeveloping_seller_side[m[33m)[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Mon Feb 16 20:56:39 2026 -0500
+
+    User module completion: UI improvements and functional database connection
+
+[33mcommit 11bceb134d90c92235bbd8dfe74042a569dd3aac[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Mon Feb 16 20:54:26 2026 -0500
+
+    User module completion: UI improvements and functional database connection
+
+[33mcommit b2da151ae692f228e1d402bb5409795d0aa83ed9[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Mon Feb 16 20:46:33 2026 -0500
+
+    User section functional with database connection, design polishing still required
+
+[33mcommit f73c3748e15555e5bf00b80903e57eb817f39e2d[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Mon Feb 16 20:42:09 2026 -0500
+
+    fix: remove exposed Stripe secret and use env variables
+
+[33mcommit aa53a58b8624b4966987ac0e55fe8e162b6e22f7[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Mon Feb 9 22:26:44 2026 -0500
+
+    Create checkout page and test ecommerce
+
+[33mcommit 62694303f93d31ebd802924728a24df4f05b171b[m[33m ([m[1;31morigin/developing_seller_side[m[33m)[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Sat Feb 7 22:44:41 2026 -0500
+
+    add profile page, fix drawer, and redesign user home page
+    
+    Pending:
+    - Checkout page
+    - Product filters (most popular, categories functionality)
+
+[33mcommit 7e85623e86d09231629671cabd48f0725f64ce3d[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Fri Feb 6 22:11:50 2026 -0500
+
+    Implement product actions, complete product details page and cart page, and fix user_home_page actions. Pending: add stock management.
+
+[33mcommit 95456cbbd6949924e95628bae83fd7d65744baad[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Thu Feb 5 22:16:53 2026 -0500
+
+    categories_select_and_view_products_inuserhomepage
+
+[33mcommit 192bd4e2495a6c22c8bba72f4e88cff9326d7185[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Wed Feb 4 23:18:46 2026 -0500
+
+    Categories_crud
+
+[33mcommit 045eb04c2f3a597903207e3bca7ac8ea3e80a61c[m[33m ([m[1;32mdevelop[m[33m)[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Wed Feb 4 21:30:15 2026 -0500
+
+    seller page
+
+[33mcommit afc9b243392bc6027a3b571bb5ae71bbe73a841b[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mmain[m[33m)[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Tue Feb 3 11:04:53 2026 -0500
+
+    upload image to firebase
+
+[33mcommit 1417bea8e6264deb7edf695049633720e7267590[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Mon Feb 2 22:06:48 2026 -0500
+
+    post_product
+
+[33mcommit 814ee5ae8332570839f75ca4bd6df6332e227e63[m[33m ([m[1;32mtest1[m[33m)[m
+Author: jhoaoo <jhoaoollerena@gmail.com>
+Date:   Thu Jan 29 20:22:41 2026 -0500
+
+    test

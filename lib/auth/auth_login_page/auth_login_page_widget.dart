@@ -36,6 +36,8 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
 
     _model.passwordLTextController ??= TextEditingController();
     _model.passwordLFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -62,69 +64,63 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(30.0, 50.0, 0.0, 0.0),
-                    child: Text(
-                      'Hello World',
-                      textAlign: TextAlign.start,
-                      style:
-                          FlutterFlowTheme.of(context).headlineLarge.override(
-                        font: GoogleFonts.interTight(
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .headlineLarge
-                              .fontWeight,
-                          fontStyle: FlutterFlowTheme.of(context)
-                              .headlineLarge
-                              .fontStyle,
-                        ),
-                        letterSpacing: 0.0,
-                        fontWeight: FlutterFlowTheme.of(context)
-                            .headlineLarge
-                            .fontWeight,
-                        fontStyle: FlutterFlowTheme.of(context)
-                            .headlineLarge
-                            .fontStyle,
-                        shadows: [
-                          Shadow(
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            offset: Offset(2.0, 2.0),
-                            blurRadius: 2.0,
-                          )
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: Image.network(
+                        'https://images.unsplash.com/photo-1472552944129-b035e9ea3744?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwzfHxuaWdodCUyMHNreXxlbnwwfHx8fDE3NzA0NzI3NTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+                      ).image,
+                    ),
+                    border: Border.all(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                    ),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0x00FFFFFF),
+                          FlutterFlowTheme.of(context).secondaryBackground
                         ],
+                        stops: [0.0, 1.0],
+                        begin: AlignmentDirectional(0.0, -1.0),
+                        end: AlignmentDirectional(0, 1.0),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Opacity(
-                    opacity: 0.7,
-                    child: Container(
-                      width: 100.0,
-                      height: 100.0,
-                      decoration: BoxDecoration(
+                      border: Border.all(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
-                        shape: BoxShape.rectangle,
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          'https://picsum.photos/seed/30/600',
-                          width: 0.0,
-                          fit: BoxFit.cover,
-                        ),
+                    ),
+                    child: Align(
+                      alignment: AlignmentDirectional(0.0, 1.0),
+                      child: Text(
+                        'Welcome to your best experience!',
+                        textAlign: TextAlign.center,
+                        style:
+                            FlutterFlowTheme.of(context).displayMedium.override(
+                                  font: GoogleFonts.interTight(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .displayMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .displayMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .displayMedium
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .displayMedium
+                                      .fontStyle,
+                                ),
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
               Form(
                 key: _model.formKey,
@@ -574,7 +570,10 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                           ),
                         ],
                       ),
-                    ].divide(SizedBox(height: 16.0)),
+                    ]
+                        .divide(SizedBox(height: 16.0))
+                        .addToStart(SizedBox(height: 16.0))
+                        .addToEnd(SizedBox(height: 16.0)),
                   ),
                 ),
               ),

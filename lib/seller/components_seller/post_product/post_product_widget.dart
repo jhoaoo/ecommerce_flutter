@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
@@ -122,6 +123,8 @@ class _PostProductWidgetState extends State<PostProductWidget>
         ],
       ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -1210,9 +1213,22 @@ class _PostProductWidgetState extends State<PostProductWidget>
                         cateSCategoriesRecordList.map((e) => e.name).toList(),
                     onChanged: (val) async {
                       safeSetState(() => _model.dropDownValue = val);
-                      if (!_model.localCategories
-                          .contains(_model.dropDownValue)) {
-                        _model.addToLocalCategories(_model.dropDownValue!);
+                      if (!_model.localCategories.contains(CategoriesDTStruct(
+                        categoryName: _model.dropDownValue,
+                        categoryRef: cateSCategoriesRecordList
+                            .where((e) => e.name == _model.dropDownValue)
+                            .toList()
+                            .firstOrNull
+                            ?.reference,
+                      ))) {
+                        _model.addToLocalCategories(CategoriesDTStruct(
+                          categoryName: _model.dropDownValue,
+                          categoryRef: cateSCategoriesRecordList
+                              .where((e) => e.name == _model.dropDownValue)
+                              .toList()
+                              .firstOrNull
+                              ?.reference,
+                        ));
                         safeSetState(() {});
                       }
                     },
@@ -1254,7 +1270,7 @@ class _PostProductWidgetState extends State<PostProductWidget>
                   ),
                   Builder(
                     builder: (context) {
-                      final testCategories =
+                      final categoryItem =
                           _model.localCategories.map((e) => e).toList();
 
                       return Wrap(
@@ -1266,10 +1282,10 @@ class _PostProductWidgetState extends State<PostProductWidget>
                         runAlignment: WrapAlignment.start,
                         verticalDirection: VerticalDirection.down,
                         clipBehavior: Clip.none,
-                        children: List.generate(testCategories.length,
-                            (testCategoriesIndex) {
-                          final testCategoriesItem =
-                              testCategories[testCategoriesIndex];
+                        children: List.generate(categoryItem.length,
+                            (categoryItemIndex) {
+                          final categoryItemItem =
+                              categoryItem[categoryItemIndex];
                           return Padding(
                             padding: EdgeInsets.all(2.0),
                             child: Container(
@@ -1285,7 +1301,7 @@ class _PostProductWidgetState extends State<PostProductWidget>
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      testCategoriesItem,
+                                      categoryItemItem.categoryName,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -1318,8 +1334,8 @@ class _PostProductWidgetState extends State<PostProductWidget>
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        _model.removeFromLocalCategories(
-                                            testCategoriesItem);
+                                        _model.removeAtIndexFromLocalCategories(
+                                            categoryItemIndex);
                                         safeSetState(() {});
                                       },
                                       child: Icon(
@@ -1462,22 +1478,6 @@ class _PostProductWidgetState extends State<PostProductWidget>
                                       }
                                     }
 
-                                    for (int loop1Index = 0;
-                                        loop1Index <
-                                            _model.localCategories.length;
-                                        loop1Index++) {
-                                      final currentLoop1Item =
-                                          _model.localCategories[loop1Index];
-                                      _model.addToDocumentLocalC(
-                                          cateSCategoriesRecordList
-                                              .where((e) =>
-                                                  e.name == currentLoop1Item)
-                                              .toList()
-                                              .firstOrNull!
-                                              .reference);
-                                      safeSetState(() {});
-                                    }
-
                                     await ProductsRecord.collection.doc().set({
                                       ...createProductsRecordData(
                                         title: _model
@@ -1499,7 +1499,10 @@ class _PostProductWidgetState extends State<PostProductWidget>
                                       ),
                                       ...mapToFirestore(
                                         {
-                                          'categories': _model.documentLocalC,
+                                          'categories':
+                                              getCategoriesDTListFirestoreData(
+                                            _model.localCategories,
+                                          ),
                                         },
                                       ),
                                     });

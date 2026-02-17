@@ -151,19 +151,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ProductsSellerWidget(),
         ),
         FFRoute(
+          name: UserProfilePageWidget.routeName,
+          path: UserProfilePageWidget.routePath,
+          builder: (context, params) => UserProfilePageWidget(),
+        ),
+        FFRoute(
+          name: UserAddressesPageWidget.routeName,
+          path: UserAddressesPageWidget.routePath,
+          builder: (context, params) => UserAddressesPageWidget(),
+        ),
+        FFRoute(
           name: OrdersSellerWidget.routeName,
           path: OrdersSellerWidget.routePath,
           builder: (context, params) => OrdersSellerWidget(),
         ),
         FFRoute(
-          name: EarningsSellerWidget.routeName,
-          path: EarningsSellerWidget.routePath,
-          builder: (context, params) => EarningsSellerWidget(),
-        ),
-        FFRoute(
-          name: UserProfilePageWidget.routeName,
-          path: UserProfilePageWidget.routePath,
-          builder: (context, params) => UserProfilePageWidget(),
+          name: UserDetailPageWidget.routeName,
+          path: UserDetailPageWidget.routePath,
+          asyncParams: {
+            'orderDoc': getDoc(['orders'], OrdersRecord.fromSnapshot),
+          },
+          builder: (context, params) => UserDetailPageWidget(
+            orderDoc: params.getParam(
+              'orderDoc',
+              ParamType.Document,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

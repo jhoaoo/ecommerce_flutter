@@ -28,6 +28,8 @@ class _AuthInicialPageWidgetState extends State<AuthInicialPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AuthInicialPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

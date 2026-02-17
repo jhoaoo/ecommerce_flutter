@@ -32,6 +32,8 @@ class _UserDrawerComponentWidgetState extends State<UserDrawerComponentWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UserDrawerComponentModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

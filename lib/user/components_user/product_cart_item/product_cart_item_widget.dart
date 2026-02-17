@@ -48,6 +48,8 @@ class _ProductCartItemWidgetState extends State<ProductCartItemWidget> {
       _model.counterHelper = widget!.cartDT!.quantity;
       safeSetState(() {});
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -102,7 +104,7 @@ class _ProductCartItemWidgetState extends State<ProductCartItemWidget> {
                       Expanded(
                         child: Text(
                           valueOrDefault<String>(
-                            widget!.cartDT?.productCards,
+                            widget!.cartDT?.productName,
                             'tittle',
                           ),
                           maxLines: 2,

@@ -1,23 +1,22 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/flutter_flow/flutter_flow_count_controller.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
-import 'carousel_user_component_widget.dart' show CarouselUserComponentWidget;
+import 'details_products_widget.dart' show DetailsProductsWidget;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class CarouselUserComponentModel
-    extends FlutterFlowModel<CarouselUserComponentWidget> {
-  ///  Local state fields for this component.
+class DetailsProductsModel extends FlutterFlowModel<DetailsProductsWidget> {
+  ///  State fields for stateful widgets in this component.
 
-  CategoriesDTStruct? selectedCategory;
-  void updateSelectedCategoryStruct(Function(CategoriesDTStruct) updateFn) {
-    updateFn(selectedCategory ??= CategoriesDTStruct());
-  }
+  // State field(s) for CountController widget.
+  int? countControllerValue;
 
   @override
   void initState(BuildContext context) {}

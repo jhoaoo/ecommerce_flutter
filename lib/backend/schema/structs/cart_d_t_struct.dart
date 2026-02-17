@@ -14,16 +14,18 @@ class CartDTStruct extends FFFirebaseStruct {
     int? quantity,
     DocumentReference? productRef,
     String? image,
-    String? productCards,
+    String? productName,
     double? price,
     DocumentReference? cartRef,
+    DateTime? time,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _quantity = quantity,
         _productRef = productRef,
         _image = image,
-        _productCards = productCards,
+        _productName = productName,
         _price = price,
         _cartRef = cartRef,
+        _time = time,
         super(firestoreUtilData);
 
   // "quantity" field.
@@ -49,12 +51,12 @@ class CartDTStruct extends FFFirebaseStruct {
 
   bool hasImage() => _image != null;
 
-  // "productCards" field.
-  String? _productCards;
-  String get productCards => _productCards ?? '';
-  set productCards(String? val) => _productCards = val;
+  // "productName" field.
+  String? _productName;
+  String get productName => _productName ?? '';
+  set productName(String? val) => _productName = val;
 
-  bool hasProductCards() => _productCards != null;
+  bool hasProductName() => _productName != null;
 
   // "price" field.
   double? _price;
@@ -72,13 +74,21 @@ class CartDTStruct extends FFFirebaseStruct {
 
   bool hasCartRef() => _cartRef != null;
 
+  // "time" field.
+  DateTime? _time;
+  DateTime? get time => _time;
+  set time(DateTime? val) => _time = val;
+
+  bool hasTime() => _time != null;
+
   static CartDTStruct fromMap(Map<String, dynamic> data) => CartDTStruct(
         quantity: castToType<int>(data['quantity']),
         productRef: data['productRef'] as DocumentReference?,
         image: data['image'] as String?,
-        productCards: data['productCards'] as String?,
+        productName: data['productName'] as String?,
         price: castToType<double>(data['price']),
         cartRef: data['cartRef'] as DocumentReference?,
+        time: data['time'] as DateTime?,
       );
 
   static CartDTStruct? maybeFromMap(dynamic data) =>
@@ -88,9 +98,10 @@ class CartDTStruct extends FFFirebaseStruct {
         'quantity': _quantity,
         'productRef': _productRef,
         'image': _image,
-        'productCards': _productCards,
+        'productName': _productName,
         'price': _price,
         'cartRef': _cartRef,
+        'time': _time,
       }.withoutNulls;
 
   @override
@@ -107,8 +118,8 @@ class CartDTStruct extends FFFirebaseStruct {
           _image,
           ParamType.String,
         ),
-        'productCards': serializeParam(
-          _productCards,
+        'productName': serializeParam(
+          _productName,
           ParamType.String,
         ),
         'price': serializeParam(
@@ -118,6 +129,10 @@ class CartDTStruct extends FFFirebaseStruct {
         'cartRef': serializeParam(
           _cartRef,
           ParamType.DocumentReference,
+        ),
+        'time': serializeParam(
+          _time,
+          ParamType.DateTime,
         ),
       }.withoutNulls;
 
@@ -139,8 +154,8 @@ class CartDTStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
-        productCards: deserializeParam(
-          data['productCards'],
+        productName: deserializeParam(
+          data['productName'],
           ParamType.String,
           false,
         ),
@@ -155,6 +170,11 @@ class CartDTStruct extends FFFirebaseStruct {
           false,
           collectionNamePath: ['user', 'carts'],
         ),
+        time: deserializeParam(
+          data['time'],
+          ParamType.DateTime,
+          false,
+        ),
       );
 
   @override
@@ -166,23 +186,25 @@ class CartDTStruct extends FFFirebaseStruct {
         quantity == other.quantity &&
         productRef == other.productRef &&
         image == other.image &&
-        productCards == other.productCards &&
+        productName == other.productName &&
         price == other.price &&
-        cartRef == other.cartRef;
+        cartRef == other.cartRef &&
+        time == other.time;
   }
 
   @override
   int get hashCode => const ListEquality()
-      .hash([quantity, productRef, image, productCards, price, cartRef]);
+      .hash([quantity, productRef, image, productName, price, cartRef, time]);
 }
 
 CartDTStruct createCartDTStruct({
   int? quantity,
   DocumentReference? productRef,
   String? image,
-  String? productCards,
+  String? productName,
   double? price,
   DocumentReference? cartRef,
+  DateTime? time,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -192,9 +214,10 @@ CartDTStruct createCartDTStruct({
       quantity: quantity,
       productRef: productRef,
       image: image,
-      productCards: productCards,
+      productName: productName,
       price: price,
       cartRef: cartRef,
+      time: time,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

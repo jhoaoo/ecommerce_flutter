@@ -21,9 +21,11 @@ export '/seller/dashboard_seller/dashboard_seller_widget.dart'
     show DashboardSellerWidget;
 export '/seller/products_seller/products_seller_widget.dart'
     show ProductsSellerWidget;
-export '/seller/orders_seller/orders_seller_widget.dart'
-    show OrdersSellerWidget;
-export '/seller/earnings_seller/earnings_seller_widget.dart'
-    show EarningsSellerWidget;
 export '/user/user_profile_page/user_profile_page_widget.dart'
     show UserProfilePageWidget;
+export '/user/user_addresses_page/user_addresses_page_widget.dart'
+    show UserAddressesPageWidget;
+export '/seller/orders_seller/orders_seller_widget.dart'
+    show OrdersSellerWidget;
+export '/user/user_detail_page/user_detail_page_widget.dart'
+    show UserDetailPageWidget;

@@ -27,6 +27,8 @@ class _ProductsSellerWidgetState extends State<ProductsSellerWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ProductsSellerModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

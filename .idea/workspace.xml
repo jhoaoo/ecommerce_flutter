@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b84a2618-9ca4-4fb7-a624-f0db35883ab0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/BrowsingTopicsState" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/BrowsingTopicsState" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/DIPS" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/DIPS" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Rules/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Rules/000003.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Rules/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Rules/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Rules/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Rules/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Scripts/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Scripts/000003.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Scripts/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Scripts/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Scripts/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension Scripts/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension State/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension State/000003.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension State/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension State/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension State/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Extension State/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Favicons" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Favicons" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/GCM Store/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/GCM Store/000003.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/GCM Store/Encryption/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/GCM Store/Encryption/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/GCM Store/Encryption/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/GCM Store/Encryption/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/GCM Store/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/GCM Store/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/History" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/History" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/MANIFEST-000001" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/MANIFEST-000001" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Login Data" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Login Data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Network Action Predictor" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Network Action Predictor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Network/Cookies" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Network/Cookies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Network/Network Persistent State" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Network/Network Persistent State" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Network/Reporting and NEL" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Network/Reporting and NEL" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Network/TransportSecurity" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Network/TransportSecurity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Preferences" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Preferences" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Secure Preferences" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Secure Preferences" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Service Worker/Database/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Service Worker/Database/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Service Worker/Database/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Service Worker/Database/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Service Worker/ScriptCache/index-dir/the-real-index" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Service Worker/ScriptCache/index-dir/the-real-index" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Session Storage/000004.log" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Session Storage/000004.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Session Storage/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Session Storage/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Session Storage/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Session Storage/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Shared Dictionary/cache/index-dir/the-real-index" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Shared Dictionary/cache/index-dir/the-real-index" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Site Characteristics Database/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Site Characteristics Database/000003.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Site Characteristics Database/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Site Characteristics Database/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Site Characteristics Database/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Site Characteristics Database/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Sync Data/LevelDB/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Sync Data/LevelDB/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Sync Data/LevelDB/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Sync Data/LevelDB/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Web Data" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Web Data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/WebStorage/QuotaManager" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/WebStorage/QuotaManager" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/passkey_enclave_state" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/passkey_enclave_state" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/000019.log" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/000019.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/MANIFEST-000001" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/MANIFEST-000001" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/metadata/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/metadata/000003.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/metadata/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/metadata/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/metadata/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/shared_proto_db/metadata/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/210bad4901163cba762d02a4a1c86c00.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/210bad4901163cba762d02a4a1c86c00.cache.dill.track.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/admin/admin_dashboard_page/admin_dashboard_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/admin/admin_dashboard_page/admin_dashboard_page_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/admin/component_admin/create_categorie_admin/create_categorie_admin_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/admin/component_admin/create_categorie_admin/create_categorie_admin_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/admin/component_admin/update_categorie_admin/update_categorie_admin_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/admin/component_admin/update_categorie_admin/update_categorie_admin_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/auth/auth_inicial_page/auth_inicial_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/auth/auth_inicial_page/auth_inicial_page_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/auth/auth_login_page/auth_login_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/auth/auth_login_page/auth_login_page_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/auth/auth_register_page/auth_register_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/auth/auth_register_page/auth_register_page_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/auth/component_auth/auth_verification_page/auth_verification_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/auth/component_auth/auth_verification_page/auth_verification_page_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/backend/api_requests/api_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/backend/api_requests/api_manager.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/backend/schema/products_record.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/backend/schema/products_record.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/backend/schema/structs/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/backend/schema/structs/index.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/seller/components_seller/cards_component/cards_component_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/seller/components_seller/cards_component/cards_component_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/seller/components_seller/post_product/post_product_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/seller/components_seller/post_product/post_product_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/seller/components_seller/post_product/post_product_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/seller/components_seller/post_product/post_product_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/seller/components_seller/select_category/select_category_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/seller/components_seller/select_category/select_category_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/seller/components_seller/seller_drawer_component/seller_drawer_component_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/seller/components_seller/seller_drawer_component/seller_drawer_component_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/seller/dashboard_seller/dashboard_seller_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/seller/dashboard_seller/dashboard_seller_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/seller/orders_seller/orders_seller_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/seller/orders_seller/orders_seller_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/seller/post_product_seller/post_product_seller_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/seller/post_product_seller/post_product_seller_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/seller/post_product_seller/post_product_seller_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/seller/post_product_seller/post_product_seller_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/seller/products_seller/products_seller_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/seller/products_seller/products_seller_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/components_user/card_products_section/card_products_section_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/components_user/card_products_section/card_products_section_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/components_user/card_products_section/card_products_section_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/components_user/card_products_section/card_products_section_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/components_user/carousel_user_component/carousel_user_component_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/components_user/carousel_user_component/carousel_user_component_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/components_user/carousel_user_component/carousel_user_component_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/components_user/carousel_user_component/carousel_user_component_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/components_user/maps/maps_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/components_user/maps/maps_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/components_user/product_cart_item/product_cart_item_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/components_user/product_cart_item/product_cart_item_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/components_user/sales_history/sales_history_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/components_user/sales_history/sales_history_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/components_user/user_drawer_component/user_drawer_component_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/components_user/user_drawer_component/user_drawer_component_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/user_addresses_page/user_addresses_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/user_addresses_page/user_addresses_page_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/user_cart_page/user_cart_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/user_cart_page/user_cart_page_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/user_checkout_page/user_checkout_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/user_checkout_page/user_checkout_page_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/user_home_page/user_home_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/user_home_page/user_home_page_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/user_order_page/user_order_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/user_order_page/user_order_page_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/user/user_profile_page/user_profile_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/user_profile_page/user_profile_page_widget.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="39l7TwQeiw3pbMKPwM4VM6rOtqV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "developing__seller__side",
+    "last_opened_file_path": "C:/Users/avale/Desktop/ecommerce-qv6mg7"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b84a2618-9ca4-4fb7-a624-f0db35883ab0" name="Changes" comment="" />
+      <created>1771258814361</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1771258814361</updated>
+    </task>
+    <servers />
+  </component>
+</project>

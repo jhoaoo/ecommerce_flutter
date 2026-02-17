@@ -31,6 +31,8 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SelectCategoryModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

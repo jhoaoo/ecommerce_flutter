@@ -58,6 +58,8 @@ class _CreateCategorieAdminWidgetState extends State<CreateCategorieAdminWidget>
         ],
       ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

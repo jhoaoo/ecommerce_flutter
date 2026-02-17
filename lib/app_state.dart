@@ -30,4 +30,11 @@ class FFAppState extends ChangeNotifier {
   set countPrice(int value) {
     _countPrice = value;
   }
+
+  DocumentReference? _initialCategory =
+      FirebaseFirestore.instance.doc('/categories/M47lsoKS1bhGVytlP4yk');
+  DocumentReference? get initialCategory => _initialCategory;
+  set initialCategory(DocumentReference? value) {
+    _initialCategory = value;
+  }
 }

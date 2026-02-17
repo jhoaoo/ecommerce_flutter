@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
@@ -23,14 +24,17 @@ import 'package:provider/provider.dart';
 class PostProductModel extends FlutterFlowModel<PostProductWidget> {
   ///  Local state fields for this component.
 
-  List<String> localCategories = [];
-  void addToLocalCategories(String item) => localCategories.add(item);
-  void removeFromLocalCategories(String item) => localCategories.remove(item);
+  List<CategoriesDTStruct> localCategories = [];
+  void addToLocalCategories(CategoriesDTStruct item) =>
+      localCategories.add(item);
+  void removeFromLocalCategories(CategoriesDTStruct item) =>
+      localCategories.remove(item);
   void removeAtIndexFromLocalCategories(int index) =>
       localCategories.removeAt(index);
-  void insertAtIndexInLocalCategories(int index, String item) =>
+  void insertAtIndexInLocalCategories(int index, CategoriesDTStruct item) =>
       localCategories.insert(index, item);
-  void updateLocalCategoriesAtIndex(int index, Function(String) updateFn) =>
+  void updateLocalCategoriesAtIndex(
+          int index, Function(CategoriesDTStruct) updateFn) =>
       localCategories[index] = updateFn(localCategories[index]);
 
   List<DocumentReference> documentLocalC = [];

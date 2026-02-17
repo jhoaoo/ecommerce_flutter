@@ -50,13 +50,15 @@ class _UserCartPageWidgetState extends State<UserCartPageWidget> {
           quantity: currentLoop1Item.quantity,
           productRef: currentLoop1Item.productRef,
           image: currentLoop1Item.image,
-          productCards: currentLoop1Item.productsCard,
+          productName: currentLoop1Item.productName,
           price: currentLoop1Item.price,
           cartRef: currentLoop1Item.reference,
         ));
         safeSetState(() {});
       }
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

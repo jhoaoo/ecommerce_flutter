@@ -61,6 +61,8 @@ class _UpdateCategorieAdminWidgetState extends State<UpdateCategorieAdminWidget>
         ],
       ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

@@ -1,9 +1,11 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/seller/components_seller/post_product/post_product_widget.dart';
 import '/seller/components_seller/select_category/select_category_widget.dart';
+import '/user/details_products/details_products_widget.dart';
 import 'dart:ui';
 import 'post_product_seller_widget.dart' show PostProductSellerWidget;
 import 'package:flutter/material.dart';

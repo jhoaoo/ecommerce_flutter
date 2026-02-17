@@ -29,6 +29,8 @@ class _AdminDashboardPageWidgetState extends State<AdminDashboardPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AdminDashboardPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

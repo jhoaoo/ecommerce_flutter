@@ -32,6 +32,8 @@ class _AuthVerificationPageWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => AuthVerificationPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -91,7 +93,7 @@ class _AuthVerificationPageWidgetState
               onPressed: () async {
                 await authManager.refreshUser();
                 if (currentUserEmailVerified) {
-                  context.pushNamed(AuthLoginPageWidget.routeName);
+                  context.pushNamed(UserHomePageWidget.routeName);
                 } else {
                   await showDialog(
                     context: context,
