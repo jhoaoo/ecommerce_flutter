@@ -127,7 +127,7 @@ class FirebaseAuthManager extends AuthManager
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error: ${e.message!}')));
+        ).showSnackBar(SnackBar(content: Text('Error: ${e.message ?? e.code}')));
       }
     }
   }
@@ -143,7 +143,7 @@ class FirebaseAuthManager extends AuthManager
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Error: ${e.message!}')));
+      ).showSnackBar(SnackBar(content: Text('Error: ${e.message ?? e.code}')));
       return null;
     }
     ScaffoldMessenger.of(
@@ -210,7 +210,7 @@ class FirebaseAuthManager extends AuthManager
         final e = phoneAuthManager.phoneAuthError!;
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error: ${e.message!}')));
+        ).showSnackBar(SnackBar(content: Text('Error: ${e.message ?? e.code}')));
         phoneAuthManager.update(() => phoneAuthManager.phoneAuthError = null);
       }
     });
@@ -321,7 +321,7 @@ class FirebaseAuthManager extends AuthManager
           'Error: The email is already in use by a different account',
         'INVALID_LOGIN_CREDENTIALS' =>
           'Error: The supplied auth credential is incorrect, malformed or has expired',
-        _ => 'Error: ${e.message!}',
+        _ => 'Error: ${e.message ?? e.code}',
       };
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(

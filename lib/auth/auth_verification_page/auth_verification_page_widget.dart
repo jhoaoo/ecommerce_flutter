@@ -13,6 +13,9 @@ export 'auth_verification_page_model.dart';
 class AuthVerificationPageWidget extends StatefulWidget {
   const AuthVerificationPageWidget({super.key});
 
+  static String routeName = 'auth_verification_page';
+  static String routePath = '/authVerificationPage';
+
   @override
   State<AuthVerificationPageWidget> createState() =>
       _AuthVerificationPageWidgetState();

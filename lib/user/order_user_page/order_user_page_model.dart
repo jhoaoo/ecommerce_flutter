@@ -6,7 +6,6 @@ import '/user/sales_history/sales_history_widget.dart';
 import 'dart:ui';
 import 'order_user_page_widget.dart' show OrderUserPageWidget;
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 

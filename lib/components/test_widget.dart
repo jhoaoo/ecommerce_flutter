@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'test_model.dart';
@@ -61,8 +60,8 @@ class _TestWidgetState extends State<TestWidget> {
                 buttonSize: 40.0,
                 fillColor: Color(0x004E3F78),
 
-                icon: FaIcon(
-                  FontAwesomeIcons.trashAlt,
+                icon: Icon(
+                  Icons.delete_outline,
                   color: Colors.black,
                   size: 24.0,
                 ),
