@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'cart_user_page_model.dart';
@@ -20,7 +21,6 @@ class CartUserPageWidget extends StatefulWidget {
 
 class _CartUserPageWidgetState extends State<CartUserPageWidget> {
   late CartUserPageModel _model;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -35,35 +35,36 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
     super.dispose();
   }
 
-  Stream<QuerySnapshot> _cartStream() {
-    return FirebaseFirestore.instance
-        .collection('cart_items')
-        .where('userRef', isEqualTo: currentUserReference)
-        .orderBy('createdAt', descending: true)
-        .snapshots();
-  }
+  Stream<QuerySnapshot> get _cartStream => FirebaseFirestore.instance
+      .collection('cart_items')
+      .where('userRef', isEqualTo: currentUserReference)
+      .orderBy('createdAt', descending: true)
+      .snapshots();
 
-  double _cartTotal(List<QueryDocumentSnapshot> docs) {
-    return docs.fold<double>(0.0, (total, doc) {
+  double _total(List<QueryDocumentSnapshot> docs) {
+    return docs.fold<double>(0.0, (sum, doc) {
       final data = doc.data() as Map<String, dynamic>;
       final price = castToType<double>(data['price']) ?? 0.0;
-      final quantity = castToType<int>(data['quantity']) ?? 1;
-      return total + (price * quantity);
+      final qty = castToType<int>(data['quantity']) ?? 1;
+      return sum + (price * qty);
     });
   }
 
-  Future<void> _updateQuantity(DocumentReference ref, int current, int change) async {
-    final nextValue = current + change;
-    if (nextValue <= 0) {
+  Future<void> _changeQuantity(DocumentReference ref, int current, int change) async {
+    final next = current + change;
+    if (next <= 0) {
       await ref.delete();
-      return;
+    } else {
+      await ref.update({'quantity': next});
     }
-    await ref.update({'quantity': nextValue});
   }
 
-  Future<void> _removeItem(DocumentReference ref) async {
-    await ref.delete();
-  }
+  String _money(num value) => formatNumber(
+        value,
+        formatType: FormatType.decimal,
+        decimalType: DecimalType.periodDecimal,
+        currency: 'S/ ',
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -78,70 +79,47 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
         body: SafeArea(
           top: true,
           child: currentUserReference == null
-              ? _LoginRequiredMessage()
+              ? _centerMessage(context, 'Please sign in to view your cart.')
               : StreamBuilder<QuerySnapshot>(
-                  stream: _cartStream(),
+                  stream: _cartStream,
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       return Center(
-                        child: SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              FlutterFlowTheme.of(context).primary,
-                            ),
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            FlutterFlowTheme.of(context).primary,
                           ),
                         ),
                       );
                     }
 
-                    final cartDocs = snapshot.data!.docs;
-                    final total = _cartTotal(cartDocs);
+                    final docs = snapshot.data!.docs;
+                    final total = _total(docs);
 
                     return Column(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
-                        _CartHeader(onBack: () => context.safePop()),
+                        _header(context),
                         Expanded(
-                          child: cartDocs.isEmpty
-                              ? _EmptyCartMessage()
+                          child: docs.isEmpty
+                              ? _centerMessage(
+                                  context,
+                                  'Your cart is empty. Add products from the home page.',
+                                )
                               : ListView.separated(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       16.0, 8.0, 16.0, 16.0),
-                                  itemCount: cartDocs.length,
+                                  itemCount: docs.length,
                                   separatorBuilder: (_, __) =>
                                       SizedBox(height: 14.0),
                                   itemBuilder: (context, index) {
-                                    final doc = cartDocs[index];
+                                    final doc = docs[index];
                                     final data =
                                         doc.data() as Map<String, dynamic>;
-                                    return _CartItemCard(
-                                      data: data,
-                                      onRemove: () => _removeItem(doc.reference),
-                                      onIncrement: () => _updateQuantity(
-                                        doc.reference,
-                                        castToType<int>(data['quantity']) ?? 1,
-                                        1,
-                                      ),
-                                      onDecrement: () => _updateQuantity(
-                                        doc.reference,
-                                        castToType<int>(data['quantity']) ?? 1,
-                                        -1,
-                                      ),
-                                    );
+                                    return _cartItem(context, doc.reference, data);
                                   },
                                 ),
                         ),
-                        _CartSummary(
-                          itemCount: cartDocs.length,
-                          total: total,
-                          onCheckout: cartDocs.isEmpty
-                              ? null
-                              : () async {
-                                  context.pushNamed('user_checkout_page');
-                                },
-                        ),
+                        _footer(context, docs.length, total),
                       ],
                     );
                   },
@@ -150,19 +128,11 @@ class _CartUserPageWidgetState extends State<CartUserPageWidget> {
       ),
     );
   }
-}
 
-class _CartHeader extends StatelessWidget {
-  const _CartHeader({required this.onBack});
-
-  final VoidCallback onBack;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _header(BuildContext context) {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 20.0, 12.0),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         children: [
           FlutterFlowIconButton(
             borderRadius: 12.0,
@@ -173,24 +143,18 @@ class _CartHeader extends StatelessWidget {
               color: FlutterFlowTheme.of(context).primaryText,
               size: 22.0,
             ),
-            onPressed: onBack,
+            onPressed: () async => context.safePop(),
           ),
           Expanded(
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Your cart',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
-                          font: GoogleFonts.interTight(
-                            fontWeight: FontWeight.w900,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .headlineMedium
-                                .fontStyle,
-                          ),
+                          font: GoogleFonts.interTight(fontWeight: FontWeight.w900),
                           fontSize: 34.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w900,
@@ -199,14 +163,7 @@ class _CartHeader extends StatelessWidget {
                   Text(
                     'Review your selected products',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
+                          font: GoogleFonts.inter(),
                           color: FlutterFlowTheme.of(context).secondaryText,
                           letterSpacing: 0.0,
                         ),
@@ -219,44 +176,20 @@ class _CartHeader extends StatelessWidget {
       ),
     );
   }
-}
 
-class _CartItemCard extends StatelessWidget {
-  const _CartItemCard({
-    required this.data,
-    required this.onRemove,
-    required this.onIncrement,
-    required this.onDecrement,
-  });
-
-  final Map<String, dynamic> data;
-  final Future<void> Function() onRemove;
-  final Future<void> Function() onIncrement;
-  final Future<void> Function() onDecrement;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _cartItem(
+    BuildContext context,
+    DocumentReference ref,
+    Map<String, dynamic> data,
+  ) {
     final title = valueOrDefault<String>(data['title'] as String?, 'Product');
     final description =
         valueOrDefault<String>(data['description'] as String?, 'Selected item');
     final image = valueOrDefault<String>(data['image'] as String?, '');
     final price = castToType<double>(data['price']) ?? 0.0;
-    final quantity = castToType<int>(data['quantity']) ?? 1;
-    final priceText = formatNumber(
-      price,
-      formatType: FormatType.decimal,
-      decimalType: DecimalType.periodDecimal,
-      currency: 'S/ ',
-    );
-    final subtotalText = formatNumber(
-      price * quantity,
-      formatType: FormatType.decimal,
-      decimalType: DecimalType.periodDecimal,
-      currency: 'S/ ',
-    );
+    final qty = castToType<int>(data['quantity']) ?? 1;
 
     return Container(
-      width: double.infinity,
       padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -270,26 +203,27 @@ class _CartItemCard extends StatelessWidget {
         ],
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(14.0),
-            child: image.isNotEmpty
-                ? Image.network(
+            child: image.isEmpty
+                ? Container(
+                    width: 90.0,
+                    height: 90.0,
+                    color: FlutterFlowTheme.of(context).alternate,
+                    child: Icon(Icons.image_not_supported_outlined),
+                  )
+                : Image.network(
                     image,
                     width: 90.0,
                     height: 90.0,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => _ImageFallback(),
-                  )
-                : _ImageFallback(),
+                  ),
           ),
           Expanded(
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 8.0, 0.0),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -297,64 +231,40 @@ class _CartItemCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: FlutterFlowTheme.of(context).titleMedium.override(
-                          font: GoogleFonts.interTight(
-                            fontWeight: FontWeight.w800,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .fontStyle,
-                          ),
+                          font: GoogleFonts.interTight(fontWeight: FontWeight.w800),
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w800,
                         ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 6.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 8.0),
                     child: Text(
                       description,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: FlutterFlowTheme.of(context).bodySmall.override(
-                            font: GoogleFonts.inter(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                            ),
+                            font: GoogleFonts.inter(),
                             color: FlutterFlowTheme.of(context).secondaryText,
                             letterSpacing: 0.0,
                           ),
                     ),
                   ),
                   Row(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        priceText,
+                        _money(price),
                         style: FlutterFlowTheme.of(context).titleSmall.override(
-                              font: GoogleFonts.interTight(
-                                fontWeight: FontWeight.w800,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .fontStyle,
-                              ),
+                              font: GoogleFonts.interTight(fontWeight: FontWeight.w800),
                               color: FlutterFlowTheme.of(context).primary,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w800,
                             ),
                       ),
                       Text(
-                        subtotalText,
+                        _money(price * qty),
                         style: FlutterFlowTheme.of(context).bodySmall.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FontWeight.w700,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .fontStyle,
-                              ),
+                              font: GoogleFonts.inter(fontWeight: FontWeight.w700),
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w700,
                             ),
@@ -366,7 +276,6 @@ class _CartItemCard extends StatelessWidget {
             ),
           ),
           Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
               FlutterFlowIconButton(
                 borderRadius: 10.0,
@@ -377,7 +286,7 @@ class _CartItemCard extends StatelessWidget {
                   color: FlutterFlowTheme.of(context).error,
                   size: 20.0,
                 ),
-                onPressed: onRemove,
+                onPressed: () async => ref.delete(),
               ),
               Container(
                 margin: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
@@ -386,38 +295,26 @@ class _CartItemCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
                     InkWell(
-                      onTap: onDecrement,
+                      onTap: () => _changeQuantity(ref, qty, -1),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            6.0, 6.0, 6.0, 6.0),
-                        child: Icon(
-                          Icons.remove_rounded,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 18.0,
-                        ),
+                        padding: EdgeInsetsDirectional.fromSTEB(6.0, 6.0, 6.0, 6.0),
+                        child: Icon(Icons.remove_rounded, size: 18.0),
                       ),
                     ),
                     Text(
-                      quantity.toString(),
+                      qty.toString(),
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.inter(
-                              fontWeight: FontWeight.w800,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
+                            font: GoogleFonts.inter(fontWeight: FontWeight.w800),
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.w800,
                           ),
                     ),
                     InkWell(
-                      onTap: onIncrement,
+                      onTap: () => _changeQuantity(ref, qty, 1),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            6.0, 6.0, 6.0, 6.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(6.0, 6.0, 6.0, 6.0),
                         child: Icon(
                           Icons.add_rounded,
                           color: FlutterFlowTheme.of(context).primary,
@@ -434,30 +331,9 @@ class _CartItemCard extends StatelessWidget {
       ),
     );
   }
-}
 
-class _CartSummary extends StatelessWidget {
-  const _CartSummary({
-    required this.itemCount,
-    required this.total,
-    required this.onCheckout,
-  });
-
-  final int itemCount;
-  final double total;
-  final Future<void> Function()? onCheckout;
-
-  @override
-  Widget build(BuildContext context) {
-    final totalText = formatNumber(
-      total,
-      formatType: FormatType.decimal,
-      decimalType: DecimalType.periodDecimal,
-      currency: 'S/ ',
-    );
-
+  Widget _footer(BuildContext context, int itemCount, double total) {
     return Container(
-      width: double.infinity,
       padding: EdgeInsetsDirectional.fromSTEB(20.0, 16.0, 20.0, 20.0),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -470,33 +346,22 @@ class _CartSummary extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '$itemCount item${itemCount == 1 ? '' : 's'}',
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      font: GoogleFonts.inter(
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
+                      font: GoogleFonts.inter(),
                       color: FlutterFlowTheme.of(context).secondaryText,
                       letterSpacing: 0.0,
                     ),
               ),
               Text(
-                totalText,
+                _money(total),
                 style: FlutterFlowTheme.of(context).titleMedium.override(
-                      font: GoogleFonts.interTight(
-                        fontWeight: FontWeight.w900,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                      ),
+                      font: GoogleFonts.interTight(fontWeight: FontWeight.w900),
                       color: FlutterFlowTheme.of(context).primary,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.w900,
@@ -507,18 +372,16 @@ class _CartSummary extends StatelessWidget {
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 0.0),
             child: FFButtonWidget(
-              onPressed: onCheckout,
+              onPressed: itemCount == 0
+                  ? null
+                  : () async => context.pushNamed('user_checkout_page'),
               text: 'Continue to checkout',
               options: FFButtonOptions(
                 width: double.infinity,
                 height: 52.0,
                 color: FlutterFlowTheme.of(context).primary,
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                      font: GoogleFonts.interTight(
-                        fontWeight: FontWeight.w800,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                      ),
+                      font: GoogleFonts.interTight(fontWeight: FontWeight.w800),
                       color: Colors.white,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.w800,
@@ -532,102 +395,20 @@ class _CartSummary extends StatelessWidget {
       ),
     );
   }
-}
 
-class _EmptyCartMessage extends StatelessWidget {
-  const _EmptyCartMessage();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(28.0, 40.0, 28.0, 40.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.shopping_cart_outlined,
-              color: FlutterFlowTheme.of(context).secondaryText,
-              size: 54.0,
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 0.0),
-              child: Text(
-                'Your cart is empty',
-                textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).titleMedium.override(
-                      font: GoogleFonts.interTight(
-                        fontWeight: FontWeight.w800,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                      ),
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-              child: Text(
-                'Add products from the home page to continue.',
-                textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      font: GoogleFonts.inter(
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      letterSpacing: 0.0,
-                    ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _LoginRequiredMessage extends StatelessWidget {
-  const _LoginRequiredMessage();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _centerMessage(BuildContext context, String message) {
     return Center(
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(28.0, 40.0, 28.0, 40.0),
         child: Text(
-          'Please sign in to view your cart.',
+          message,
           textAlign: TextAlign.center,
           style: FlutterFlowTheme.of(context).titleMedium.override(
-                font: GoogleFonts.interTight(
-                  fontWeight: FontWeight.w800,
-                  fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                ),
+                font: GoogleFonts.interTight(fontWeight: FontWeight.w800),
                 letterSpacing: 0.0,
                 fontWeight: FontWeight.w800,
               ),
         ),
-      ),
-    );
-  }
-}
-
-class _ImageFallback extends StatelessWidget {
-  const _ImageFallback();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 90.0,
-      height: 90.0,
-      color: FlutterFlowTheme.of(context).alternate,
-      child: Icon(
-        Icons.image_not_supported_outlined,
-        color: FlutterFlowTheme.of(context).secondaryText,
-        size: 28.0,
       ),
     );
   }
