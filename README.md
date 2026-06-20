@@ -1,10 +1,12 @@
 # Ecommerce Flutter
 
-Aplicación de comercio electrónico construida en Flutter como desafío de lógica de negocio. Implementa el flujo completo de compra — catálogo, detalle de producto, carrito persistente y autenticación — con soporte offline y Firebase como backend.
+Aplicación de comercio electrónico desarrollada en **Flutter** como proyecto de lógica de negocio, arquitectura móvil y conexión con backend. Implementa un flujo de compra con catálogo, detalle de producto, carrito persistente, autenticación y soporte offline utilizando Firebase como backend principal.
 
 > **Estado:** En desarrollo activo.
 
----
+## Descripción
+
+Este proyecto busca simular una aplicación de ecommerce moderna, priorizando una estructura clara, separación de responsabilidades y una experiencia de usuario fluida. Además de la interfaz, el proyecto trabaja conceptos importantes como persistencia local, autenticación, sincronización con Firestore y organización por capas.
 
 ## Stack
 
@@ -14,79 +16,80 @@ Aplicación de comercio electrónico construida en Flutter como desafío de lóg
 | Animaciones | flutter_animate · carousel_slider |
 | Navegación | go_router |
 | Estado | Provider · RxDart |
-| Auth | Firebase Auth · Google Sign-In |
+| Autenticación | Firebase Auth · Google Sign-In |
 | Base de datos | Firebase Firestore |
 | Almacenamiento | Firebase Storage |
 | Persistencia local | sqflite · SharedPreferences |
 
----
-
 ## Arquitectura
 
-```
+```text
 lib/
 ├── core/
-│   ├── router/          # go_router — rutas y guards
-│   └── utils/           # helpers, constantes
+│   ├── router/          # Rutas, navegación y guards
+│   └── utils/           # Constantes, helpers y utilidades
 ├── data/
-│   ├── local/           # sqflite — carrito offline
-│   ├── remote/          # Firestore + Storage
-│   └── repositories/    # abstracción fuente de datos
+│   ├── local/           # Persistencia local con sqflite
+│   ├── remote/          # Firebase Firestore / Storage
+│   └── repositories/    # Abstracción de fuentes de datos
 ├── domain/
-│   ├── models/          # Product, CartItem, User
-│   └── providers/       # CartProvider, AuthProvider
+│   ├── models/          # Entidades principales
+│   └── providers/       # Estado y lógica de presentación
 └── presentation/
-    ├── screens/         # Home, Detalle, Carrito, Auth
-    └── widgets/         # ProductCard, CartTile, etc.
+    ├── screens/         # Pantallas principales
+    └── widgets/         # Componentes reutilizables
 ```
-
----
 
 ## Decisiones técnicas
 
-**Carrito offline-first** — El carrito se guarda en sqflite localmente. Cuando el usuario recupera conexión, se sincroniza con Firestore automáticamente sin pérdida de datos.
+### Carrito offline-first
 
-**Estado con Provider + RxDart** — `CartProvider` extiende `ChangeNotifier` para la UI y usa `BehaviorSubject` para streams de productos desde Firestore.
+El carrito se guarda localmente para mantener la experiencia incluso sin conexión. La sincronización con Firestore puede ampliarse para conservar consistencia entre dispositivos.
 
-**Repository pattern** — La lógica de negocio no conoce si los datos vienen de sqflite o Firestore. La capa de repositorio decide la fuente según conectividad.
+### Estado con Provider + RxDart
 
----
+Provider permite actualizar la interfaz de forma sencilla, mientras que RxDart facilita el manejo de streams y datos reactivos.
+
+### Repository pattern
+
+La lógica de negocio no depende directamente de la fuente de datos. La capa de repositorio decide si obtener información desde almacenamiento local o remoto.
 
 ## Funcionalidades implementadas
 
-- Autenticación con Email y Google Sign-In
-- Catálogo de productos desde Firestore en tiempo real
-- Carrito de compras con persistencia entre sesiones
-- Detalle de producto con galería de imágenes
-- Gestión de favoritos
-- Navegación declarativa con guards de autenticación
+- Autenticación con email y Google Sign-In.
+- Catálogo de productos desde Firestore.
+- Carrito de compras con persistencia entre sesiones.
+- Detalle de producto con galería de imágenes.
+- Gestión de favoritos.
+- Navegación declarativa con control de autenticación.
 
 ## En desarrollo
 
-- Flujo de checkout y pagos
-- Historial de pedidos
-- Filtros y búsqueda avanzada
-- Panel de administración
-
----
+- Flujo de checkout y pagos.
+- Historial de pedidos.
+- Filtros y búsqueda avanzada.
+- Panel de administración.
+- Mejoras de testing y documentación técnica.
 
 ## Instalación local
 
 ```bash
 git clone https://github.com/jhoaoo/ecommerce_flutter.git
 cd ecommerce_flutter
-
 flutter pub get
 flutter run
 ```
 
-> Requiere Flutter 3.x y Firebase configurado. El archivo `google-services.json` no está incluido por razones de seguridad.
+> Requiere Flutter 3.x y configuración propia de Firebase. Archivos sensibles como `google-services.json` no deben subirse al repositorio.
 
----
+## Valor para portafolio
+
+Este proyecto demuestra manejo de Flutter, Firebase, persistencia local, arquitectura por capas y buenas prácticas de organización para aplicaciones móviles.
 
 ## Autor
 
-**Jhoaoo Sebastian Llerena Quispe**
-Estudiante de Ingeniería de Sistemas
+**Jhoaoo Sebastián Llerena Quispe**  
+Estudiante de Ingeniería de Sistemas · UCSM  
+Arequipa, Perú
 
-[LinkedIn](https://www.linkedin.com/in/jhoaoo-llerena-quispe-78a602331/) · [GitHub](https://github.com/jhoaoo) · [jhoaoollerena@gmail.com](mailto:jhoaoollerena@gmail.com)
+[GitHub](https://github.com/jhoaoo) · [LinkedIn](https://www.linkedin.com/in/jhoaoo-llerena-quispe-78a602331/)
