@@ -9,10 +9,11 @@ analyzer:
     - lib/flutter_flow/**
     - lib/user/**
     - lib/index.dart
+  errors:
+    deprecated_member_use: ignore
 
 linter:
   rules:
     unnecessary_string_escapes: false
-    deprecated_member_use: false
     use_build_context_synchronously: false
     avoid_types_as_parameter_names: false
