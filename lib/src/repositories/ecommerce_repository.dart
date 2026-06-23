@@ -1,4 +1,5 @@
-﻿
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../core/app_collections.dart';
 import '../core/app_role.dart';
 import '../core/firebase_bootstrapper.dart';
@@ -20,6 +21,8 @@ class EcommerceRepository {
     required this.roleAccessService,
   });
 
+  static const ownerEmails = {'jhoaoollerena@gmail.com'};
+
   final FirebaseBootstrapper firebase;
   final AuthService authService;
   final FirestoreService firestoreService;
@@ -27,12 +30,21 @@ class EcommerceRepository {
   final MessagingService messagingService;
   final RoleAccessService roleAccessService;
 
+  bool get isConnected => firebase.isConnected;
+  User? get currentFirebaseUser => authService.currentFirebaseUser;
+
+  Future<AppUser?> restoreSession() async {
+    final user = currentFirebaseUser;
+    if (user == null) return null;
+    return _ensureUserProfile(user);
+  }
+
   Future<AppUser> signInDemo(AppRole role) async => authService.demoUserForRole(role);
 
   Future<AppUser> signInWithEmail(String email, String password) async {
     final credential = await authService.signInWithEmail(email, password);
     if (credential?.user == null) return authService.demoUserForRole(AppRole.customer);
-    return _profileFromAuthUser(credential!.user!);
+    return _ensureUserProfile(credential!.user!);
   }
 
   Future<AppUser> registerWithEmail(String email, String password, String fullName) async {
@@ -40,21 +52,46 @@ class EcommerceRepository {
     if (credential?.user == null) {
       return authService.demoUserForRole(AppRole.customer).copyWith(email: email, fullName: fullName);
     }
-    final user = _profileFromAuthUser(credential!.user!);
-    await saveUser(user);
-    return user;
+    return _ensureUserProfile(credential!.user!, fallbackName: fullName);
   }
 
   Future<AppUser> signInWithGoogle() async {
     final credential = await authService.signInWithGoogle();
     if (credential?.user == null) return authService.demoUserForRole(AppRole.customer);
-    final user = _profileFromAuthUser(credential!.user!);
-    await saveUser(user);
-    return user;
+    return _ensureUserProfile(credential!.user!);
   }
 
   Future<void> signOut() => authService.signOut();
   Future<void> resetPassword(String email) => authService.sendPasswordReset(email);
+
+  Stream<List<CategoryModel>> watchCategories() {
+    if (!isConnected) return Stream.value(demoCategories);
+    return firestoreService.watchAll(AppCollections.categories).map(
+          (docs) => docs.map(CategoryModel.fromFirestore).where((category) => category.active).toList(),
+        );
+  }
+
+  Stream<List<Product>> watchProducts() {
+    if (!isConnected) return Stream.value(demoProducts);
+    return firestoreService.watchAll(AppCollections.products).map(
+          (docs) => docs.map(Product.fromFirestore).where((product) => product.active).toList(),
+        );
+  }
+
+  Stream<List<AppUser>> watchUsers() {
+    if (!isConnected) return Stream.value(demoUsers);
+    return firestoreService.watchAll(AppCollections.users).map((docs) => docs.map(AppUser.fromFirestore).toList());
+  }
+
+  Stream<List<RoleRequest>> watchRoleRequests() {
+    if (!isConnected) return const Stream<List<RoleRequest>>.empty();
+    return firestoreService.watchAll(AppCollections.roleRequests).map((docs) => docs.map(RoleRequest.fromFirestore).toList());
+  }
+
+  Stream<List<CustomerOrder>> watchOrders() {
+    if (!isConnected) return const Stream<List<CustomerOrder>>.empty();
+    return firestoreService.watchAll(AppCollections.orders).map((docs) => docs.map(CustomerOrder.fromFirestore).toList());
+  }
 
   Future<List<CategoryModel>> fetchCategories() async {
     final docs = await firestoreService.getAll(AppCollections.categories);
@@ -72,6 +109,12 @@ class EcommerceRepository {
     final docs = await firestoreService.getAll(AppCollections.users);
     if (docs.isEmpty) return demoUsers;
     return docs.map(AppUser.fromFirestore).toList();
+  }
+
+  Future<AppUser?> getUserProfile(String uid) async {
+    final doc = await firestoreService.getDocument(AppCollections.users, uid);
+    if (doc == null || !doc.exists) return null;
+    return AppUser.fromFirestore(doc);
   }
 
   Future<void> saveUser(AppUser user) => firestoreService.setDocument(AppCollections.users, user.id, user.toFirestore());
@@ -151,19 +194,20 @@ class EcommerceRepository {
       await saveCategory(category);
     }
     for (final product in demoProducts) {
-      await saveProduct(product);
-    }
-    for (final user in demoUsers) {
-      await saveUser(user);
+      await saveProduct(product.copyWith(approvalStatus: 'approved', active: true));
     }
   }
 
-  AppUser _profileFromAuthUser(dynamic user) {
-    return AppUser(
-      id: user.uid.toString(),
-      email: user.email?.toString() ?? '',
-      fullName: user.displayName?.toString() ?? 'Usuario ecommerce',
-      role: AppRole.customer,
+  Future<AppUser> _ensureUserProfile(User user, {String? fallbackName}) async {
+    final existing = await getUserProfile(user.uid);
+    if (existing != null) return existing;
+
+    final email = user.email?.toLowerCase().trim() ?? '';
+    final appUser = AppUser(
+      id: user.uid,
+      email: email,
+      fullName: user.displayName?.trim().isNotEmpty == true ? user.displayName!.trim() : (fallbackName?.trim().isNotEmpty == true ? fallbackName!.trim() : 'Usuario NovaMarket'),
+      role: ownerEmails.contains(email) ? AppRole.admin : AppRole.customer,
       phone: '',
       address: '',
       photoUrl: user.photoURL?.toString() ?? '',
@@ -171,7 +215,10 @@ class EcommerceRepository {
       notifications: NotificationPreferences.defaults(),
       createdAt: DateTime.now(),
       demo: false,
+      language: 'Español',
+      darkMode: false,
     );
+    await saveUser(appUser);
+    return appUser;
   }
 }
-
