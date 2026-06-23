@@ -11,10 +11,22 @@ class FirestoreService {
 
   CollectionReference<Map<String, dynamic>> collection(String path) => _db.collection(path);
 
+  Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> watchAll(String collectionPath) {
+    if (!firebase.isConnected) {
+      return const Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>.empty();
+    }
+    return collection(collectionPath).snapshots().map((snapshot) => snapshot.docs);
+  }
+
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getAll(String collectionPath) async {
     if (!firebase.isConnected) return [];
     final snapshot = await collection(collectionPath).get();
     return snapshot.docs;
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>?> getDocument(String collectionPath, String id) async {
+    if (!firebase.isConnected) return null;
+    return collection(collectionPath).doc(id).get();
   }
 
   Future<void> setDocument(String collectionPath, String id, Map<String, dynamic> data) async {
