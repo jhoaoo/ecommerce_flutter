@@ -17,6 +17,8 @@ class Product {
     this.lowStockThreshold = 5,
     this.documentUrl = '',
     this.active = true,
+    this.approvalStatus = 'approved',
+    this.rejectionReason = '',
   });
 
   final String id;
@@ -34,9 +36,14 @@ class Product {
   final int lowStockThreshold;
   final String documentUrl;
   final bool active;
+  final String approvalStatus;
+  final String rejectionReason;
 
   bool get hasStock => stock > 0;
   bool get isLowStock => stock <= lowStockThreshold;
+  bool get isApproved => approvalStatus == 'approved';
+  bool get isPending => approvalStatus == 'pending';
+  bool get isRejected => approvalStatus == 'rejected';
   double get discountAmount => price * discountRate;
   double get priceAfterDiscount => price - discountAmount;
   double get taxAmount => priceAfterDiscount * taxRate;
@@ -58,6 +65,8 @@ class Product {
     int? lowStockThreshold,
     String? documentUrl,
     bool? active,
+    String? approvalStatus,
+    String? rejectionReason,
   }) {
     return Product(
       id: id ?? this.id,
@@ -75,6 +84,8 @@ class Product {
       lowStockThreshold: lowStockThreshold ?? this.lowStockThreshold,
       documentUrl: documentUrl ?? this.documentUrl,
       active: active ?? this.active,
+      approvalStatus: approvalStatus ?? this.approvalStatus,
+      rejectionReason: rejectionReason ?? this.rejectionReason,
     );
   }
 
@@ -96,6 +107,8 @@ class Product {
       lowStockThreshold: _readInt(data['lowStockThreshold'], fallback: 5),
       documentUrl: _readString(data['documentUrl'], ''),
       active: data['active'] != false,
+      approvalStatus: _readString(data['approvalStatus'], 'approved'),
+      rejectionReason: _readString(data['rejectionReason'], ''),
     );
   }
 
@@ -115,6 +128,8 @@ class Product {
         'lowStockThreshold': lowStockThreshold,
         'documentUrl': documentUrl,
         'active': active,
+        'approvalStatus': approvalStatus,
+        'rejectionReason': rejectionReason,
         'updatedAt': FieldValue.serverTimestamp(),
       };
 
