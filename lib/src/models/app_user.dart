@@ -17,6 +17,8 @@ class AppUser {
     required this.notifications,
     required this.createdAt,
     required this.demo,
+    this.language = 'Español',
+    this.darkMode = false,
   });
 
   final String id;
@@ -30,6 +32,8 @@ class AppUser {
   final NotificationPreferences notifications;
   final DateTime createdAt;
   final bool demo;
+  final String language;
+  final bool darkMode;
 
   AppUser copyWith({
     String? id,
@@ -43,6 +47,8 @@ class AppUser {
     NotificationPreferences? notifications,
     DateTime? createdAt,
     bool? demo,
+    String? language,
+    bool? darkMode,
   }) {
     return AppUser(
       id: id ?? this.id,
@@ -56,6 +62,8 @@ class AppUser {
       notifications: notifications ?? this.notifications,
       createdAt: createdAt ?? this.createdAt,
       demo: demo ?? this.demo,
+      language: language ?? this.language,
+      darkMode: darkMode ?? this.darkMode,
     );
   }
 
@@ -80,6 +88,8 @@ class AppUser {
       ),
       createdAt: _readDate(data['createdAt']),
       demo: data['demo'] == true,
+      language: data['language']?.toString() ?? 'Español',
+      darkMode: data['darkMode'] == true,
     );
   }
 
@@ -93,6 +103,8 @@ class AppUser {
         'paymentMethods': paymentMethods.map((method) => method.toMap()).toList(),
         'notifications': notifications.toMap(),
         'demo': demo,
+        'language': language,
+        'darkMode': darkMode,
         'createdAt': Timestamp.fromDate(createdAt),
         'updatedAt': FieldValue.serverTimestamp(),
       };
