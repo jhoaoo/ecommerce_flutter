@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../core/app_collections.dart';
@@ -49,9 +50,7 @@ class EcommerceRepository {
 
   Future<AppUser> registerWithEmail(String email, String password, String fullName) async {
     final credential = await authService.registerWithEmail(email, password, fullName);
-    if (credential?.user == null) {
-      return authService.demoUserForRole(AppRole.customer).copyWith(email: email, fullName: fullName);
-    }
+    if (credential?.user == null) return authService.demoUserForRole(AppRole.customer).copyWith(email: email, fullName: fullName);
     return _ensureUserProfile(credential!.user!, fallbackName: fullName);
   }
 
@@ -66,16 +65,12 @@ class EcommerceRepository {
 
   Stream<List<CategoryModel>> watchCategories() {
     if (!isConnected) return Stream.value(demoCategories);
-    return firestoreService.watchAll(AppCollections.categories).map(
-          (docs) => docs.map(CategoryModel.fromFirestore).where((category) => category.active).toList(),
-        );
+    return firestoreService.watchAll(AppCollections.categories).map((docs) => docs.map(CategoryModel.fromFirestore).where((category) => category.active).toList());
   }
 
   Stream<List<Product>> watchProducts() {
     if (!isConnected) return Stream.value(demoProducts);
-    return firestoreService.watchAll(AppCollections.products).map(
-          (docs) => docs.map(Product.fromFirestore).where((product) => product.active).toList(),
-        );
+    return firestoreService.watchAll(AppCollections.products).map((docs) => docs.map(Product.fromFirestore).where((product) => product.active).toList());
   }
 
   Stream<List<AppUser>> watchUsers() {
@@ -88,9 +83,17 @@ class EcommerceRepository {
     return firestoreService.watchAll(AppCollections.roleRequests).map((docs) => docs.map(RoleRequest.fromFirestore).toList());
   }
 
-  Stream<List<CustomerOrder>> watchOrders() {
+  Stream<List<CustomerOrder>> watchOrdersFor(AppUser user) {
     if (!isConnected) return const Stream<List<CustomerOrder>>.empty();
-    return firestoreService.watchAll(AppCollections.orders).map((docs) => docs.map(CustomerOrder.fromFirestore).toList());
+    Query<Map<String, dynamic>> query = firestoreService.collection(AppCollections.orders);
+    if (user.role == AppRole.admin) {
+      query = firestoreService.collection(AppCollections.orders);
+    } else if (user.role == AppRole.seller) {
+      query = query.where('sellerIds', arrayContains: user.id);
+    } else {
+      query = query.where('userId', isEqualTo: user.id);
+    }
+    return query.snapshots().map((snapshot) => snapshot.docs.map(CustomerOrder.fromFirestore).toList());
   }
 
   Future<List<CategoryModel>> fetchCategories() async {
@@ -118,27 +121,14 @@ class EcommerceRepository {
   }
 
   Future<void> saveUser(AppUser user) => firestoreService.setDocument(AppCollections.users, user.id, user.toFirestore());
-
-  Future<void> saveCategory(CategoryModel category) {
-    return firestoreService.setDocument(AppCollections.categories, category.id, category.toFirestore());
-  }
-
+  Future<void> saveCategory(CategoryModel category) => firestoreService.setDocument(AppCollections.categories, category.id, category.toFirestore());
   Future<void> deleteCategory(String categoryId) => firestoreService.deleteDocument(AppCollections.categories, categoryId);
-
-  Future<void> saveProduct(Product product) {
-    return firestoreService.setDocument(AppCollections.products, product.id, product.toFirestore());
-  }
-
+  Future<void> saveProduct(Product product) => firestoreService.setDocument(AppCollections.products, product.id, product.toFirestore());
   Future<void> deleteProduct(String productId) => firestoreService.deleteDocument(AppCollections.products, productId);
 
-  Future<CustomerOrder> createOrder({
-    required AppUser user,
-    required List<CartItem> items,
-    required CartTotals totals,
-  }) async {
+  Future<CustomerOrder> createOrder({required AppUser user, required List<CartItem> items, required CartTotals totals}) async {
     final id = 'ORD-${DateTime.now().millisecondsSinceEpoch}';
     final sellerIds = items.map((item) => item.product.sellerId).toSet().toList();
-
     final order = CustomerOrder(
       id: id,
       userId: user.id,
@@ -154,7 +144,6 @@ class EcommerceRepository {
       createdAt: DateTime.now(),
       status: 'pending',
     );
-
     await firestoreService.createOrderAndUpdateStock(
       orderId: id,
       orderData: {
@@ -164,29 +153,24 @@ class EcommerceRepository {
         'sellerIds': sellerIds,
         'status': 'pending',
         ...totals.toMap(),
-        'items': items
-            .map((item) => {
-                  'productId': item.product.id,
-                  'name': item.product.name,
-                  'price': item.product.price,
-                  'quantity': item.quantity,
-                  'subtotal': item.subtotal,
-                  'discount': item.discount,
-                  'tax': item.tax,
-                  'total': item.total,
-                })
-            .toList(),
+        'items': items.map((item) => {
+          'productId': item.product.id,
+          'sellerId': item.product.sellerId,
+          'name': item.product.name,
+          'price': item.product.price,
+          'quantity': item.quantity,
+          'subtotal': item.subtotal,
+          'discount': item.discount,
+          'tax': item.tax,
+          'total': item.total,
+        }).toList(),
       },
       stockDeltaByProductId: {for (final item in items) item.product.id: item.quantity},
     );
-
     return order;
   }
 
-  Future<RoleRequest> requestRole(AppUser user, AppRole role, String reason) {
-    return roleAccessService.requestRole(user: user, requestedRole: role, reason: reason);
-  }
-
+  Future<RoleRequest> requestRole(AppUser user, AppRole role, String reason) => roleAccessService.requestRole(user: user, requestedRole: role, reason: reason);
   Future<String?> registerDeviceForNotifications(String uid) => messagingService.registerDevice(uid);
 
   Future<void> seedDemoData() async {
@@ -201,7 +185,6 @@ class EcommerceRepository {
   Future<AppUser> _ensureUserProfile(User user, {String? fallbackName}) async {
     final existing = await getUserProfile(user.uid);
     if (existing != null) return existing;
-
     final email = user.email?.toLowerCase().trim() ?? '';
     final appUser = AppUser(
       id: user.uid,

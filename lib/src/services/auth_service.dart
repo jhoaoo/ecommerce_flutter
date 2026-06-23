@@ -43,10 +43,7 @@ class AuthService {
     final account = await GoogleSignIn().signIn();
     if (account == null) return null;
     final tokens = await account.authentication;
-    final credential = GoogleAuthProvider.credential(
-      accessToken: tokens.accessToken,
-      idToken: tokens.idToken,
-    );
+    final credential = GoogleAuthProvider.credential(accessToken: tokens.accessToken, idToken: tokens.idToken);
     return _auth.signInWithCredential(credential);
   }
 

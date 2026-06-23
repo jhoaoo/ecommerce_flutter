@@ -39,6 +39,12 @@ class AppController extends ChangeNotifier {
 
   List<CartItem> get cart => List.unmodifiable(_cart);
   List<CustomerOrder> get orders => List.unmodifiable(_orders);
+  List<CustomerOrder> get visibleOrders {
+    if (isAdmin) return orders;
+    if (isSeller) return orders.where((order) => order.sellerIds.contains(currentUser.id)).toList();
+    return orders.where((order) => order.userId == currentUser.id).toList();
+  }
+
   List<RoleRequest> get roleRequests => List.unmodifiable(_roleRequests);
   List<NotificationItem> get notifications => List.unmodifiable(_notifications);
 
@@ -52,11 +58,6 @@ class AppController extends ChangeNotifier {
   List<Product> get approvedProducts => products.where((product) => product.active && product.isApproved).toList();
   List<Product> get pendingProducts => products.where((product) => product.active && product.isPending).toList();
   List<Product> get sellerProducts => products.where((product) => product.sellerId == currentUser.id).toList();
-  List<CustomerOrder> get visibleOrders {
-    if (isAdmin) return orders;
-    if (isSeller) return orders.where((order) => order.sellerIds.contains(currentUser.id)).toList();
-    return orders.where((order) => order.userId == currentUser.id).toList();
-  }
 
   int get sellerUnitsSold => visibleOrders.fold(0, (sum, order) {
         return sum + order.items.fold(0, (subtotal, item) => subtotal + item.quantity);
@@ -93,7 +94,13 @@ class AppController extends ChangeNotifier {
       products = demoProducts;
       categoryModels = demoCategories;
       users = demoUsers;
-      _notifications.add(NotificationItem(id: 'local', title: 'Modo local', message: 'La tienda se abrió con datos locales para pruebas de interfaz.', type: 'system', createdAt: DateTime.now()));
+      _notifications.add(NotificationItem(
+        id: 'local',
+        title: 'Datos locales cargados',
+        message: 'La tienda se abrió con datos locales para pruebas de interfaz.',
+        type: 'system',
+        createdAt: DateTime.now(),
+      ));
       isLoading = false;
       notifyListeners();
       return;
@@ -127,8 +134,22 @@ class AppController extends ChangeNotifier {
   }
 
   Future<void> resetPassword(String email) async {
-    await repository.resetPassword(email.trim());
-    _notifications.insert(0, NotificationItem(id: 'reset-${DateTime.now().millisecondsSinceEpoch}', title: 'Correo enviado', message: 'Revisa tu bandeja para recuperar tu contraseña.', type: 'auth', createdAt: DateTime.now()));
+    try {
+      await repository.resetPassword(email.trim());
+      _notifications.insert(
+        0,
+        NotificationItem(
+          id: 'reset-${DateTime.now().millisecondsSinceEpoch}',
+          title: 'Correo enviado',
+          message: 'Revisa tu bandeja para recuperar tu contraseña.',
+          type: 'auth',
+          createdAt: DateTime.now(),
+        ),
+      );
+      errorMessage = 'Revisa tu correo para continuar.';
+    } catch (error) {
+      errorMessage = _friendlyAuthError(error.toString());
+    }
     notifyListeners();
   }
 
@@ -140,7 +161,16 @@ class AppController extends ChangeNotifier {
       final user = await action();
       _setCurrentUser(user);
       _bindRealtime();
-      _notifications.insert(0, NotificationItem(id: 'signin-${DateTime.now().millisecondsSinceEpoch}', title: 'Sesión iniciada', message: 'Bienvenido a NovaMarket.', type: 'auth', createdAt: DateTime.now()));
+      _notifications.insert(
+        0,
+        NotificationItem(
+          id: 'signin-${DateTime.now().millisecondsSinceEpoch}',
+          title: 'Sesión iniciada',
+          message: 'Bienvenido a NovaMarket.',
+          type: 'auth',
+          createdAt: DateTime.now(),
+        ),
+      );
     } catch (error) {
       errorMessage = _friendlyAuthError(error.toString());
     } finally {
@@ -176,8 +206,8 @@ class AppController extends ChangeNotifier {
     _requestsSub = null;
   }
 
-  void _bindRealtime() {
-    _cancelRealtime();
+  Future<void> _bindRealtime() async {
+    await _cancelRealtime();
 
     _categoriesSub = repository.watchCategories().listen((value) {
       categoryModels = value;
@@ -189,22 +219,27 @@ class AppController extends ChangeNotifier {
       notifyListeners();
     }, onError: _handleRealtimeError);
 
-    _usersSub = repository.watchUsers().listen((value) {
-      users = value;
-      final match = value.where((user) => user.id == currentUser.id);
-      if (match.isNotEmpty) _setCurrentUser(match.first, notify: false);
-      notifyListeners();
-    }, onError: _handleRealtimeError);
-
-    _ordersSub = repository.watchOrders().listen((value) {
+    _ordersSub = repository.watchOrdersFor(currentUser).listen((value) {
       _orders = value;
       notifyListeners();
     }, onError: _handleRealtimeError);
 
-    _requestsSub = repository.watchRoleRequests().listen((value) {
-      _roleRequests = value;
-      notifyListeners();
-    }, onError: _handleRealtimeError);
+    if (isAdmin) {
+      _usersSub = repository.watchUsers().listen((value) {
+        users = value;
+        final match = value.where((user) => user.id == currentUser.id);
+        if (match.isNotEmpty) _setCurrentUser(match.first, notify: false);
+        notifyListeners();
+      }, onError: _handleRealtimeError);
+
+      _requestsSub = repository.watchRoleRequests().listen((value) {
+        _roleRequests = value;
+        notifyListeners();
+      }, onError: _handleRealtimeError);
+    } else {
+      users = [currentUser];
+      _roleRequests = [];
+    }
   }
 
   void _handleRealtimeError(Object error) {
@@ -228,7 +263,16 @@ class AppController extends ChangeNotifier {
   Future<void> requestRole(AppRole role, String reason) async {
     final request = await repository.requestRole(currentUser, role, reason);
     _roleRequests.insert(0, request);
-    _notifications.insert(0, NotificationItem(id: 'request-${request.id}', title: 'Solicitud enviada', message: 'Tu solicitud para acceder como ${role.label} fue enviada para revisión.', type: 'role_request', createdAt: DateTime.now()));
+    _notifications.insert(
+      0,
+      NotificationItem(
+        id: 'request-${request.id}',
+        title: 'Solicitud enviada',
+        message: 'Tu solicitud para acceder como ${role.label} fue enviada para revisión.',
+        type: 'role_request',
+        createdAt: DateTime.now(),
+      ),
+    );
     notifyListeners();
   }
 
@@ -305,7 +349,16 @@ class AppController extends ChangeNotifier {
     final order = await repository.createOrder(user: currentUser, items: List.unmodifiable(_cart), totals: totals);
     _orders.insert(0, order);
     _cart.clear();
-    _notifications.insert(0, NotificationItem(id: 'order-${order.id}', title: 'Compra realizada', message: 'Tu pedido ${order.id} fue registrado por S/ ${order.total.toStringAsFixed(2)}.', type: 'order', createdAt: DateTime.now()));
+    _notifications.insert(
+      0,
+      NotificationItem(
+        id: 'order-${order.id}',
+        title: 'Compra realizada',
+        message: 'Tu pedido ${order.id} fue registrado por S/ ${order.total.toStringAsFixed(2)}.',
+        type: 'order',
+        createdAt: DateTime.now(),
+      ),
+    );
     notifyListeners();
     return order;
   }

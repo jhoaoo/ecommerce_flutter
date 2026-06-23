@@ -12,9 +12,7 @@ class FirestoreService {
   CollectionReference<Map<String, dynamic>> collection(String path) => _db.collection(path);
 
   Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> watchAll(String collectionPath) {
-    if (!firebase.isConnected) {
-      return const Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>.empty();
-    }
+    if (!firebase.isConnected) return Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>.empty();
     return collection(collectionPath).snapshots().map((snapshot) => snapshot.docs);
   }
 
