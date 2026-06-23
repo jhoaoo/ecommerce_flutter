@@ -42,7 +42,7 @@ class StorageService {
     if (!firebase.isConnected) {
       return StorageUploadResult(
         path: path,
-        downloadUrl: 'cloud-simulation://$path',
+        downloadUrl: 'local-preview://$path',
         contentType: contentType,
       );
     }

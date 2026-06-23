@@ -14,12 +14,15 @@ class EcommerceApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<AppController>();
+    final seed = const Color(0xFF0F172A);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Ecommerce Flutter V2',
+      title: 'NovaMarket',
+      themeMode: controller.darkMode ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0F172A)),
+        colorScheme: ColorScheme.fromSeed(seedColor: seed),
         textTheme: GoogleFonts.interTextTheme(),
         scaffoldBackgroundColor: const Color(0xFFF8FAFC),
         cardTheme: CardThemeData(
@@ -28,15 +31,18 @@ class EcommerceApp extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         ),
       ),
-      home: _ResponsiveShell(firebaseStatus: firebaseStatus),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.dark),
+        textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+      ),
+      home: const _ResponsiveShell(),
     );
   }
 }
 
 class _ResponsiveShell extends StatefulWidget {
-  const _ResponsiveShell({required this.firebaseStatus});
-
-  final FirebaseConnectionStatus firebaseStatus;
+  const _ResponsiveShell();
 
   @override
   State<_ResponsiveShell> createState() => _ResponsiveShellState();
@@ -49,7 +55,7 @@ class _ResponsiveShellState extends State<_ResponsiveShell> {
   Widget build(BuildContext context) {
     final controller = context.watch<AppController>();
     final pages = [
-      _CatalogPage(firebaseStatus: widget.firebaseStatus),
+      const _CatalogPage(),
       const _CartPage(),
       const _ProfilePage(),
       const _RoleDashboardPage(),
@@ -80,23 +86,13 @@ class _ResponsiveShellState extends State<_ResponsiveShell> {
                     child: CircleAvatar(child: Text(controller.currentUser.role.label[0])),
                   ),
                   destinations: destinations
-                      .map((item) => NavigationRailDestination(
-                            icon: item.icon,
-                            selectedIcon: item.selectedIcon,
-                            label: Text(item.label),
-                          ))
+                      .map((item) => NavigationRailDestination(icon: item.icon, selectedIcon: item.selectedIcon, label: Text(item.label)))
                       .toList(),
                 ),
               Expanded(child: pages[_index]),
             ],
           ),
-          bottomNavigationBar: wide
-              ? null
-              : NavigationBar(
-                  selectedIndex: _index,
-                  onDestinationSelected: (value) => setState(() => _index = value),
-                  destinations: destinations,
-                ),
+          bottomNavigationBar: wide ? null : NavigationBar(selectedIndex: _index, onDestinationSelected: (value) => setState(() => _index = value), destinations: destinations),
         );
       },
     );
@@ -104,9 +100,7 @@ class _ResponsiveShellState extends State<_ResponsiveShell> {
 }
 
 class _CatalogPage extends StatelessWidget {
-  const _CatalogPage({required this.firebaseStatus});
-
-  final FirebaseConnectionStatus firebaseStatus;
+  const _CatalogPage();
 
   @override
   Widget build(BuildContext context) {
@@ -125,18 +119,13 @@ class _CatalogPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _Header(firebaseStatus: firebaseStatus),
+                    const _Header(),
                     const SizedBox(height: 16),
-                    _RolePreviewBar(),
+                    const _QuickAccessBar(),
                     const SizedBox(height: 16),
                     TextField(
                       onChanged: controller.setQuery,
-                      decoration: const InputDecoration(
-                        filled: true,
-                        prefixIcon: Icon(Icons.search),
-                        hintText: 'Buscar productos, categorías o ofertas',
-                        border: OutlineInputBorder(borderSide: BorderSide.none),
-                      ),
+                      decoration: const InputDecoration(filled: true, prefixIcon: Icon(Icons.search), hintText: 'Buscar productos, categorías u ofertas', border: OutlineInputBorder(borderSide: BorderSide.none)),
                     ),
                     const SizedBox(height: 14),
                     SingleChildScrollView(
@@ -146,11 +135,7 @@ class _CatalogPage extends StatelessWidget {
                           final selected = category == controller.selectedCategory;
                           return Padding(
                             padding: const EdgeInsets.only(right: 8),
-                            child: ChoiceChip(
-                              label: Text(category),
-                              selected: selected,
-                              onSelected: (_) => controller.setCategory(category),
-                            ),
+                            child: ChoiceChip(label: Text(category), selected: selected, onSelected: (_) => controller.setCategory(category)),
                           );
                         }).toList(),
                       ),
@@ -166,7 +151,7 @@ class _CatalogPage extends StatelessWidget {
             if (controller.isLoading)
               const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
             else if (products.isEmpty)
-              const SliverFillRemaining(child: Center(child: Text('No hay productos disponibles.')))
+              const SliverFillRemaining(child: Center(child: Text('No hay productos publicados.')))
             else
               SliverPadding(
                 padding: const EdgeInsets.all(20),
@@ -176,12 +161,7 @@ class _CatalogPage extends StatelessWidget {
                     final columns = width >= 1100 ? 4 : width >= 800 ? 3 : width >= 560 ? 2 : 1;
                     return SliverGrid.builder(
                       itemCount: products.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: columns,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 16,
-                        childAspectRatio: columns == 1 ? .82 : .72,
-                      ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: columns, mainAxisSpacing: 16, crossAxisSpacing: 16, childAspectRatio: columns == 1 ? .82 : .72),
                       itemBuilder: (context, index) => _ProductCard(product: products[index]),
                     );
                   },
@@ -195,9 +175,7 @@ class _CatalogPage extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({required this.firebaseStatus});
-
-  final FirebaseConnectionStatus firebaseStatus;
+  const _Header();
 
   @override
   Widget build(BuildContext context) {
@@ -206,10 +184,7 @@ class _Header extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [theme.colorScheme.primary, theme.colorScheme.tertiary]),
-        borderRadius: BorderRadius.circular(28),
-      ),
+      decoration: BoxDecoration(gradient: LinearGradient(colors: [theme.colorScheme.primary, theme.colorScheme.tertiary]), borderRadius: BorderRadius.circular(28)),
       child: Wrap(
         alignment: WrapAlignment.spaceBetween,
         runSpacing: 18,
@@ -219,23 +194,11 @@ class _Header extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Ecommerce Flutter V2', style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w900)),
+                Text('NovaMarket', style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w900)),
                 const SizedBox(height: 8),
-                Text(
-                  'Web + Android, roles, CRUD, Storage, FCM-ready y pagos simulados.',
-                  style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white),
-                ),
+                Text('Compra tecnología, gestiona pedidos y vende productos desde una sola plataforma.', style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white)),
                 const SizedBox(height: 12),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    _Tag(text: firebaseStatus.label),
-                    const _Tag(text: 'Cloud simulation'),
-                    const _Tag(text: 'Google Sign-In ready'),
-                    const _Tag(text: 'Responsive'),
-                  ],
-                ),
+                const Wrap(spacing: 8, runSpacing: 8, children: [_Tag(text: 'Compra segura'), _Tag(text: 'Ofertas'), _Tag(text: 'Envíos'), _Tag(text: 'Soporte')]),
               ],
             ),
           ),
@@ -249,11 +212,7 @@ class _Header extends StatelessWidget {
                   Text(controller.currentUser.fullName, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
                   Text(controller.currentUser.email),
                   const SizedBox(height: 10),
-                  FilledButton.icon(
-                    onPressed: controller.signInWithGoogleSimulation,
-                    icon: const Icon(Icons.login),
-                    label: const Text('Google / demo'),
-                  ),
+                  FilledButton.icon(onPressed: controller.signInWithGoogleSimulation, icon: const Icon(Icons.login), label: const Text('Continuar con Google')),
                 ],
               ),
             ),
@@ -264,22 +223,25 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _RolePreviewBar extends StatelessWidget {
+class _QuickAccessBar extends StatelessWidget {
+  const _QuickAccessBar();
+
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<AppController>();
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: AppRole.values.map((role) {
-        final selected = controller.currentUser.role == role;
-        return ChoiceChip(
-          selected: selected,
-          label: Text('Probar como ${role.label}'),
-          onSelected: (_) => controller.switchDemoRole(role),
-        );
-      }).toList(),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            const Padding(padding: EdgeInsets.symmetric(horizontal: 6), child: Text('Cuentas de prueba:', style: TextStyle(fontWeight: FontWeight.w700))),
+            ...AppRole.values.map((role) => ChoiceChip(selected: controller.currentUser.role == role, label: Text(role.label), onSelected: (_) => controller.switchDemoRole(role))),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -300,15 +262,7 @@ class _ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Image.network(
-              product.imageUrl,
-              width: double.infinity,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => ColoredBox(
-                color: theme.colorScheme.primaryContainer,
-                child: const Center(child: Icon(Icons.image_not_supported_outlined)),
-              ),
-            ),
+            child: Image.network(product.imageUrl, width: double.infinity, fit: BoxFit.cover, errorBuilder: (_, __, ___) => ColoredBox(color: theme.colorScheme.primaryContainer, child: const Center(child: Icon(Icons.image_not_supported_outlined)))),
           ),
           Padding(
             padding: const EdgeInsets.all(14),
@@ -319,27 +273,14 @@ class _ProductCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(product.description, maxLines: 2, overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  children: [
-                    Chip(label: Text(product.category)),
-                    if (product.discountRate > 0) Chip(label: Text('-${(product.discountRate * 100).round()}%')),
-                    if (product.isLowStock) const Chip(label: Text('Stock bajo')),
-                  ],
-                ),
+                Wrap(spacing: 8, children: [Chip(label: Text(product.category)), if (product.discountRate > 0) Chip(label: Text('-${(product.discountRate * 100).round()}%')), if (product.isLowStock) const Chip(label: Text('Últimas unidades'))]),
                 const SizedBox(height: 8),
-                Text('Base: S/ ${product.price.toStringAsFixed(2)} · IGV: S/ ${product.taxAmount.toStringAsFixed(2)}'),
+                Text('Incluye IGV: S/ ${product.taxAmount.toStringAsFixed(2)}'),
                 const SizedBox(height: 6),
                 Row(
                   children: [
-                    Expanded(
-                      child: Text('S/ ${product.finalPrice.toStringAsFixed(2)}', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
-                    ),
-                    FilledButton.icon(
-                      onPressed: product.hasStock ? () => controller.addToCart(product) : null,
-                      icon: const Icon(Icons.add_shopping_cart),
-                      label: const Text('Agregar'),
-                    ),
+                    Expanded(child: Text('S/ ${product.finalPrice.toStringAsFixed(2)}', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900))),
+                    FilledButton.icon(onPressed: product.hasStock ? () => controller.addToCart(product) : null, icon: const Icon(Icons.add_shopping_cart), label: const Text('Agregar')),
                   ],
                 ),
               ],
@@ -362,19 +303,13 @@ class _CartPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: controller.cart.isEmpty
-            ? const _EmptyState(icon: Icons.shopping_bag_outlined, title: 'Carrito vacío', message: 'Agrega productos para probar checkout.')
+            ? const _EmptyState(icon: Icons.shopping_bag_outlined, title: 'Carrito vacío', message: 'Agrega productos para probar el flujo de compra.')
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Carrito y checkout', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
+                  Text('Carrito y pago', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
                   const SizedBox(height: 14),
-                  Expanded(
-                    child: ListView.separated(
-                      itemCount: controller.cart.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 10),
-                      itemBuilder: (context, index) => _CartTile(item: controller.cart[index]),
-                    ),
-                  ),
+                  Expanded(child: ListView.separated(itemCount: controller.cart.length, separatorBuilder: (_, __) => const SizedBox(height: 10), itemBuilder: (context, index) => _CartTile(item: controller.cart[index]))),
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.all(18),
@@ -392,12 +327,10 @@ class _CartPage extends StatelessWidget {
                             child: FilledButton.icon(
                               onPressed: () async {
                                 final order = await controller.checkout();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Pedido ${order.id} creado.')),
-                                );
+                                if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Pedido ${order.id} creado.')));
                               },
                               icon: const Icon(Icons.payments_outlined),
-                              label: const Text('Pagar con simulación cloud'),
+                              label: const Text('Confirmar compra'),
                             ),
                           ),
                         ],
@@ -421,19 +354,10 @@ class _CartTile extends StatelessWidget {
     final controller = context.read<AppController>();
     return Card(
       child: ListTile(
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.network(item.product.imageUrl, width: 60, height: 60, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const Icon(Icons.inventory)),
-        ),
+        leading: ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.network(item.product.imageUrl, width: 60, height: 60, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const Icon(Icons.inventory))),
         title: Text(item.product.name),
         subtitle: Text('${item.quantity} x S/ ${item.product.finalPrice.toStringAsFixed(2)}'),
-        trailing: Wrap(
-          children: [
-            IconButton(onPressed: () => controller.decreaseQuantity(item.product), icon: const Icon(Icons.remove)),
-            IconButton(onPressed: () => controller.addToCart(item.product), icon: const Icon(Icons.add)),
-            IconButton(onPressed: () => controller.removeFromCart(item.product), icon: const Icon(Icons.delete_outline)),
-          ],
-        ),
+        trailing: Wrap(children: [IconButton(onPressed: () => controller.decreaseQuantity(item.product), icon: const Icon(Icons.remove)), IconButton(onPressed: () => controller.addToCart(item.product), icon: const Icon(Icons.add)), IconButton(onPressed: () => controller.removeFromCart(item.product), icon: const Icon(Icons.delete_outline))]),
       ),
     );
   }
@@ -476,7 +400,7 @@ class _ProfilePageState extends State<_ProfilePage> {
       child: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          Text('Perfil, pagos y notificaciones', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
+          Text('Perfil y configuración', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
           const SizedBox(height: 16),
           TextField(controller: name, decoration: const InputDecoration(labelText: 'Nombre completo')),
           const SizedBox(height: 10),
@@ -484,69 +408,57 @@ class _ProfilePageState extends State<_ProfilePage> {
           const SizedBox(height: 10),
           TextField(controller: address, decoration: const InputDecoration(labelText: 'Dirección')),
           const SizedBox(height: 16),
-          Text('Métodos de pago simulados', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
-          ...user.paymentMethods.map((method) => ListTile(
-                leading: const Icon(Icons.credit_card),
-                title: Text(method.type),
-                subtitle: Text('${method.holder} · **** ${method.last4}'),
-                trailing: method.isDefault ? const Chip(label: Text('Default')) : null,
-              )),
+          Card(
+            child: Column(
+              children: [
+                SwitchListTile(value: controller.darkMode, onChanged: controller.setDarkMode, title: const Text('Modo oscuro')),
+                ListTile(
+                  title: const Text('Idioma'),
+                  trailing: DropdownButton<String>(value: controller.language, items: const ['Español', 'English'].map((value) => DropdownMenuItem(value: value, child: Text(value))).toList(), onChanged: (value) => controller.setLanguage(value ?? 'Español')),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text('Métodos de pago', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+          ...user.paymentMethods.map((method) => ListTile(leading: const Icon(Icons.credit_card), title: Text(method.type), subtitle: Text('${method.holder} · **** ${method.last4}'), trailing: method.isDefault ? const Chip(label: Text('Principal')) : null)),
           const SizedBox(height: 16),
           _NotificationSwitches(user: user),
           const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: () {
-              controller.updateProfile(
-                fullName: name.text.trim(),
-                phone: phone.text.trim(),
-                address: address.text.trim(),
-                notifications: user.notifications,
-              );
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Perfil actualizado en simulación.')));
+              controller.updateProfile(fullName: name.text.trim(), phone: phone.text.trim(), address: address.text.trim(), notifications: user.notifications);
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Perfil actualizado.')));
             },
             icon: const Icon(Icons.save_outlined),
             label: const Text('Guardar perfil'),
           ),
           const SizedBox(height: 10),
-          OutlinedButton.icon(
-            onPressed: () => _showRoleRequest(context),
-            icon: const Icon(Icons.manage_accounts_outlined),
-            label: const Text('Solicitar acceso a vendedor/admin'),
-          ),
+          OutlinedButton.icon(onPressed: () => _showRoleRequest(context), icon: const Icon(Icons.manage_accounts_outlined), label: const Text('Solicitar acceso avanzado')),
         ],
       ),
     );
   }
 
   void _showRoleRequest(BuildContext context) {
-    final reason = TextEditingController(text: 'Quiero probar las funciones avanzadas del ecommerce.');
+    final reason = TextEditingController(text: 'Quiero vender productos en la plataforma.');
     AppRole selected = AppRole.seller;
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Solicitud de rol'),
+        title: const Text('Solicitud de acceso'),
         content: StatefulBuilder(
           builder: (context, setState) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              DropdownButtonFormField<AppRole>(
-                value: selected,
-                items: AppRole.values.map((role) => DropdownMenuItem(value: role, child: Text(role.label))).toList(),
-                onChanged: (value) => setState(() => selected = value ?? AppRole.seller),
-              ),
+              DropdownButtonFormField<AppRole>(value: selected, items: AppRole.values.map((role) => DropdownMenuItem(value: role, child: Text(role.label))).toList(), onChanged: (value) => setState(() => selected = value ?? AppRole.seller)),
               TextField(controller: reason, decoration: const InputDecoration(labelText: 'Motivo')),
             ],
           ),
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
-          FilledButton(
-            onPressed: () {
-              context.read<AppController>().requestRole(selected, reason.text.trim());
-              Navigator.pop(context);
-            },
-            child: const Text('Enviar'),
-          ),
+          FilledButton(onPressed: () { context.read<AppController>().requestRole(selected, reason.text.trim()); Navigator.pop(context); }, child: const Text('Enviar')),
         ],
       ),
     );
@@ -560,13 +472,15 @@ class _NotificationSwitches extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<AppController>();
+    void update(NotificationPreferences preferences) => controller.updateProfile(fullName: user.fullName, phone: user.phone, address: user.address, notifications: preferences);
     return Card(
       child: Column(
-        children: const [
-          SwitchListTile(value: true, onChanged: null, title: Text('Pedidos')),
-          SwitchListTile(value: true, onChanged: null, title: Text('Promociones')),
-          SwitchListTile(value: true, onChanged: null, title: Text('Stock bajo')),
-          SwitchListTile(value: true, onChanged: null, title: Text('Recordatorios de ofertas')),
+        children: [
+          SwitchListTile(value: user.notifications.orderUpdates, onChanged: (value) => update(user.notifications.copyWith(orderUpdates: value)), title: const Text('Actualizaciones de pedidos')),
+          SwitchListTile(value: user.notifications.promotions, onChanged: (value) => update(user.notifications.copyWith(promotions: value)), title: const Text('Promociones')),
+          SwitchListTile(value: user.notifications.stockAlerts, onChanged: (value) => update(user.notifications.copyWith(stockAlerts: value)), title: const Text('Alertas de stock')),
+          SwitchListTile(value: user.notifications.offerReminders, onChanged: (value) => update(user.notifications.copyWith(offerReminders: value)), title: const Text('Recordatorios de ofertas')),
         ],
       ),
     );
@@ -602,18 +516,9 @@ class _CustomerPanel extends StatelessWidget {
         children: [
           Text('Panel de usuario', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
           const SizedBox(height: 10),
-          _MetricGrid(values: {
-            'Pedidos': controller.orders.length.toString(),
-            'Carrito': controller.cartCount.toString(),
-            'Notificaciones': controller.notifications.length.toString(),
-          }),
+          _MetricGrid(values: {'Pedidos': controller.orders.length.toString(), 'Carrito': controller.cartCount.toString(), 'Avisos': controller.notifications.length.toString()}),
           const SizedBox(height: 16),
-          ...controller.orders.map((order) => ListTile(
-                leading: const Icon(Icons.receipt_long),
-                title: Text(order.id),
-                subtitle: Text(order.status),
-                trailing: Text('S/ ${order.total.toStringAsFixed(2)}'),
-              )),
+          ...controller.orders.map((order) => ListTile(leading: const Icon(Icons.receipt_long), title: Text(order.id), subtitle: Text(order.status), trailing: Text('S/ ${order.total.toStringAsFixed(2)}'))),
         ],
       ),
     );
@@ -626,7 +531,7 @@ class _SellerPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<AppController>();
-    final sellerProducts = controller.products.where((product) => product.sellerId == controller.currentUser.id || product.sellerId == 'demo-seller').toList();
+    final sellerProducts = controller.sellerProducts;
     return SafeArea(
       child: ListView(
         padding: const EdgeInsets.all(20),
@@ -635,26 +540,20 @@ class _SellerPanel extends StatelessWidget {
           const SizedBox(height: 10),
           _MetricGrid(values: {
             'Productos': sellerProducts.length.toString(),
+            'Publicados': sellerProducts.where((product) => product.isApproved).length.toString(),
+            'En revisión': sellerProducts.where((product) => product.isPending).length.toString(),
             'Stock bajo': sellerProducts.where((product) => product.isLowStock).length.toString(),
-            'Ventas demo': controller.orders.length.toString(),
+            'Vendidos': controller.sellerUnitsSold.toString(),
+            'Ganancias': 'S/ ${controller.sellerRevenue.toStringAsFixed(0)}',
           }),
           const SizedBox(height: 16),
-          FilledButton.icon(
-            onPressed: () => _ProductEditor.show(context),
-            icon: const Icon(Icons.add_box_outlined),
-            label: const Text('Crear producto'),
-          ),
+          FilledButton.icon(onPressed: () => _ProductEditor.show(context), icon: const Icon(Icons.add_box_outlined), label: const Text('Crear producto')),
           const SizedBox(height: 16),
           ...sellerProducts.map((product) => ListTile(
                 leading: const Icon(Icons.inventory_2_outlined),
                 title: Text(product.name),
                 subtitle: Text('${product.category} · Stock ${product.stock}'),
-                trailing: Wrap(
-                  children: [
-                    IconButton(onPressed: () => _ProductEditor.show(context, product: product), icon: const Icon(Icons.edit_outlined)),
-                    IconButton(onPressed: () => controller.deleteProduct(product), icon: const Icon(Icons.delete_outline)),
-                  ],
-                ),
+                trailing: Wrap(children: [_StatusChip(product: product), IconButton(onPressed: () => _ProductEditor.show(context, product: product), icon: const Icon(Icons.edit_outlined)), IconButton(onPressed: () => controller.deleteProduct(product), icon: const Icon(Icons.delete_outline))]),
               )),
         ],
       ),
@@ -674,39 +573,22 @@ class _AdminPanel extends StatelessWidget {
         children: [
           Text('Panel administrador', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
           const SizedBox(height: 10),
-          _MetricGrid(values: {
-            'Usuarios': controller.users.length.toString(),
-            'Productos': controller.products.length.toString(),
-            'Categorías': controller.categoryModels.length.toString(),
-            'Solicitudes': controller.roleRequests.length.toString(),
-          }),
+          _MetricGrid(values: {'Usuarios': controller.users.length.toString(), 'Productos': controller.products.length.toString(), 'Categorías': controller.categoryModels.length.toString(), 'Pendientes': controller.pendingProducts.length.toString(), 'Solicitudes': controller.roleRequests.length.toString()}),
           const SizedBox(height: 16),
-          FilledButton.icon(
-            onPressed: controller.seedDemoData,
-            icon: const Icon(Icons.cloud_upload_outlined),
-            label: const Text('Sincronizar demo con Firebase'),
-          ),
+          FilledButton.icon(onPressed: controller.seedDemoData, icon: const Icon(Icons.inventory_outlined), label: const Text('Cargar catálogo inicial')),
+          const SizedBox(height: 16),
+          Text('Productos pendientes de aprobación', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
+          if (controller.pendingProducts.isEmpty) const ListTile(leading: Icon(Icons.check_circle_outline), title: Text('No hay productos pendientes.')),
+          ...controller.pendingProducts.map((product) => ListTile(leading: const Icon(Icons.pending_actions), title: Text(product.name), subtitle: Text('${product.category} · Vendedor ${product.sellerId}'), trailing: Wrap(children: [FilledButton(onPressed: () => controller.approveProduct(product), child: const Text('Aprobar')), const SizedBox(width: 8), OutlinedButton(onPressed: () => controller.rejectProduct(product), child: const Text('Rechazar'))]))),
           const SizedBox(height: 16),
           Text('Solicitudes de acceso', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
-          ...controller.roleRequests.map((request) => ListTile(
-                leading: const Icon(Icons.manage_accounts),
-                title: Text('${request.email} → ${request.requestedRole.label}'),
-                subtitle: Text(request.reason),
-                trailing: request.status == 'pending'
-                    ? FilledButton(
-                        onPressed: () => controller.approveRoleRequest(request),
-                        child: const Text('Aprobar'),
-                      )
-                    : Chip(label: Text(request.status)),
-              )),
+          ...controller.roleRequests.map((request) => ListTile(leading: const Icon(Icons.manage_accounts), title: Text('${request.email} → ${request.requestedRole.label}'), subtitle: Text(request.reason), trailing: request.status == 'pending' ? FilledButton(onPressed: () => controller.approveRoleRequest(request), child: const Text('Aprobar')) : Chip(label: Text(request.status)))),
+          const SizedBox(height: 16),
+          Text('Productos de la tienda', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
+          ...controller.products.map((product) => ListTile(leading: const Icon(Icons.inventory_2_outlined), title: Text(product.name), subtitle: Text('${product.category} · Stock ${product.stock}'), trailing: Wrap(children: [_StatusChip(product: product), IconButton(onPressed: () => _ProductEditor.show(context, product: product), icon: const Icon(Icons.edit_outlined)), IconButton(onPressed: () => controller.deleteProduct(product), icon: const Icon(Icons.delete_outline))]))),
           const SizedBox(height: 16),
           Text('Usuarios', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
-          ...controller.users.map((user) => ListTile(
-                leading: const Icon(Icons.person),
-                title: Text(user.fullName),
-                subtitle: Text(user.email),
-                trailing: Chip(label: Text(user.role.label)),
-              )),
+          ...controller.users.map((user) => ListTile(leading: const Icon(Icons.person), title: Text(user.fullName), subtitle: Text(user.email), trailing: Chip(label: Text(user.role.label)))),
         ],
       ),
     );
@@ -720,25 +602,31 @@ class _ProductEditor {
     final category = TextEditingController(text: product?.category ?? 'Accesorios');
     final price = TextEditingController(text: (product?.price ?? 99.90).toString());
     final stock = TextEditingController(text: (product?.stock ?? 10).toString());
+    final discount = TextEditingController(text: ((product?.discountRate ?? 0) * 100).toStringAsFixed(0));
+    final threshold = TextEditingController(text: (product?.lowStockThreshold ?? 5).toString());
     final image = TextEditingController(text: product?.imageUrl ?? 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80');
+    final document = TextEditingController(text: product?.documentUrl ?? '');
 
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(product == null ? 'Crear producto' : 'Editar producto'),
         content: SizedBox(
-          width: 440,
+          width: 520,
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextField(controller: name, decoration: const InputDecoration(labelText: 'Nombre')),
-                TextField(controller: description, decoration: const InputDecoration(labelText: 'Descripción')),
-                TextField(controller: category, decoration: const InputDecoration(labelText: 'Categoría')),
-                TextField(controller: price, decoration: const InputDecoration(labelText: 'Precio')),
-                TextField(controller: stock, decoration: const InputDecoration(labelText: 'Stock')),
-                TextField(controller: image, decoration: const InputDecoration(labelText: 'URL de imagen o Storage')),
-              ],
-            ),
+            child: Column(children: [
+              TextField(controller: name, decoration: const InputDecoration(labelText: 'Nombre')),
+              TextField(controller: description, decoration: const InputDecoration(labelText: 'Descripción')),
+              TextField(controller: category, decoration: const InputDecoration(labelText: 'Categoría')),
+              TextField(controller: price, decoration: const InputDecoration(labelText: 'Precio')),
+              TextField(controller: stock, decoration: const InputDecoration(labelText: 'Stock')),
+              TextField(controller: discount, decoration: const InputDecoration(labelText: 'Descuento (%)')),
+              TextField(controller: threshold, decoration: const InputDecoration(labelText: 'Alerta de stock bajo')),
+              TextField(controller: image, decoration: const InputDecoration(labelText: 'URL de imagen')),
+              TextField(controller: document, decoration: const InputDecoration(labelText: 'URL de documento')),
+              const SizedBox(height: 8),
+              const Text('Los productos creados por vendedores pasan a revisión antes de publicarse.'),
+            ]),
           ),
         ),
         actions: [
@@ -757,6 +645,10 @@ class _ProductEditor {
                 rating: product?.rating ?? 4.5,
                 isFeatured: product?.isFeatured ?? false,
                 sellerId: controller.currentUser.id,
+                discountRate: (double.tryParse(discount.text) ?? 0) / 100,
+                lowStockThreshold: int.tryParse(threshold.text) ?? 5,
+                documentUrl: document.text.trim(),
+                approvalStatus: product?.approvalStatus ?? 'pending',
               );
               controller.saveProduct(next);
               Navigator.pop(context);
@@ -766,6 +658,19 @@ class _ProductEditor {
         ],
       ),
     );
+  }
+}
+
+class _StatusChip extends StatelessWidget {
+  const _StatusChip({required this.product});
+
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    if (product.isApproved) return const Chip(label: Text('Publicado'));
+    if (product.isPending) return const Chip(label: Text('En revisión'));
+    return const Chip(label: Text('Rechazado'));
   }
 }
 
@@ -779,17 +684,9 @@ class _NotificationsPage extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          Text('Notificaciones', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
+          Text('Avisos', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
           const SizedBox(height: 10),
-          if (controller.notifications.isEmpty)
-            const _EmptyState(icon: Icons.notifications_none, title: 'Sin notificaciones', message: 'Aquí aparecerán pedidos, promociones y alertas.')
-          else
-            ...controller.notifications.map((item) => ListTile(
-                  leading: const Icon(Icons.notifications_active_outlined),
-                  title: Text(item.title),
-                  subtitle: Text(item.message),
-                  trailing: Chip(label: Text(item.type)),
-                )),
+          if (controller.notifications.isEmpty) const _EmptyState(icon: Icons.notifications_none, title: 'Sin avisos', message: 'Aquí aparecerán pedidos, promociones y alertas.') else ...controller.notifications.map((item) => ListTile(leading: const Icon(Icons.notifications_active_outlined), title: Text(item.title), subtitle: Text(item.message), trailing: Chip(label: Text(item.type)))),
         ],
       ),
     );
@@ -803,27 +700,7 @@ class _MetricGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 12,
-      runSpacing: 12,
-      children: values.entries
-          .map((entry) => SizedBox(
-                width: 180,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(18),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(entry.value, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w900)),
-                        Text(entry.key),
-                      ],
-                    ),
-                  ),
-                ),
-              ))
-          .toList(),
-    );
+    return Wrap(spacing: 12, runSpacing: 12, children: values.entries.map((entry) => SizedBox(width: 180, child: Card(child: Padding(padding: const EdgeInsets.all(18), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(entry.value, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w900)), Text(entry.key)]))))).toList());
   }
 }
 
@@ -837,13 +714,7 @@ class _MoneyRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = strong ? Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900) : null;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(label, style: style),
-        Text('S/ ${value.toStringAsFixed(2)}', style: style),
-      ],
-    );
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(label, style: style), Text('S/ ${value.toStringAsFixed(2)}', style: style)]);
   }
 }
 
@@ -853,9 +724,7 @@ class _Tag extends StatelessWidget {
   final String text;
 
   @override
-  Widget build(BuildContext context) {
-    return Chip(label: Text(text));
-  }
+  Widget build(BuildContext context) => Chip(label: Text(text));
 }
 
 class _EmptyState extends StatelessWidget {
@@ -867,22 +736,6 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(28),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 52),
-              const SizedBox(height: 10),
-              Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
-              const SizedBox(height: 6),
-              Text(message, textAlign: TextAlign.center),
-            ],
-          ),
-        ),
-      ),
-    );
+    return Center(child: Card(child: Padding(padding: const EdgeInsets.all(28), child: Column(mainAxisSize: MainAxisSize.min, children: [Icon(icon, size: 52), const SizedBox(height: 10), Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)), const SizedBox(height: 6), Text(message, textAlign: TextAlign.center)]))));
   }
 }

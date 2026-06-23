@@ -32,7 +32,7 @@ class PaymentMethodProfile {
   factory PaymentMethodProfile.fromMap(Map<String, dynamic> data) {
     return PaymentMethodProfile(
       id: data['id']?.toString() ?? '',
-      type: data['type']?.toString() ?? 'Tarjeta demo',
+      type: data['type']?.toString() ?? 'Tarjeta',
       holder: data['holder']?.toString() ?? '',
       last4: data['last4']?.toString() ?? '0000',
       isDefault: data['isDefault'] == true,

@@ -11,7 +11,7 @@ class MessagingService {
   final FirebaseBootstrapper firebase;
 
   Future<String?> registerDevice(String uid) async {
-    if (!firebase.isConnected) return 'cloud-simulation-token';
+    if (!firebase.isConnected) return 'local-preview-token';
     await FirebaseMessaging.instance.requestPermission();
     final token = await FirebaseMessaging.instance.getToken();
     if (token == null) return null;

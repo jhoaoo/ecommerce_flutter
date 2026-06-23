@@ -46,11 +46,11 @@ extension FirebaseConnectionStatusText on FirebaseConnectionStatus {
   String get label {
     switch (this) {
       case FirebaseConnectionStatus.connected:
-        return 'Firebase conectado';
+        return 'Servicio disponible';
       case FirebaseConnectionStatus.demoMode:
-        return 'Cloud simulation local';
+        return 'Modo de prueba local';
       case FirebaseConnectionStatus.notInitialized:
-        return 'Inicializando Firebase';
+        return 'Inicializando tienda';
     }
   }
 }

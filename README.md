@@ -1,48 +1,59 @@
-# Ecommerce Flutter V2
+# NovaMarket Ecommerce
 
-Sistema ecommerce multifuncional creado con **Flutter + Firebase** para portafolio profesional.
+Aplicación ecommerce desarrollada con Flutter y Firebase para portafolio profesional. La app está organizada por capas y módulos, con experiencia responsive para Web y Android.
 
-## Funciones principales
+## Experiencia por rol
 
-- Web + Android.
-- Diseño responsive con NavigationRail en escritorio/tablet y NavigationBar en móvil.
-- Firebase Auth con email/password y Google Sign-In preparado.
-- Cloud simulation para probar como usuario, vendedor o admin sin cuentas manuales.
-- Solicitud de acceso a roles.
-- Panel de usuario, vendedor y admin.
-- CRUD funcional de productos en modo vendedor/admin.
-- CRUD preparado para categorías, usuarios y pedidos.
-- Perfil editable con métodos de pago simulados y preferencias de notificaciones.
-- Firebase Storage preparado para imágenes y documentos.
-- Firestore guarda solo URL/ruta/metadata de archivos, nunca base64 o bytes.
-- Cálculos automáticos de subtotal, descuentos, IGV, envío y total.
-- Stock bajo, actualización de stock y checkout.
-- FCM-ready para tokens, pedidos, promociones, stock y ofertas.
+### Usuario
+
+- Compra productos publicados.
+- Usa carrito y checkout con pagos simulados.
+- Revisa pedidos y avisos.
+- Edita perfil.
+- Configura idioma y modo claro/oscuro.
+- Administra preferencias de notificación.
+- Solicita acceso como vendedor o administrador para pruebas.
+
+### Vendedor
+
+Incluye todo lo del usuario y además:
+
+- Crear productos.
+- Editar precio, stock, descuento, categoría, imagen y documento.
+- Eliminar productos propios.
+- Ver dashboard de ventas, unidades vendidas, ganancias, stock bajo y productos en revisión.
+- Los productos nuevos quedan en revisión hasta que un administrador los apruebe.
+
+### Administrador
+
+- Control total de usuarios, productos, categorías y solicitudes.
+- Aprobar o rechazar productos antes de que aparezcan en la tienda.
+- Aprobar solicitudes de acceso.
+- Editar o eliminar cualquier producto.
+- Cargar catálogo inicial para pruebas.
 
 ## Arquitectura
 
 ```text
 lib/
-├── main.dart
 └── src/
-    ├── app.dart
-    ├── core/
     ├── controllers/
+    ├── core/
     ├── models/
     ├── repositories/
     └── services/
 ```
 
-## Capas
+## Buenas prácticas implementadas
 
-- `core`: roles, colecciones, Firebase bootstrap.
-- `models`: entidades del dominio.
-- `services`: Firebase Auth, Firestore, Storage, Messaging y roles.
-- `repositories`: capa de acceso a datos y fallback demo.
-- `controllers`: estado global y casos de uso.
-- `app.dart`: UI responsive y paneles.
+- La interfaz no muestra nombres técnicos del backend.
+- Las imágenes y documentos se manejan como URL/ruta/metadata, no como base64 en base de datos.
+- El catálogo del comprador solo muestra productos activos y aprobados.
+- Los productos creados por vendedores requieren aprobación.
+- Los cálculos incluyen subtotal, descuento, IGV, envío y total.
+- El proyecto funciona con datos de prueba y queda preparado para servicios reales.
 
-## Ejecución
+## Ejecutar
 
 ```bash
 flutter clean
@@ -51,24 +62,6 @@ flutter analyze
 flutter test
 flutter run -d chrome
 ```
-
-Para Android:
-
-```bash
-flutter run -d android
-```
-
-## Notas Firebase
-
-Para una demo real completa debes activar en Firebase Console:
-
-1. Authentication: Email/Password y Google.
-2. Firestore Database.
-3. Firebase Storage.
-4. Cloud Messaging.
-5. Reglas de seguridad por rol.
-
-El proyecto mantiene cloud simulation para que siempre se pueda probar aunque Firebase no esté configurado localmente.
 
 ## Autor
 

@@ -1,10 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+﻿import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../core/app_role.dart';
 import '../core/firebase_bootstrapper.dart';
 import '../models/models.dart';
+import '../models/demo_data.dart';
 
 class AuthService {
   AuthService({required this.firebase});
@@ -69,3 +70,4 @@ class AuthService {
     }
   }
 }
+

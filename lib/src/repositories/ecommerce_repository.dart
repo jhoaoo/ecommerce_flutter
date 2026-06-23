@@ -1,4 +1,5 @@
-﻿import '../core/app_collections.dart';
+﻿
+import '../core/app_collections.dart';
 import '../core/app_role.dart';
 import '../core/firebase_bootstrapper.dart';
 import '../models/demo_data.dart';
