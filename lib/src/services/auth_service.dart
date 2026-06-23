@@ -22,29 +22,46 @@ class AuthService {
 
   Future<UserCredential?> registerWithEmail(String email, String password, String fullName) async {
     if (!firebase.isConnected) return null;
-    final credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-    await credential.user?.updateDisplayName(fullName);
-    await credential.user?.reload();
-    return credential;
+    try {
+      final credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await credential.user?.updateDisplayName(fullName);
+      await credential.user?.reload();
+      return credential;
+    } on FirebaseAuthException catch (error) {
+      throw Exception('AUTH_CODE:${error.code}|MESSAGE:${error.message ?? ''}');
+    } catch (error) {
+      throw Exception('AUTH_UNKNOWN:$error');
+    }
   }
 
   Future<UserCredential?> signInWithEmail(String email, String password) async {
     if (!firebase.isConnected) return null;
-    return _auth.signInWithEmailAndPassword(email: email, password: password);
+    try {
+      return await _auth.signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (error) {
+      throw Exception('AUTH_CODE:${error.code}|MESSAGE:${error.message ?? ''}');
+    } catch (error) {
+      throw Exception('AUTH_UNKNOWN:$error');
+    }
   }
 
   Future<UserCredential?> signInWithGoogle() async {
     if (!firebase.isConnected) return null;
+    try {
+      if (kIsWeb) {
+        return await _auth.signInWithPopup(GoogleAuthProvider());
+      }
 
-    if (kIsWeb) {
-      return _auth.signInWithPopup(GoogleAuthProvider());
+      final account = await GoogleSignIn().signIn();
+      if (account == null) return null;
+      final tokens = await account.authentication;
+      final credential = GoogleAuthProvider.credential(accessToken: tokens.accessToken, idToken: tokens.idToken);
+      return await _auth.signInWithCredential(credential);
+    } on FirebaseAuthException catch (error) {
+      throw Exception('AUTH_CODE:${error.code}|MESSAGE:${error.message ?? ''}');
+    } catch (error) {
+      throw Exception('AUTH_UNKNOWN:$error');
     }
-
-    final account = await GoogleSignIn().signIn();
-    if (account == null) return null;
-    final tokens = await account.authentication;
-    final credential = GoogleAuthProvider.credential(accessToken: tokens.accessToken, idToken: tokens.idToken);
-    return _auth.signInWithCredential(credential);
   }
 
   Future<void> signOut() async {
@@ -57,7 +74,13 @@ class AuthService {
 
   Future<void> sendPasswordReset(String email) async {
     if (!firebase.isConnected) return;
-    await _auth.sendPasswordResetEmail(email: email);
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (error) {
+      throw Exception('AUTH_CODE:${error.code}|MESSAGE:${error.message ?? ''}');
+    } catch (error) {
+      throw Exception('AUTH_UNKNOWN:$error');
+    }
   }
 
   AppUser demoUserForRole(AppRole role) {
