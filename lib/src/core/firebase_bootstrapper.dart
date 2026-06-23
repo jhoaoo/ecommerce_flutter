@@ -1,4 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
+﻿import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
 class FirebaseBootstrapper {
@@ -19,7 +19,7 @@ class FirebaseBootstrapper {
       if (kIsWeb) {
         await Firebase.initializeApp(
           options: const FirebaseOptions(
-            apiKey: 'AIzaSyARHZaK8DTe5kYoe5rTpo1SE9oY_L5lZKI',
+            apiKey: 'AIzaSyCcMN5vi59_RX_LFHWrR5Cy0pb1l-EEc38',
             authDomain: 'ecommerce-7ea77.firebaseapp.com',
             projectId: 'ecommerce-7ea77',
             storageBucket: 'ecommerce-7ea77.firebasestorage.app',
