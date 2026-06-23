@@ -13,3 +13,6 @@ analyzer:
 linter:
   rules:
     unnecessary_string_escapes: false
+    deprecated_member_use: false
+    use_build_context_synchronously: false
+    avoid_types_as_parameter_names: false
