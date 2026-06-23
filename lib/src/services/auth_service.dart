@@ -1,11 +1,11 @@
-﻿import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../core/app_role.dart';
 import '../core/firebase_bootstrapper.dart';
-import '../models/models.dart';
 import '../models/demo_data.dart';
+import '../models/models.dart';
 
 class AuthService {
   AuthService({required this.firebase});
@@ -13,6 +13,7 @@ class AuthService {
   final FirebaseBootstrapper firebase;
 
   FirebaseAuth get _auth => FirebaseAuth.instance;
+  User? get currentFirebaseUser => firebase.isConnected ? _auth.currentUser : null;
 
   Stream<User?> authStateChanges() {
     if (!firebase.isConnected) return const Stream<User?>.empty();
@@ -23,6 +24,7 @@ class AuthService {
     if (!firebase.isConnected) return null;
     final credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
     await credential.user?.updateDisplayName(fullName);
+    await credential.user?.reload();
     return credential;
   }
 
@@ -50,7 +52,9 @@ class AuthService {
 
   Future<void> signOut() async {
     if (!firebase.isConnected) return;
-    await GoogleSignIn().signOut();
+    try {
+      await GoogleSignIn().signOut();
+    } catch (_) {}
     await _auth.signOut();
   }
 
@@ -70,4 +74,3 @@ class AuthService {
     }
   }
 }
-
