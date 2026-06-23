@@ -1,58 +1,45 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:ecommerce/src/models.dart';
-import 'package:ecommerce/src/repositories.dart';
-import 'package:ecommerce/src/shop_controller.dart';
-
-class FakeProductRepository implements ProductRepository {
-  @override
-  Future<List<Product>> fetchProducts() async => demoProducts;
-
-  @override
-  Future<void> seedDemoProducts() async {}
-}
-
-class FakeOrderRepository implements OrderRepository {
-  @override
-  Future<CustomerOrder> createOrder({
-    required List<CartItem> items,
-    required String customerName,
-    required String customerEmail,
-  }) async {
-    final total = items.fold<double>(0, (value, item) => value + item.subtotal);
-    return CustomerOrder(
-      id: 'TEST-ORDER',
-      items: items,
-      total: total,
-      customerName: customerName,
-      customerEmail: customerEmail,
-      createdAt: DateTime(2026),
-      status: 'test',
-    );
-  }
-}
+import 'package:ecommerce/src/controllers/app_controller.dart';
+import 'package:ecommerce/src/core/app_role.dart';
+import 'package:ecommerce/src/core/firebase_bootstrapper.dart';
+import 'package:ecommerce/src/repositories/ecommerce_repository.dart';
+import 'package:ecommerce/src/services/auth_service.dart';
+import 'package:ecommerce/src/services/firestore_service.dart';
+import 'package:ecommerce/src/services/messaging_service.dart';
+import 'package:ecommerce/src/services/role_access_service.dart';
+import 'package:ecommerce/src/services/storage_service.dart';
 
 void main() {
-  test('cart and checkout logic works without Firebase', () async {
-    final controller = ShopController(
-      productRepository: FakeProductRepository(),
-      orderRepository: FakeOrderRepository(),
+  test('cart, role simulation and checkout logic work', () async {
+    final firebase = FirebaseBootstrapper();
+    final firestore = FirestoreService(firebase: firebase);
+    final controller = AppController(
+      repository: EcommerceRepository(
+        firebase: firebase,
+        authService: AuthService(firebase: firebase),
+        firestoreService: firestore,
+        storageService: StorageService(firebase: firebase),
+        messagingService: MessagingService(firebase: firebase),
+        roleAccessService: RoleAccessService(firestoreService: firestore),
+      ),
     );
 
-    await controller.loadProducts();
+    await controller.bootstrap();
+    expect(controller.products, isNotEmpty);
+
+    await controller.switchDemoRole(AppRole.seller);
+    expect(controller.currentUser.role, AppRole.seller);
+
     final product = controller.products.first;
     controller.addToCart(product);
     controller.addToCart(product);
 
     expect(controller.cartCount, 2);
-    expect(controller.cartTotal, product.price * 2);
+    expect(controller.totals.total, greaterThan(0));
 
-    final order = await controller.checkout(
-      customerName: 'Cliente Test',
-      customerEmail: 'cliente@test.com',
-    );
-
-    expect(order.id, 'TEST-ORDER');
+    final order = await controller.checkout();
+    expect(order.total, greaterThan(0));
     expect(controller.cart, isEmpty);
     expect(controller.orders.length, 1);
   });

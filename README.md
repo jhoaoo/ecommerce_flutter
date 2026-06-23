@@ -1,160 +1,76 @@
-# Ecommerce Flutter
+# Ecommerce Flutter V2
 
-Aplicación ecommerce desarrollada con **Flutter + Firebase** para portafolio. La versión actual ya funciona como base con catálogo, carrito, checkout, Firestore y panel administrativo básico. La rama `portfolio-ecommerce-refactor` queda orientada a una V2 más completa, escalable y realista.
+Sistema ecommerce multifuncional creado con **Flutter + Firebase** para portafolio profesional.
 
-## Objetivo V2
+## Funciones principales
 
-Construir un ecommerce responsive para **Web y Android** con:
+- Web + Android.
+- Diseño responsive con NavigationRail en escritorio/tablet y NavigationBar en móvil.
+- Firebase Auth con email/password y Google Sign-In preparado.
+- Cloud simulation para probar como usuario, vendedor o admin sin cuentas manuales.
+- Solicitud de acceso a roles.
+- Panel de usuario, vendedor y admin.
+- CRUD funcional de productos en modo vendedor/admin.
+- CRUD preparado para categorías, usuarios y pedidos.
+- Perfil editable con métodos de pago simulados y preferencias de notificaciones.
+- Firebase Storage preparado para imágenes y documentos.
+- Firestore guarda solo URL/ruta/metadata de archivos, nunca base64 o bytes.
+- Cálculos automáticos de subtotal, descuentos, IGV, envío y total.
+- Stock bajo, actualización de stock y checkout.
+- FCM-ready para tokens, pedidos, promociones, stock y ofertas.
 
-- Firebase Authentication.
-- Inicio con email y Google.
-- Cierre de sesión y recuperación de acceso.
-- Solicitud de acceso a roles: usuario, vendedor y admin.
-- Paneles diferenciados por rol.
-- CRUD de productos, categorías, usuarios y pedidos.
-- Perfil editable con datos personales, métodos de pago simulados y preferencias de notificación.
-- Firebase Storage para imágenes/documentos, guardando en Firestore solo URL, ruta y metadata.
-- Cálculos de subtotal, impuestos, descuentos, envío, total y stock.
-- Firebase Cloud Messaging preparado para pedidos, promociones, stock bajo y ofertas.
-- Modo cloud simulation para que reclutadores/profesores puedan probar los tres roles sin configuración manual.
-
-## Arquitectura objetivo
+## Arquitectura
 
 ```text
 lib/
 ├── main.dart
 └── src/
+    ├── app.dart
     ├── core/
-    │   ├── constants/
-    │   ├── routing/
-    │   ├── theme/
-    │   └── utils/
-    ├── models/
-    │   ├── app_user.dart
-    │   ├── category.dart
-    │   ├── product.dart
-    │   ├── order.dart
-    │   ├── payment_method.dart
-    │   └── notification_item.dart
-    ├── services/
-    │   ├── auth_service.dart
-    │   ├── firestore_service.dart
-    │   ├── storage_service.dart
-    │   ├── messaging_service.dart
-    │   └── role_access_service.dart
-    ├── repositories/
-    │   ├── auth_repository.dart
-    │   ├── product_repository.dart
-    │   ├── category_repository.dart
-    │   ├── user_repository.dart
-    │   └── order_repository.dart
     ├── controllers/
-    │   ├── auth_controller.dart
-    │   ├── catalog_controller.dart
-    │   ├── cart_controller.dart
-    │   ├── profile_controller.dart
-    │   └── admin_controller.dart
-    ├── features/
-    │   ├── auth/
-    │   ├── customer/
-    │   ├── seller/
-    │   ├── admin/
-    │   ├── profile/
-    │   └── checkout/
-    └── shared/
-        ├── widgets/
-        └── layout/
+    ├── models/
+    ├── repositories/
+    └── services/
 ```
 
-## Funcionalidades actuales
+## Capas
 
-- Catálogo responsive con búsqueda y filtro por categoría.
-- Carrito de compras con incremento, reducción, eliminación y total automático.
-- Checkout con validación de formulario.
-- Creación de órdenes en Cloud Firestore cuando Firebase está disponible.
-- Panel administrativo con métricas básicas y sincronización de productos demo a Firestore.
-- Fallback local para que la app no falle si el entorno no tiene credenciales Firebase configuradas.
+- `core`: roles, colecciones, Firebase bootstrap.
+- `models`: entidades del dominio.
+- `services`: Firebase Auth, Firestore, Storage, Messaging y roles.
+- `repositories`: capa de acceso a datos y fallback demo.
+- `controllers`: estado global y casos de uso.
+- `app.dart`: UI responsive y paneles.
 
-## Stack técnico
-
-| Área | Tecnología |
-|---|---|
-| Framework | Flutter |
-| Lenguaje | Dart |
-| Estado | Provider + ChangeNotifier |
-| Backend | Firebase |
-| Base de datos | Cloud Firestore |
-| Autenticación | Firebase Auth |
-| Archivos | Firebase Storage |
-| Notificaciones | Firebase Cloud Messaging ready |
-| UI | Material 3 responsive |
-
-## Colecciones Firestore objetivo
-
-```text
-users
-roleRequests
-categories
-products
-orders
-notifications
-promotions
-```
-
-## Buenas prácticas Storage
-
-Las imágenes y documentos no deben guardarse como bytes/base64 en Firestore. La app debe subirlos a Storage y guardar en Firestore solamente:
-
-```text
-fileUrl
-filePath
-contentType
-uploadedBy
-createdAt
-```
-
-Rutas recomendadas:
-
-```text
-users/{uid}/profile
-products/{sellerId}/{productId}/images
-products/{sellerId}/{productId}/documents
-orders/{orderId}/documents
-```
-
-## Modo cloud simulation
-
-El proyecto debe permitir probar el sistema completo sin depender de cuentas manuales:
-
-- Entrar como usuario demo.
-- Entrar como vendedor demo.
-- Entrar como admin demo.
-- Solicitar cambio de rol.
-- Crear productos, categorías y pedidos demo.
-- Simular pagos.
-- Simular notificaciones.
-
-## Cálculos de compra
-
-```text
-subtotal = precio * cantidad
-descuento = subtotal * porcentajeDescuento
-base = subtotal - descuento
-impuesto = base * porcentajeImpuesto
-total = base + impuesto + envío
-```
-
-## Instalación local
+## Ejecución
 
 ```bash
-git clone https://github.com/jhoaoo/ecommerce_flutter.git
-cd ecommerce_flutter
+flutter clean
 flutter pub get
-flutter run
+flutter analyze
+flutter test
+flutter run -d chrome
 ```
+
+Para Android:
+
+```bash
+flutter run -d android
+```
+
+## Notas Firebase
+
+Para una demo real completa debes activar en Firebase Console:
+
+1. Authentication: Email/Password y Google.
+2. Firestore Database.
+3. Firebase Storage.
+4. Cloud Messaging.
+5. Reglas de seguridad por rol.
+
+El proyecto mantiene cloud simulation para que siempre se pueda probar aunque Firebase no esté configurado localmente.
 
 ## Autor
 
-**Jhoaoo Sebastián Llerena Quispe**  
-Estudiante de Ingeniería de Sistemas · UCSM  
-Arequipa, Perú
+Jhoaoo Sebastián Llerena Quispe  
+Ingeniería de Sistemas · UCSM · Arequipa, Perú

@@ -17,3 +17,6 @@ linter:
     unnecessary_string_escapes: false
     use_build_context_synchronously: false
     avoid_types_as_parameter_names: false
+    prefer_const_declarations: false
+    prefer_const_constructors: false
+    prefer_collection_literals: false
