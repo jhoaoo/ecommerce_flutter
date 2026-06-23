@@ -119,7 +119,7 @@ class _AuthInicialPageWidgetState extends State<AuthInicialPageWidget>
                   const SizedBox(height: 20),
 
                   Text(
-                    'Miles de productos. Entrega rápida.\nTu tienda favorita en un solo lugar.',
+                    'Miles de productos. Entrega rapida.\nTu tienda favorita en un solo lugar.',
                     style: GoogleFonts.dmSans(
                       fontSize: 15,
                       color: Colors.white.withOpacity(0.5),
@@ -147,7 +147,7 @@ class _AuthInicialPageWidgetState extends State<AuthInicialPageWidget>
                   const SizedBox(height: 14),
 
                   _SecondaryButton(
-                    label: 'Iniciar sesión',
+                    label: 'Iniciar sesion',
                     onTap: () => Navigator.pushNamed(
                       context,
                       AuthLoginPageWidget.routePath,
@@ -327,7 +327,7 @@ class _TrustRow extends StatelessWidget {
           color: Colors.white.withOpacity(0.1),
           margin: const EdgeInsets.symmetric(horizontal: 16),
         ),
-        _TrustItem(icon: Icons.local_shipping_rounded, label: 'Envío rápido'),
+        _TrustItem(icon: Icons.local_shipping_rounded, label: 'Envio rapido'),
         Container(
           width: 1,
           height: 28,

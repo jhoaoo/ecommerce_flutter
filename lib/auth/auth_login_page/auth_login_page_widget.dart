@@ -68,7 +68,7 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
       }
     } catch (e) {
       if (mounted) {
-        setState(() => _errorMessage = 'Credenciales incorrectas. Inténtalo de nuevo.');
+        setState(() => _errorMessage = 'Credenciales incorrectas. Intentalo de nuevo.');
         _triggerShake();
       }
     } finally {
@@ -185,13 +185,13 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                           // Email field
                           _AuthField(
                             controller: _emailController,
-                            label: 'Correo electrónico',
+                            label: 'Correo electronico',
                             hint: 'tu@email.com',
                             icon: Icons.email_outlined,
                             keyboardType: TextInputType.emailAddress,
                             validator: (v) {
                               if (v == null || v.isEmpty) return 'Ingresa tu correo';
-                              if (!v.contains('@')) return 'Correo inválido';
+                              if (!v.contains('@')) return 'Correo invalido';
                               return null;
                             },
                           ).animate().fadeIn(delay: 300.ms, duration: 400.ms).slideX(begin: -0.05, end: 0),
@@ -201,7 +201,7 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                           // Password field
                           _AuthField(
                             controller: _passwordController,
-                            label: 'Contraseña',
+                            label: 'Contrasena',
                             hint: '••••••••',
                             icon: Icons.lock_outline_rounded,
                             obscureText: !_passwordVisible,
@@ -216,8 +216,8 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                               ),
                             ),
                             validator: (v) {
-                              if (v == null || v.isEmpty) return 'Ingresa tu contraseña';
-                              if (v.length < 6) return 'Mínimo 6 caracteres';
+                              if (v == null || v.isEmpty) return 'Ingresa tu contrasena';
+                              if (v.length < 6) return 'Minimo 6 caracteres';
                               return null;
                             },
                           ).animate().fadeIn(delay: 380.ms, duration: 400.ms).slideX(begin: -0.05, end: 0),
@@ -235,7 +235,7 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
                       ),
                       child: Text(
-                        '¿Olvidaste tu contraseña?',
+                        'Olvidaste tu contrasena?',
                         style: GoogleFonts.dmSans(
                           fontSize: 13,
                           color: _kAccent,
@@ -278,7 +278,7 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
 
                   // Login button
                   _LoadingButton(
-                    label: 'Iniciar sesión',
+                    label: 'Iniciar sesion',
                     isLoading: _isLoading,
                     onTap: _handleLogin,
                   ).animate().fadeIn(delay: 500.ms, duration: 400.ms).slideY(begin: 0.2, end: 0),
@@ -292,7 +292,7 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          'o continúa con',
+                          'o continua con',
                           style: GoogleFonts.dmSans(
                             fontSize: 13,
                             color: _kMuted,
@@ -337,14 +337,14 @@ class _AuthLoginPageWidgetState extends State<AuthLoginPageWidget> {
                       ),
                       child: RichText(
                         text: TextSpan(
-                          text: '¿No tienes cuenta? ',
+                          text: 'No tienes cuenta? ',
                           style: GoogleFonts.dmSans(
                             fontSize: 14,
                             color: _kMuted,
                           ),
                           children: [
                             TextSpan(
-                              text: 'Regístrate',
+                              text: 'Registrate',
                               style: GoogleFonts.dmSans(
                                 fontSize: 14,
                                 color: _kAccent,
@@ -735,20 +735,20 @@ class _FormContent extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Text(
-          'Recuperar contraseña',
+          'Recuperar contrasena',
           style: GoogleFonts.playfairDisplay(
             fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white,
           ),
         ),
         const SizedBox(height: 8),
         Text(
-          'Te enviaremos un enlace a tu correo para restablecer tu contraseña.',
+          'Te enviaremos un enlace a tu correo para restablecer tu contrasena.',
           style: GoogleFonts.dmSans(fontSize: 14, color: _kMuted, height: 1.5),
         ),
         const SizedBox(height: 24),
         _AuthField(
           controller: controller,
-          label: 'Correo electrónico',
+          label: 'Correo electronico',
           hint: 'tu@email.com',
           icon: Icons.email_outlined,
           keyboardType: TextInputType.emailAddress,
@@ -780,7 +780,7 @@ class _SuccessContent extends StatelessWidget {
             .scale(begin: const Offset(0.5, 0.5), duration: 400.ms, curve: Curves.elasticOut),
         const SizedBox(height: 20),
         Text(
-          '¡Correo enviado!',
+          'Correo enviado!',
           style: GoogleFonts.playfairDisplay(
             fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white,
           ),

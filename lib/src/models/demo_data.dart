@@ -2,8 +2,8 @@ import '../core/app_role.dart';
 import 'models.dart';
 
 final demoCategories = <CategoryModel>[
-  const CategoryModel(id: 'accesorios', name: 'Accesorios', description: 'Periféricos y complementos tech.', active: true),
-  const CategoryModel(id: 'audio', name: 'Audio', description: 'Audífonos, parlantes y micrófonos.', active: true),
+  const CategoryModel(id: 'accesorios', name: 'Accesorios', description: 'Perifericos y complementos tech.', active: true),
+  const CategoryModel(id: 'audio', name: 'Audio', description: 'Audifonos, parlantes y microfonos.', active: true),
   const CategoryModel(id: 'wearables', name: 'Wearables', description: 'Relojes inteligentes y dispositivos portables.', active: true),
   const CategoryModel(id: 'lifestyle', name: 'Lifestyle', description: 'Productos urbanos para estudio y trabajo.', active: true),
 ];
@@ -12,7 +12,7 @@ final demoProducts = <Product>[
   const Product(
     id: 'keyboard-pro',
     name: 'Keyboard Pro X',
-    description: 'Teclado mecánico compacto con switches táctiles y RGB sobrio.',
+    description: 'Teclado mecanico compacto con switches tactiles y RGB sobrio.',
     category: 'Accesorios',
     price: 249.90,
     stock: 18,
@@ -24,7 +24,7 @@ final demoProducts = <Product>[
   const Product(
     id: 'headset-air',
     name: 'Headset Air Studio',
-    description: 'Audífonos inalámbricos con cancelación de ruido para estudio y gaming.',
+    description: 'Audifonos inalambricos con cancelacion de ruido para estudio y gaming.',
     category: 'Audio',
     price: 319.00,
     stock: 12,
@@ -36,7 +36,7 @@ final demoProducts = <Product>[
   const Product(
     id: 'smartwatch-fit',
     name: 'Smartwatch Fit 2',
-    description: 'Reloj inteligente para entrenamiento, sueño y productividad diaria.',
+    description: 'Reloj inteligente para entrenamiento, sueno y productividad diaria.',
     category: 'Wearables',
     price: 399.90,
     stock: 3,
@@ -59,7 +59,7 @@ final demoProducts = <Product>[
   const Product(
     id: 'mouse-precision',
     name: 'Mouse Precision 8K',
-    description: 'Mouse ergonómico de alta precisión para trabajo, diseño y videojuegos.',
+    description: 'Mouse ergonomico de alta precision para trabajo, diseno y videojuegos.',
     category: 'Accesorios',
     price: 159.90,
     stock: 30,
@@ -76,7 +76,7 @@ final demoUsers = <AppUser>[
     fullName: 'Cliente Demo',
     role: AppRole.customer,
     phone: '+51 999 000 001',
-    address: 'Arequipa, Perú',
+    address: 'Arequipa, Peru',
     photoUrl: '',
     paymentMethods: const [
       PaymentMethodProfile(id: 'pm-demo', type: 'Tarjeta simulada', holder: 'Cliente Demo', last4: '4242', isDefault: true),
@@ -91,7 +91,7 @@ final demoUsers = <AppUser>[
     fullName: 'Vendedor Demo',
     role: AppRole.seller,
     phone: '+51 999 000 002',
-    address: 'Arequipa, Perú',
+    address: 'Arequipa, Peru',
     photoUrl: '',
     paymentMethods: const [],
     notifications: NotificationPreferences.defaults(),
@@ -104,7 +104,7 @@ final demoUsers = <AppUser>[
     fullName: 'Administrador Demo',
     role: AppRole.admin,
     phone: '+51 999 000 003',
-    address: 'Arequipa, Perú',
+    address: 'Arequipa, Peru',
     photoUrl: '',
     paymentMethods: const [],
     notifications: NotificationPreferences.defaults(),

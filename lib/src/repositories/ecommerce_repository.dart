@@ -198,7 +198,7 @@ class EcommerceRepository {
       notifications: NotificationPreferences.defaults(),
       createdAt: DateTime.now(),
       demo: false,
-      language: 'Español',
+      language: 'Espanol',
       darkMode: false,
     );
     await saveUser(appUser);

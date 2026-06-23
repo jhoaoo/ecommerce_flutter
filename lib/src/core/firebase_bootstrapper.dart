@@ -1,4 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
+﻿import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
 class FirebaseBootstrapper {
@@ -18,6 +18,7 @@ class FirebaseBootstrapper {
     try {
       if (kIsWeb) {
         const apiKey = String.fromEnvironment('FIREBASE_API_KEY');
+
         if (apiKey.isEmpty) {
           throw StateError('FIREBASE_API_KEY is required for web builds.');
         }

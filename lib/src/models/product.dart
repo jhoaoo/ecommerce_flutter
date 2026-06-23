@@ -94,7 +94,7 @@ class Product {
     return Product(
       id: doc.id,
       name: _readString(data['name'], 'Producto sin nombre'),
-      description: _readString(data['description'], 'Sin descripción'),
+      description: _readString(data['description'], 'Sin descripcion'),
       category: _readString(data['category'], _readString(data['categoryName'], 'General')),
       price: _readDouble(data['price']),
       stock: _readInt(data['stock']),

@@ -77,12 +77,12 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
       return;
     }
     if (!_acceptTerms) {
-      setState(() => _errorMessage = 'Debes aceptar los términos y condiciones.');
+      setState(() => _errorMessage = 'Debes aceptar los terminos y condiciones.');
       _triggerShake();
       return;
     }
     if (_passwordController.text != _confirmController.text) {
-      setState(() => _errorMessage = 'Las contraseñas no coinciden.');
+      setState(() => _errorMessage = 'Las contrasenas no coinciden.');
       _triggerShake();
       return;
     }
@@ -113,7 +113,7 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
       }
     } catch (e) {
       if (mounted) {
-        setState(() => _errorMessage = 'No se pudo crear la cuenta. Inténtalo de nuevo.');
+        setState(() => _errorMessage = 'No se pudo crear la cuenta. Intentalo de nuevo.');
         _triggerShake();
       }
     } finally {
@@ -223,13 +223,13 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
 
                           _AuthField(
                             controller: _emailController,
-                            label: 'Correo electrónico',
+                            label: 'Correo electronico',
                             hint: 'tu@email.com',
                             icon: Icons.email_outlined,
                             keyboardType: TextInputType.emailAddress,
                             validator: (v) {
                               if (v == null || v.isEmpty) return 'Ingresa tu correo';
-                              if (!v.contains('@')) return 'Correo inválido';
+                              if (!v.contains('@')) return 'Correo invalido';
                               return null;
                             },
                           ).animate().fadeIn(delay: 340.ms, duration: 400.ms).slideX(begin: -0.05, end: 0),
@@ -238,7 +238,7 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
 
                           _AuthField(
                             controller: _passwordController,
-                            label: 'Contraseña',
+                            label: 'Contrasena',
                             hint: '••••••••',
                             icon: Icons.lock_outline_rounded,
                             obscureText: !_passwordVisible,
@@ -250,8 +250,8 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
                               ),
                             ),
                             validator: (v) {
-                              if (v == null || v.isEmpty) return 'Ingresa una contraseña';
-                              if (v.length < 6) return 'Mínimo 6 caracteres';
+                              if (v == null || v.isEmpty) return 'Ingresa una contrasena';
+                              if (v.length < 6) return 'Minimo 6 caracteres';
                               return null;
                             },
                           ).animate().fadeIn(delay: 400.ms, duration: 400.ms).slideX(begin: -0.05, end: 0),
@@ -268,7 +268,7 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
 
                           _AuthField(
                             controller: _confirmController,
-                            label: 'Confirmar contraseña',
+                            label: 'Confirmar contrasena',
                             hint: '••••••••',
                             icon: Icons.lock_outline_rounded,
                             obscureText: !_confirmVisible,
@@ -280,8 +280,8 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
                               ),
                             ),
                             validator: (v) {
-                              if (v == null || v.isEmpty) return 'Confirma tu contraseña';
-                              if (v != _passwordController.text) return 'Las contraseñas no coinciden';
+                              if (v == null || v.isEmpty) return 'Confirma tu contrasena';
+                              if (v != _passwordController.text) return 'Las contrasenas no coinciden';
                               return null;
                             },
                           ).animate().fadeIn(delay: 460.ms, duration: 400.ms).slideX(begin: -0.05, end: 0),
@@ -320,7 +320,7 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
                               style: GoogleFonts.dmSans(fontSize: 13, color: _kMuted),
                               children: [
                                 TextSpan(
-                                  text: 'Términos y Condiciones',
+                                  text: 'Terminos y Condiciones',
                                   style: GoogleFonts.dmSans(
                                     fontSize: 13, color: _kAccent, fontWeight: FontWeight.w600,
                                   ),
@@ -330,7 +330,7 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
                                   style: GoogleFonts.dmSans(fontSize: 13, color: _kMuted),
                                 ),
                                 TextSpan(
-                                  text: 'Política de Privacidad',
+                                  text: 'Politica de Privacidad',
                                   style: GoogleFonts.dmSans(
                                     fontSize: 13, color: _kAccent, fontWeight: FontWeight.w600,
                                   ),
@@ -389,7 +389,7 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          'o regístrate con',
+                          'o registrate con',
                           style: GoogleFonts.dmSans(fontSize: 13, color: _kMuted),
                         ),
                       ),
@@ -417,11 +417,11 @@ class _AuthRegisterPageWidgetState extends State<AuthRegisterPageWidget> {
                       ),
                       child: RichText(
                         text: TextSpan(
-                          text: '¿Ya tienes cuenta? ',
+                          text: 'Ya tienes cuenta? ',
                           style: GoogleFonts.dmSans(fontSize: 14, color: _kMuted),
                           children: [
                             TextSpan(
-                              text: 'Inicia sesión',
+                              text: 'Inicia sesion',
                               style: GoogleFonts.dmSans(
                                 fontSize: 14, color: _kAccent, fontWeight: FontWeight.w700,
                               ),
@@ -458,7 +458,7 @@ class _PasswordStrengthBar extends StatelessWidget {
   }
 
   String get _label {
-    if (strength <= 1) return 'Débil';
+    if (strength <= 1) return 'Debil';
     if (strength == 2) return 'Regular';
     if (strength == 3) return 'Buena';
     return 'Muy fuerte';

@@ -17,7 +17,7 @@ class AppUser {
     required this.notifications,
     required this.createdAt,
     required this.demo,
-    this.language = 'Español',
+    this.language = 'Espanol',
     this.darkMode = false,
   });
 
@@ -88,7 +88,7 @@ class AppUser {
       ),
       createdAt: _readDate(data['createdAt']),
       demo: data['demo'] == true,
-      language: data['language']?.toString() ?? 'Español',
+      language: data['language']?.toString() ?? 'Espanol',
       darkMode: data['darkMode'] == true,
     );
   }

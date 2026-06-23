@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -106,7 +106,7 @@ class _AuthPageState extends State<_AuthPage> {
                         children: [
                           Text('NovaMarket', style: theme.textTheme.displaySmall?.copyWith(color: Colors.white, fontWeight: FontWeight.w900)),
                           const SizedBox(height: 12),
-                          Text('Compra tecnología, vende productos y gestiona pedidos desde una sola plataforma.', style: theme.textTheme.titleLarge?.copyWith(color: Colors.white)),
+                          Text('Compra tecnologia, vende productos y gestiona pedidos desde una sola plataforma.', style: theme.textTheme.titleLarge?.copyWith(color: Colors.white)),
                           const SizedBox(height: 18),
                           const Wrap(spacing: 8, runSpacing: 8, children: [_Tag(text: 'Compra segura'), _Tag(text: 'Panel vendedor'), _Tag(text: 'Panel admin')]),
                         ],
@@ -122,21 +122,33 @@ class _AuthPageState extends State<_AuthPage> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(registerMode ? 'Crear cuenta' : 'Iniciar sesión', style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
+                          Text(registerMode ? 'Crear cuenta' : 'Iniciar sesion', style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
                           const SizedBox(height: 6),
-                          Text(registerMode ? 'Regístrate para comprar y solicitar acceso de vendedor.' : 'Ingresa para continuar con tus compras y paneles.'),
+                          Text(registerMode ? 'Registrate para comprar y solicitar acceso de vendedor.' : 'Ingresa para continuar con tus compras y paneles.'),
                           const SizedBox(height: 18),
                           if (registerMode) ...[
                             TextField(controller: name, textInputAction: TextInputAction.next, decoration: const InputDecoration(labelText: 'Nombre completo')),
                             const SizedBox(height: 12),
                           ],
-                          TextField(controller: email, keyboardType: TextInputType.emailAddress, textInputAction: TextInputAction.next, decoration: const InputDecoration(labelText: 'Correo electrónico')),
+                          TextField(controller: email, keyboardType: TextInputType.emailAddress, textInputAction: TextInputAction.next, decoration: const InputDecoration(labelText: 'Correo electronico')),
                           const SizedBox(height: 12),
-                          TextField(controller: password, obscureText: true, decoration: const InputDecoration(labelText: 'Contraseña')),
+                          TextField(controller: password, obscureText: true, decoration: const InputDecoration(labelText: 'Contrasena')),
                           if (controller.errorMessage != null) ...[
                             const SizedBox(height: 12),
                             Text(controller.errorMessage!, style: TextStyle(color: theme.colorScheme.error)),
                           ],
+                          const SizedBox(height: 14),
+                          _DemoAccessPanel(
+                            onSelect: (account) {
+                              setState(() {
+                                registerMode = false;
+                                name.text = account.name;
+                                email.text = account.email;
+                                password.text = account.password;
+                              });
+                              controller.signInDemoRole(account.role);
+                            },
+                          ),
                           const SizedBox(height: 18),
                           SizedBox(
                             width: double.infinity,
@@ -159,7 +171,7 @@ class _AuthPageState extends State<_AuthPage> {
                           ),
                           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                             TextButton(onPressed: () => setState(() => registerMode = !registerMode), child: Text(registerMode ? 'Ya tengo cuenta' : 'Crear cuenta')),
-                            TextButton(onPressed: () => controller.resetPassword(email.text), child: const Text('Olvidé mi contraseña')),
+                            TextButton(onPressed: () => controller.resetPassword(email.text), child: const Text('Olvide mi contrasena')),
                           ]),
                         ],
                       ),
@@ -175,6 +187,156 @@ class _AuthPageState extends State<_AuthPage> {
   }
 }
 
+class _DemoAccount {
+  const _DemoAccount({
+    required this.role,
+    required this.name,
+    required this.email,
+    required this.password,
+    required this.description,
+    required this.icon,
+  });
+
+  final AppRole role;
+  final String name;
+  final String email;
+  final String password;
+  final String description;
+  final IconData icon;
+}
+
+const _demoAccounts = [
+  _DemoAccount(
+    role: AppRole.customer,
+    name: 'Cliente Demo',
+    email: 'cliente@novamarket.demo',
+    password: 'Demo123456',
+    description: 'Compra productos, usa carrito y revisa pedidos.',
+    icon: Icons.person_outline,
+  ),
+  _DemoAccount(
+    role: AppRole.seller,
+    name: 'Vendedor Demo',
+    email: 'vendedor@novamarket.demo',
+    password: 'Demo123456',
+    description: 'Gestiona productos y revisa ventas del panel vendedor.',
+    icon: Icons.storefront_outlined,
+  ),
+  _DemoAccount(
+    role: AppRole.admin,
+    name: 'Admin Demo',
+    email: 'admin@novamarket.demo',
+    password: 'Demo123456',
+    description: 'Acceso completo: usuarios, productos, roles y aprobaciones.',
+    icon: Icons.admin_panel_settings_outlined,
+  ),
+];
+
+class _DemoAccessPanel extends StatelessWidget {
+  const _DemoAccessPanel({required this.onSelect});
+
+  final ValueChanged<_DemoAccount> onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primary.withOpacity(.06),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: theme.colorScheme.primary.withOpacity(.14)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.visibility_outlined, size: 18, color: theme.colorScheme.primary),
+              const SizedBox(width: 8),
+              Text(
+                'Acceso rapido para revision',
+                style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w900),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Credenciales demo para reclutadores. Puedes entrar directo como cliente, vendedor o administrador.',
+            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          ),
+          const SizedBox(height: 12),
+          ..._demoAccounts.map(
+            (account) => Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: _DemoCredentialTile(
+                account: account,
+                onTap: () => onSelect(account),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DemoCredentialTile extends StatelessWidget {
+  const _DemoCredentialTile({
+    required this.account,
+    required this.onTap,
+  });
+
+  final _DemoAccount account;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Material(
+      color: theme.colorScheme.surface,
+      borderRadius: BorderRadius.circular(14),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 18,
+                backgroundColor: theme.colorScheme.primary.withOpacity(.10),
+                child: Icon(account.icon, size: 19, color: theme.colorScheme.primary),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(account.name, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w800)),
+                    const SizedBox(height: 2),
+                    Text(account.email, style: theme.textTheme.bodySmall),
+                    Text('Clave: ${account.password}', style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+                    const SizedBox(height: 2),
+                    Text(account.description, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              FilledButton.tonal(
+                onPressed: onTap,
+                child: const Text('Entrar'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 class _ResponsiveShell extends StatefulWidget {
   const _ResponsiveShell();
 
@@ -234,7 +396,7 @@ class _CatalogPage extends StatelessWidget {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const _Header(),
                 const SizedBox(height: 16),
-                TextField(onChanged: controller.setQuery, decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'Buscar productos, categorías u ofertas')),
+                TextField(onChanged: controller.setQuery, decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'Buscar productos, categorias u ofertas')),
                 const SizedBox(height: 14),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -248,7 +410,7 @@ class _CatalogPage extends StatelessWidget {
             ),
           ),
           if (products.isEmpty)
-            const SliverFillRemaining(child: _EmptyState(icon: Icons.storefront_outlined, title: 'No hay productos publicados', message: 'Cuando un administrador apruebe productos, aparecerán aquí.'))
+            const SliverFillRemaining(child: _EmptyState(icon: Icons.storefront_outlined, title: 'No hay productos publicados', message: 'Cuando un administrador apruebe productos, apareceran aqui.'))
           else
             SliverPadding(
               padding: const EdgeInsets.all(20),
@@ -285,9 +447,9 @@ class _Header extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('NovaMarket', style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w900)),
             const SizedBox(height: 8),
-            Text('Compra tecnología, gestiona pedidos y vende productos desde una sola plataforma.', style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white)),
+            Text('Compra tecnologia, gestiona pedidos y vende productos desde una sola plataforma.', style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white)),
             const SizedBox(height: 12),
-            const Wrap(spacing: 8, runSpacing: 8, children: [_Tag(text: 'Compra segura'), _Tag(text: 'Ofertas'), _Tag(text: 'Envíos'), _Tag(text: 'Soporte')]),
+            const Wrap(spacing: 8, runSpacing: 8, children: [_Tag(text: 'Compra segura'), _Tag(text: 'Ofertas'), _Tag(text: 'Envios'), _Tag(text: 'Soporte')]),
           ]),
         ),
         Card(
@@ -326,7 +488,7 @@ class _ProductCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(product.description, maxLines: 2, overflow: TextOverflow.ellipsis),
             const SizedBox(height: 8),
-            Wrap(spacing: 8, children: [Chip(label: Text(product.category)), if (product.discountRate > 0) Chip(label: Text('-${(product.discountRate * 100).round()}%')), if (product.isLowStock) const Chip(label: Text('Últimas unidades'))]),
+            Wrap(spacing: 8, children: [Chip(label: Text(product.category)), if (product.discountRate > 0) Chip(label: Text('-${(product.discountRate * 100).round()}%')), if (product.isLowStock) const Chip(label: Text('Ultimas unidades'))]),
             const SizedBox(height: 8),
             Text('Incluye IGV: S/ ${product.taxAmount.toStringAsFixed(2)}'),
             const SizedBox(height: 6),
@@ -352,7 +514,7 @@ class _CartPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: controller.cart.isEmpty
-            ? const _EmptyState(icon: Icons.shopping_bag_outlined, title: 'Carrito vacío', message: 'Agrega productos para continuar con la compra.')
+            ? const _EmptyState(icon: Icons.shopping_bag_outlined, title: 'Carrito vacio', message: 'Agrega productos para continuar con la compra.')
             : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text('Carrito y pago', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
                 const SizedBox(height: 14),
@@ -364,7 +526,7 @@ class _CartPage extends StatelessWidget {
                       _MoneyRow('Subtotal', totals.subtotal),
                       _MoneyRow('Descuento', -totals.discount),
                       _MoneyRow('IGV', totals.tax),
-                      _MoneyRow('Envío', totals.shipping),
+                      _MoneyRow('Envio', totals.shipping),
                       const Divider(),
                       _MoneyRow('Total', totals.total, strong: true),
                       const SizedBox(height: 12),
@@ -431,21 +593,21 @@ class _ProfilePageState extends State<_ProfilePage> {
     final user = controller.currentUser;
     return SafeArea(
       child: ListView(padding: const EdgeInsets.all(20), children: [
-        Text('Perfil y configuración', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
+        Text('Perfil y configuracion', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
         const SizedBox(height: 16),
         TextField(controller: name, decoration: const InputDecoration(labelText: 'Nombre completo')),
         const SizedBox(height: 10),
-        TextField(controller: phone, decoration: const InputDecoration(labelText: 'Teléfono')),
+        TextField(controller: phone, decoration: const InputDecoration(labelText: 'Telefono')),
         const SizedBox(height: 10),
-        TextField(controller: address, decoration: const InputDecoration(labelText: 'Dirección')),
+        TextField(controller: address, decoration: const InputDecoration(labelText: 'Direccion')),
         const SizedBox(height: 16),
         Card(child: Column(children: [
           SwitchListTile(value: controller.darkMode, onChanged: controller.setDarkMode, title: const Text('Modo oscuro')),
-          ListTile(title: const Text('Idioma'), trailing: DropdownButton<String>(value: controller.language, items: const ['Español', 'English'].map((value) => DropdownMenuItem(value: value, child: Text(value))).toList(), onChanged: (value) => controller.setLanguage(value ?? 'Español'))),
+          ListTile(title: const Text('Idioma'), trailing: DropdownButton<String>(value: controller.language, items: const ['Espanol', 'English'].map((value) => DropdownMenuItem(value: value, child: Text(value))).toList(), onChanged: (value) => controller.setLanguage(value ?? 'Espanol'))),
         ])),
         const SizedBox(height: 16),
-        Row(children: [Expanded(child: Text('Métodos de pago', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800))), TextButton.icon(onPressed: () => _PaymentEditor.show(context), icon: const Icon(Icons.add_card), label: const Text('Agregar'))]),
-        if (user.paymentMethods.isEmpty) const ListTile(leading: Icon(Icons.credit_card_off), title: Text('No hay métodos registrados.')),
+        Row(children: [Expanded(child: Text('Metodos de pago', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800))), TextButton.icon(onPressed: () => _PaymentEditor.show(context), icon: const Icon(Icons.add_card), label: const Text('Agregar'))]),
+        if (user.paymentMethods.isEmpty) const ListTile(leading: Icon(Icons.credit_card_off), title: Text('No hay metodos registrados.')),
         ...user.paymentMethods.map((method) => ListTile(leading: const Icon(Icons.credit_card), title: Text(method.type), subtitle: Text('${method.holder} · **** ${method.last4}'), trailing: IconButton(onPressed: () => controller.deletePaymentMethod(method), icon: const Icon(Icons.delete_outline)))),
         const SizedBox(height: 16),
         _NotificationSwitches(user: user),
@@ -454,7 +616,7 @@ class _ProfilePageState extends State<_ProfilePage> {
         const SizedBox(height: 10),
         OutlinedButton.icon(onPressed: () => _showRoleRequest(context), icon: const Icon(Icons.manage_accounts_outlined), label: const Text('Solicitar acceso avanzado')),
         const SizedBox(height: 10),
-        OutlinedButton.icon(onPressed: controller.signOut, icon: const Icon(Icons.logout), label: const Text('Cerrar sesión')),
+        OutlinedButton.icon(onPressed: controller.signOut, icon: const Icon(Icons.logout), label: const Text('Cerrar sesion')),
       ]),
     );
   }
@@ -486,11 +648,11 @@ class _PaymentEditor {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Agregar método de pago'),
+        title: const Text('Agregar metodo de pago'),
         content: Column(mainAxisSize: MainAxisSize.min, children: [
           TextField(controller: type, decoration: const InputDecoration(labelText: 'Tipo')),
           TextField(controller: holder, decoration: const InputDecoration(labelText: 'Titular')),
-          TextField(controller: last4, decoration: const InputDecoration(labelText: 'Últimos 4 dígitos')),
+          TextField(controller: last4, decoration: const InputDecoration(labelText: 'Ultimos 4 digitos')),
         ]),
         actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')), FilledButton(onPressed: () { final controller = context.read<AppController>(); controller.addPaymentMethod(PaymentMethodProfile(id: 'PM-${DateTime.now().millisecondsSinceEpoch}', type: type.text.trim(), holder: holder.text.trim(), last4: last4.text.trim().padLeft(4, '0'), isDefault: controller.currentUser.paymentMethods.isEmpty)); Navigator.pop(context); }, child: const Text('Guardar'))],
       ),
@@ -558,7 +720,7 @@ class _SellerPanel extends StatelessWidget {
     return SafeArea(child: ListView(padding: const EdgeInsets.all(20), children: [
       Text('Panel de vendedor', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
       const SizedBox(height: 10),
-      _MetricGrid(values: {'Productos': sellerProducts.length.toString(), 'Publicados': sellerProducts.where((product) => product.isApproved).length.toString(), 'En revisión': sellerProducts.where((product) => product.isPending).length.toString(), 'Stock bajo': sellerProducts.where((product) => product.isLowStock).length.toString(), 'Vendidos': controller.sellerUnitsSold.toString(), 'Ganancias': 'S/ ${controller.sellerRevenue.toStringAsFixed(0)}'}),
+      _MetricGrid(values: {'Productos': sellerProducts.length.toString(), 'Publicados': sellerProducts.where((product) => product.isApproved).length.toString(), 'En revision': sellerProducts.where((product) => product.isPending).length.toString(), 'Stock bajo': sellerProducts.where((product) => product.isLowStock).length.toString(), 'Vendidos': controller.sellerUnitsSold.toString(), 'Ganancias': 'S/ ${controller.sellerRevenue.toStringAsFixed(0)}'}),
       const SizedBox(height: 16),
       FilledButton.icon(onPressed: () => _ProductEditor.show(context), icon: const Icon(Icons.add_box_outlined), label: const Text('Crear producto')),
       const SizedBox(height: 16),
@@ -576,16 +738,16 @@ class _AdminPanel extends StatelessWidget {
     return SafeArea(child: ListView(padding: const EdgeInsets.all(20), children: [
       Text('Panel administrador', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
       const SizedBox(height: 10),
-      _MetricGrid(values: {'Usuarios': controller.users.length.toString(), 'Productos': controller.products.length.toString(), 'Categorías': controller.categoryModels.length.toString(), 'Pendientes': controller.pendingProducts.length.toString(), 'Solicitudes': controller.roleRequests.length.toString()}),
+      _MetricGrid(values: {'Usuarios': controller.users.length.toString(), 'Productos': controller.products.length.toString(), 'Categorias': controller.categoryModels.length.toString(), 'Pendientes': controller.pendingProducts.length.toString(), 'Solicitudes': controller.roleRequests.length.toString()}),
       const SizedBox(height: 16),
-      FilledButton.icon(onPressed: controller.seedDemoData, icon: const Icon(Icons.inventory_outlined), label: const Text('Cargar catálogo inicial')),
+      FilledButton.icon(onPressed: controller.seedDemoData, icon: const Icon(Icons.inventory_outlined), label: const Text('Cargar catalogo inicial')),
       const SizedBox(height: 16),
-      Text('Productos pendientes de aprobación', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
+      Text('Productos pendientes de aprobacion', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
       if (controller.pendingProducts.isEmpty) const ListTile(leading: Icon(Icons.check_circle_outline), title: Text('No hay productos pendientes.')),
       ...controller.pendingProducts.map((product) => ListTile(leading: const Icon(Icons.pending_actions), title: Text(product.name), subtitle: Text('${product.category} · Vendedor ${product.sellerId}'), trailing: Wrap(children: [FilledButton(onPressed: () => controller.approveProduct(product), child: const Text('Aprobar')), const SizedBox(width: 8), OutlinedButton(onPressed: () => controller.rejectProduct(product), child: const Text('Rechazar'))]))),
       const SizedBox(height: 16),
       Text('Solicitudes de acceso', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
-      ...controller.roleRequests.map((request) => ListTile(leading: const Icon(Icons.manage_accounts), title: Text('${request.email} → ${request.requestedRole.label}'), subtitle: Text(request.reason), trailing: request.status == 'pending' ? FilledButton(onPressed: () => controller.approveRoleRequest(request), child: const Text('Aprobar')) : Chip(label: Text(request.status)))),
+      ...controller.roleRequests.map((request) => ListTile(leading: const Icon(Icons.manage_accounts), title: Text('${request.email} â†’ ${request.requestedRole.label}'), subtitle: Text(request.reason), trailing: request.status == 'pending' ? FilledButton(onPressed: () => controller.approveRoleRequest(request), child: const Text('Aprobar')) : Chip(label: Text(request.status)))),
       const SizedBox(height: 16),
       Text('Productos de la tienda', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
       ...controller.products.map((product) => ListTile(leading: const Icon(Icons.inventory_2_outlined), title: Text(product.name), subtitle: Text('${product.category} · Stock ${product.stock}'), trailing: Wrap(children: [_StatusChip(product: product), IconButton(onPressed: () => _ProductEditor.show(context, product: product), icon: const Icon(Icons.edit_outlined)), IconButton(onPressed: () => controller.deleteProduct(product), icon: const Icon(Icons.delete_outline))]))),
@@ -611,8 +773,8 @@ class _ProductEditor {
       title: Text(product == null ? 'Crear producto' : 'Editar producto'),
       content: SizedBox(width: 520, child: SingleChildScrollView(child: Column(children: [
         TextField(controller: name, decoration: const InputDecoration(labelText: 'Nombre')),
-        TextField(controller: description, decoration: const InputDecoration(labelText: 'Descripción')),
-        TextField(controller: category, decoration: const InputDecoration(labelText: 'Categoría')),
+        TextField(controller: description, decoration: const InputDecoration(labelText: 'Descripcion')),
+        TextField(controller: category, decoration: const InputDecoration(labelText: 'Categoria')),
         TextField(controller: price, decoration: const InputDecoration(labelText: 'Precio')),
         TextField(controller: stock, decoration: const InputDecoration(labelText: 'Stock')),
         TextField(controller: discount, decoration: const InputDecoration(labelText: 'Descuento (%)')),
@@ -620,7 +782,7 @@ class _ProductEditor {
         TextField(controller: image, decoration: const InputDecoration(labelText: 'URL de imagen')),
         TextField(controller: document, decoration: const InputDecoration(labelText: 'URL de documento')),
         const SizedBox(height: 8),
-        const Text('Los productos creados por vendedores pasan a revisión antes de publicarse.'),
+        const Text('Los productos creados por vendedores pasan a revision antes de publicarse.'),
       ]))),
       actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')), FilledButton(onPressed: () { final controller = context.read<AppController>(); final next = Product(id: product?.id ?? 'PROD-${DateTime.now().millisecondsSinceEpoch}', name: name.text.trim(), description: description.text.trim(), category: category.text.trim(), price: double.tryParse(price.text) ?? 0, stock: int.tryParse(stock.text) ?? 0, imageUrl: image.text.trim(), rating: product?.rating ?? 4.5, isFeatured: product?.isFeatured ?? false, sellerId: product?.sellerId ?? controller.currentUser.id, discountRate: (double.tryParse(discount.text) ?? 0) / 100, lowStockThreshold: int.tryParse(threshold.text) ?? 5, documentUrl: document.text.trim(), approvalStatus: product?.approvalStatus ?? 'pending'); controller.saveProduct(next); Navigator.pop(context); }, child: const Text('Guardar'))],
     ));
@@ -633,7 +795,7 @@ class _StatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (product.isApproved) return const Chip(label: Text('Publicado'));
-    if (product.isPending) return const Chip(label: Text('En revisión'));
+    if (product.isPending) return const Chip(label: Text('En revision'));
     return const Chip(label: Text('Rechazado'));
   }
 }
@@ -646,7 +808,7 @@ class _NotificationsPage extends StatelessWidget {
     return SafeArea(child: ListView(padding: const EdgeInsets.all(20), children: [
       Text('Avisos', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900)),
       const SizedBox(height: 10),
-      if (controller.notifications.isEmpty) const _EmptyState(icon: Icons.notifications_none, title: 'Sin avisos', message: 'Aquí aparecerán pedidos, promociones y alertas.') else ...controller.notifications.map((item) => ListTile(leading: const Icon(Icons.notifications_active_outlined), title: Text(item.title), subtitle: Text(item.message), trailing: Chip(label: Text(item.type)))),
+      if (controller.notifications.isEmpty) const _EmptyState(icon: Icons.notifications_none, title: 'Sin avisos', message: 'Aqui apareceran pedidos, promociones y alertas.') else ...controller.notifications.map((item) => ListTile(leading: const Icon(Icons.notifications_active_outlined), title: Text(item.title), subtitle: Text(item.message), trailing: Chip(label: Text(item.type)))),
     ]));
   }
 }
@@ -682,3 +844,4 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Center(child: Card(child: Padding(padding: const EdgeInsets.all(28), child: Column(mainAxisSize: MainAxisSize.min, children: [Icon(icon, size: 52), const SizedBox(height: 10), Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900)), const SizedBox(height: 6), Text(message, textAlign: TextAlign.center)]))));
 }
+

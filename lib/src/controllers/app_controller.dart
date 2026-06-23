@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
@@ -26,7 +26,7 @@ class AppController extends ChangeNotifier {
 
   String selectedCategory = 'Todos';
   String query = '';
-  String language = 'Español';
+  String language = 'Espanol';
   bool darkMode = false;
   bool isLoading = true;
   String? errorMessage;
@@ -97,7 +97,7 @@ class AppController extends ChangeNotifier {
       _notifications.add(NotificationItem(
         id: 'local',
         title: 'Datos locales cargados',
-        message: 'La tienda se abrió con datos locales para pruebas de interfaz.',
+        message: 'La tienda se abrio con datos locales para pruebas de interfaz.',
         type: 'system',
         createdAt: DateTime.now(),
       ));
@@ -114,7 +114,7 @@ class AppController extends ChangeNotifier {
       }
       errorMessage = null;
     } catch (_) {
-      errorMessage = 'No se pudo cargar tu sesión. Inicia sesión nuevamente.';
+      errorMessage = 'No se pudo cargar tu sesion. Inicia sesion nuevamente.';
     } finally {
       isLoading = false;
       notifyListeners();
@@ -133,7 +133,41 @@ class AppController extends ChangeNotifier {
     await _runAuth(repository.signInWithGoogle);
   }
 
-  Future<void> resetPassword(String email) async {
+  Future<void> signInDemoRole(AppRole role) async {
+    isLoading = true;
+    errorMessage = null;
+    notifyListeners();
+
+    try {
+      final user = await repository.signInDemo(role);
+      await _cancelRealtime();
+
+      _setCurrentUser(user, notify: false);
+      products = demoProducts.map((product) => product.copyWith(approvalStatus: 'approved', active: true)).toList();
+      categoryModels = demoCategories;
+      users = demoUsers;
+      _orders = [];
+      _roleRequests = [];
+      _cart.clear();
+
+      _notifications.insert(
+        0,
+        NotificationItem(
+          id: 'demo-${DateTime.now().millisecondsSinceEpoch}',
+          title: 'Modo demo activado',
+          message: 'Ingresaste como ${role.label} para revisar la plataforma.',
+          type: 'auth',
+          createdAt: DateTime.now(),
+        ),
+      );
+    } catch (_) {
+      errorMessage = 'No se pudo abrir el modo demo.';
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+Future<void> resetPassword(String email) async {
     try {
       await repository.resetPassword(email.trim());
       _notifications.insert(
@@ -141,7 +175,7 @@ class AppController extends ChangeNotifier {
         NotificationItem(
           id: 'reset-${DateTime.now().millisecondsSinceEpoch}',
           title: 'Correo enviado',
-          message: 'Revisa tu bandeja para recuperar tu contraseña.',
+          message: 'Revisa tu bandeja para recuperar tu contrasena.',
           type: 'auth',
           createdAt: DateTime.now(),
         ),
@@ -165,7 +199,7 @@ class AppController extends ChangeNotifier {
         0,
         NotificationItem(
           id: 'signin-${DateTime.now().millisecondsSinceEpoch}',
-          title: 'Sesión iniciada',
+          title: 'Sesion iniciada',
           message: 'Bienvenido a NovaMarket.',
           type: 'auth',
           createdAt: DateTime.now(),
@@ -268,7 +302,7 @@ class AppController extends ChangeNotifier {
       NotificationItem(
         id: 'request-${request.id}',
         title: 'Solicitud enviada',
-        message: 'Tu solicitud para acceder como ${role.label} fue enviada para revisión.',
+        message: 'Tu solicitud para acceder como ${role.label} fue enviada para revision.',
         type: 'role_request',
         createdAt: DateTime.now(),
       ),
@@ -345,7 +379,7 @@ class AppController extends ChangeNotifier {
   }
 
   Future<CustomerOrder> checkout() async {
-    if (_cart.isEmpty) throw StateError('El carrito está vacío.');
+    if (_cart.isEmpty) throw StateError('El carrito esta vacio.');
     final order = await repository.createOrder(user: currentUser, items: List.unmodifiable(_cart), totals: totals);
     _orders.insert(0, order);
     _cart.clear();
@@ -381,7 +415,7 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> rejectProduct(Product product, {String reason = 'No cumple los requisitos de publicación.'}) async {
+  Future<void> rejectProduct(Product product, {String reason = 'No cumple los requisitos de publicacion.'}) async {
     if (!isAdmin) return;
     final rejected = product.copyWith(approvalStatus: 'rejected', active: false, rejectionReason: reason);
     await repository.saveProduct(rejected);
@@ -450,10 +484,10 @@ class AppController extends ChangeNotifier {
   String _friendlyAuthError(String error) {
     if (error.contains('wrong-password') || error.contains('invalid-credential')) return 'Credenciales incorrectas.';
     if (error.contains('user-not-found')) return 'No existe una cuenta con ese correo.';
-    if (error.contains('email-already-in-use')) return 'Ese correo ya está registrado.';
-    if (error.contains('weak-password')) return 'Usa una contraseña más segura.';
+    if (error.contains('email-already-in-use')) return 'Ese correo ya esta registrado.';
+    if (error.contains('weak-password')) return 'Usa una contrasena mas segura.';
     if (error.contains('permission-denied')) return 'No tienes permisos suficientes. Revisa las reglas de acceso.';
-    return 'No se pudo completar la operación. Intenta nuevamente.';
+    return 'No se pudo completar la operacion. Intenta nuevamente.';
   }
 
   @override
@@ -462,3 +496,5 @@ class AppController extends ChangeNotifier {
     super.dispose();
   }
 }
+
+

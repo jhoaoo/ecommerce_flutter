@@ -1,5 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+﻿import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
 class FirebaseBootstrapper {
@@ -18,9 +17,15 @@ class FirebaseBootstrapper {
 
     try {
       if (kIsWeb) {
+        const apiKey = String.fromEnvironment('FIREBASE_API_KEY');
+
+        if (apiKey.isEmpty) {
+          throw StateError('FIREBASE_API_KEY is required for web builds.');
+        }
+
         await Firebase.initializeApp(
           options: const FirebaseOptions(
-            apiKey: 'AIzaSyARHZaK8DTe5kYoe5rTpo1SE9oY_L5lZKI',
+            apiKey: apiKey,
             authDomain: 'ecommerce-7ea77.firebaseapp.com',
             projectId: 'ecommerce-7ea77',
             storageBucket: 'ecommerce-7ea77.firebasestorage.app',
@@ -33,20 +38,10 @@ class FirebaseBootstrapper {
         await Firebase.initializeApp();
       }
 
-      await _ensureAnonymousSession();
       _status = FirebaseConnectionStatus.connected;
     } catch (error) {
       _lastError = error;
       _status = FirebaseConnectionStatus.demoMode;
-    }
-  }
-
-  Future<void> _ensureAnonymousSession() async {
-    try {
-      final auth = FirebaseAuth.instance;
-      auth.currentUser ?? await auth.signInAnonymously();
-    } catch (_) {
-      // Firestore can still be demonstrated if anonymous auth is disabled.
     }
   }
 }
@@ -57,11 +52,11 @@ extension FirebaseConnectionStatusText on FirebaseConnectionStatus {
   String get label {
     switch (this) {
       case FirebaseConnectionStatus.connected:
-        return 'Firebase conectado';
+        return 'Servicio disponible';
       case FirebaseConnectionStatus.demoMode:
-        return 'Modo demo con fallback local';
+        return 'Modo de prueba local';
       case FirebaseConnectionStatus.notInitialized:
-        return 'Inicializando Firebase';
+        return 'Inicializando tienda';
     }
   }
 }

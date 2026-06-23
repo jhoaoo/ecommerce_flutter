@@ -26,7 +26,7 @@ class CategoryModel {
     final data = doc.data() ?? <String, dynamic>{};
     return CategoryModel(
       id: doc.id,
-      name: data['name']?.toString() ?? 'Categoría',
+      name: data['name']?.toString() ?? 'Categoria',
       description: data['description']?.toString() ?? '',
       active: data['active'] != false,
     );
