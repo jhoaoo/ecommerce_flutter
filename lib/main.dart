@@ -8,14 +8,16 @@ import 'src/shop_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   final firebase = FirebaseBootstrapper();
   await firebase.initialize();
 
   runApp(
     ChangeNotifierProvider(
       create: (_) => ShopController(
-        repository: FirebaseEcommerceRepository(firebase: firebase),
-      )..bootstrap(),
+        productRepository: FirebaseProductRepository(firebase: firebase),
+        orderRepository: FirebaseOrderRepository(firebase: firebase),
+      )..loadProducts(),
       child: EcommerceApp(firebaseStatus: firebase.status),
     ),
   );
