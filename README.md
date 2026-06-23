@@ -1,16 +1,77 @@
 # Ecommerce Flutter
 
-Aplicación ecommerce desarrollada con **Flutter + Firebase** para portafolio. El proyecto presenta una arquitectura más limpia, separada por capas, con catálogo de productos, carrito, checkout, creación de órdenes y panel administrativo básico.
+Aplicación ecommerce desarrollada con **Flutter + Firebase** para portafolio. La versión actual ya funciona como base con catálogo, carrito, checkout, Firestore y panel administrativo básico. La rama `portfolio-ecommerce-refactor` queda orientada a una V2 más completa, escalable y realista.
 
-> Estado: versión portfolio funcional. Puede ejecutarse con Firebase conectado o en modo demo con fallback local.
+## Objetivo V2
 
-## Funcionalidades
+Construir un ecommerce responsive para **Web y Android** con:
+
+- Firebase Authentication.
+- Inicio con email y Google.
+- Cierre de sesión y recuperación de acceso.
+- Solicitud de acceso a roles: usuario, vendedor y admin.
+- Paneles diferenciados por rol.
+- CRUD de productos, categorías, usuarios y pedidos.
+- Perfil editable con datos personales, métodos de pago simulados y preferencias de notificación.
+- Firebase Storage para imágenes/documentos, guardando en Firestore solo URL, ruta y metadata.
+- Cálculos de subtotal, impuestos, descuentos, envío, total y stock.
+- Firebase Cloud Messaging preparado para pedidos, promociones, stock bajo y ofertas.
+- Modo cloud simulation para que reclutadores/profesores puedan probar los tres roles sin configuración manual.
+
+## Arquitectura objetivo
+
+```text
+lib/
+├── main.dart
+└── src/
+    ├── core/
+    │   ├── constants/
+    │   ├── routing/
+    │   ├── theme/
+    │   └── utils/
+    ├── models/
+    │   ├── app_user.dart
+    │   ├── category.dart
+    │   ├── product.dart
+    │   ├── order.dart
+    │   ├── payment_method.dart
+    │   └── notification_item.dart
+    ├── services/
+    │   ├── auth_service.dart
+    │   ├── firestore_service.dart
+    │   ├── storage_service.dart
+    │   ├── messaging_service.dart
+    │   └── role_access_service.dart
+    ├── repositories/
+    │   ├── auth_repository.dart
+    │   ├── product_repository.dart
+    │   ├── category_repository.dart
+    │   ├── user_repository.dart
+    │   └── order_repository.dart
+    ├── controllers/
+    │   ├── auth_controller.dart
+    │   ├── catalog_controller.dart
+    │   ├── cart_controller.dart
+    │   ├── profile_controller.dart
+    │   └── admin_controller.dart
+    ├── features/
+    │   ├── auth/
+    │   ├── customer/
+    │   ├── seller/
+    │   ├── admin/
+    │   ├── profile/
+    │   └── checkout/
+    └── shared/
+        ├── widgets/
+        └── layout/
+```
+
+## Funcionalidades actuales
 
 - Catálogo responsive con búsqueda y filtro por categoría.
 - Carrito de compras con incremento, reducción, eliminación y total automático.
 - Checkout con validación de formulario.
-- Creación de órdenes en **Cloud Firestore** cuando Firebase está disponible.
-- Autenticación anónima con **Firebase Auth** para identificar sesiones demo.
+- Creación de órdenes en Cloud Firestore cuando Firebase está disponible.
 - Panel administrativo con métricas básicas y sincronización de productos demo a Firestore.
 - Fallback local para que la app no falle si el entorno no tiene credenciales Firebase configuradas.
 
@@ -23,61 +84,64 @@ Aplicación ecommerce desarrollada con **Flutter + Firebase** para portafolio. E
 | Estado | Provider + ChangeNotifier |
 | Backend | Firebase |
 | Base de datos | Cloud Firestore |
-| Autenticación | Firebase Auth anónimo |
-| UI | Material 3 |
+| Autenticación | Firebase Auth |
+| Archivos | Firebase Storage |
+| Notificaciones | Firebase Cloud Messaging ready |
+| UI | Material 3 responsive |
 
-## Arquitectura
+## Colecciones Firestore objetivo
 
 ```text
-lib/
-├── main.dart
-└── src/
-    ├── app.dart                 # MaterialApp, navegación y pantallas
-    ├── firebase_bootstrapper.dart # Inicialización segura de Firebase
-    ├── models.dart              # Entidades de dominio y datos demo
-    ├── repositories.dart        # Contratos e implementación Firebase
-    └── shop_controller.dart     # Estado global de tienda
+users
+roleRequests
+categories
+products
+orders
+notifications
+promotions
 ```
 
-## Colecciones Firestore usadas
+## Buenas prácticas Storage
 
-### `products`
+Las imágenes y documentos no deben guardarse como bytes/base64 en Firestore. La app debe subirlos a Storage y guardar en Firestore solamente:
 
-```json
-{
-  "name": "Keyboard Pro X",
-  "description": "Teclado mecánico compacto",
-  "category": "Accesorios",
-  "price": 249.90,
-  "stock": 18,
-  "imageUrl": "https://...",
-  "rating": 4.8,
-  "isFeatured": true,
-  "updatedAt": "serverTimestamp"
-}
+```text
+fileUrl
+filePath
+contentType
+uploadedBy
+createdAt
 ```
 
-### `orders`
+Rutas recomendadas:
 
-```json
-{
-  "userId": "firebase-auth-uid",
-  "customerName": "Cliente Demo",
-  "customerEmail": "cliente@email.com",
-  "status": "pending",
-  "paymentMethod": "demo_checkout",
-  "total": 249.90,
-  "items": [
-    {
-      "productId": "keyboard-pro",
-      "name": "Keyboard Pro X",
-      "price": 249.90,
-      "quantity": 1,
-      "subtotal": 249.90
-    }
-  ],
-  "createdAt": "serverTimestamp"
-}
+```text
+users/{uid}/profile
+products/{sellerId}/{productId}/images
+products/{sellerId}/{productId}/documents
+orders/{orderId}/documents
+```
+
+## Modo cloud simulation
+
+El proyecto debe permitir probar el sistema completo sin depender de cuentas manuales:
+
+- Entrar como usuario demo.
+- Entrar como vendedor demo.
+- Entrar como admin demo.
+- Solicitar cambio de rol.
+- Crear productos, categorías y pedidos demo.
+- Simular pagos.
+- Simular notificaciones.
+
+## Cálculos de compra
+
+```text
+subtotal = precio * cantidad
+descuento = subtotal * porcentajeDescuento
+base = subtotal - descuento
+impuesto = base * porcentajeImpuesto
+total = base + impuesto + envío
 ```
 
 ## Instalación local
@@ -88,32 +152,6 @@ cd ecommerce_flutter
 flutter pub get
 flutter run
 ```
-
-## Firebase
-
-El proyecto mantiene Firebase como parte central para demostrar uso real de base de datos. La app intenta inicializar Firebase al arrancar:
-
-- En Web usa las opciones configuradas del proyecto `ecommerce-7ea77`.
-- En Android usa `android/app/google-services.json`.
-- Si Firebase no está disponible, activa modo demo local para evitar fallos de ejecución.
-
-Para probar Firestore:
-
-1. Ejecuta la app.
-2. Entra al módulo **Admin**.
-3. Presiona **Sincronizar productos demo**.
-4. Revisa la colección `products` en Firebase.
-5. Crea una compra desde el checkout y revisa la colección `orders`.
-
-## Valor para portafolio
-
-Este repositorio demuestra:
-
-- Diseño de arquitectura por capas.
-- Separación entre UI, estado, repositorios y modelos.
-- Integración real con Firebase Auth y Cloud Firestore.
-- Flujo ecommerce completo: catálogo → carrito → checkout → orden.
-- Manejo defensivo de errores para que el proyecto sea presentable y ejecutable en diferentes entornos.
 
 ## Autor
 
